@@ -4,13 +4,13 @@ public class Character {
 	private characterType charType;
 	private Space startPos;
 	
-//Constructor
+	// Constructor
 	public Character(characterType type, int startRow, int startCol) {
 		charType = type;
 		startPos = new Space (startRow, startCol);
 	}
 
-//set+get
+	// Setters & Getters
 	public characterType getCharType() {
 		return charType;
 	}
@@ -28,9 +28,7 @@ public class Character {
 		
 	}
 	
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 

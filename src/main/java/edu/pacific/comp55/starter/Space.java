@@ -1,19 +1,20 @@
 package edu.pacific.comp55.starter;
 
 public class Space {
+	private int row;
+	private int col;
 	
 	public String toString() {
 		return "r" + this.row + "c" + this.col;
 	}
 
-	private int row;
-	private int col;
-
+	// Constructor
 	public Space(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
 
+	// Setters & Getters
 	public void setRow(int row) {
 		this.row = row;
 	}
@@ -30,13 +31,5 @@ public class Space {
 		return col;
 	}
 
-//	public Space() {
-//		// TODO Auto-generated constructor stub
-//	}
-//
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//
-//	}
-
+	//test
 }
