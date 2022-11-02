@@ -7,6 +7,15 @@ import acm.graphics.GRect;
 
 public class Player extends Character {
 	
+	public Player(characterType type, int startRow, int startCol) {
+		super(type, startRow, startCol);
+		currX = 100;
+		currY = 100;
+		velocityX = 0;
+		velocityY = 0;
+	}
+
+
 	//player's current position
 	private int currX;
 	private int currY;
@@ -24,13 +33,6 @@ public class Player extends Character {
 	//checks to see if player can still jump/is touching ground
 	private boolean isInAir;
 	private boolean isOnGround;
-	
-	public Player() {
-		currX = 100;
-		currY = 100;
-		velocityX = 0;
-		velocityY = 0;
-	}
 
 	public void setGraphics() {
 		GRect rect = new GRect(300, 300, currX, currY);
