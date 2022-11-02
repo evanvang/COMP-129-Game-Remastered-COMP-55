@@ -7,7 +7,9 @@ import acm.graphics.GRect;
 
 public class Player extends Character {
 	
-	public Player(characterType type, int startRow, int startCol) {
+	
+	
+	/*public Player(characterType type, int startRow, int startCol) {
 		super(type, startRow, startCol);
 		currX = 100;
 		currY = 100;
@@ -100,5 +102,5 @@ public class Player extends Character {
 		currX += velocityX;
 		
 	}
-	
+	*/
 }
