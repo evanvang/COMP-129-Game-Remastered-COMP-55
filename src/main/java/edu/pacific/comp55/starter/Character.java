@@ -1,14 +1,43 @@
 package edu.pacific.comp55.starter;
 
 public class Character {
-
-	public Character() {
-		// TODO Auto-generated constructor stub
+	private characterType charType;
+	private Space startPos;
+	
+//Constructor
+	public Character(characterType type, int startRow, int startCol) {
+		charType = type;
+		startPos = new Space (startRow, startCol);
 	}
+
+//set+get
+	public characterType getCharType() {
+		return charType;
+	}
+
+	public void setCharType(characterType charType) {
+		this.charType = charType;
+	}
+
+	public Space getStartPos() {
+		return startPos;
+	}
+
+	public void setStartPos(Space startPos) {
+		this.startPos = startPos;
+		
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public String toString() {
+		return "Character [charType=" + charType + ", startPos=" + startPos + "]";
+	}
+
 
 }
