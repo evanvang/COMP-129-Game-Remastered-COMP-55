@@ -1,4 +1,10 @@
 package edu.pacific.comp55.starter;
+import acm.graphics.*;
+import acm.program.*;
+import acm.util.*;
+import java.awt.*;
+import java.awt.event.*;
+
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
