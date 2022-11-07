@@ -59,6 +59,8 @@ public class SomePane extends GraphicsPane {
 	private GParagraph para;
 	private Player player;
 	private GImage tile;
+	private Enemy enemy1;
+	private GImage EImg;
 	
 	private Map foo;
 	
@@ -75,6 +77,13 @@ public class SomePane extends GraphicsPane {
 		//tile.setSize(100, 100):
 		program.add(img);
 		program.add(tile);
+		
+		//enemy
+				enemy1 = new Enemy( 200, 150);
+				EImg = new GImage("robot head.jpg",enemy1.getStartX(), enemy1.getStartY());
+				EImg.setSize(50, 50);
+				program.add(EImg);
+				ActionListeners();
 		
 	}
 	
