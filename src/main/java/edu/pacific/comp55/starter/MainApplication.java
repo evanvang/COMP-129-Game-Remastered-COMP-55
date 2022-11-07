@@ -13,6 +13,7 @@ public class MainApplication extends GraphicsApplication {
 
 	private SomePane somePane;
 	private MenuPane menu;
+	private Map floor;
 	private int count;
 
 	public void init() {
@@ -23,6 +24,7 @@ public class MainApplication extends GraphicsApplication {
 		System.out.println("Hello, world!");
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
+		floor = new Map(this);
 		setupInteractions();
 		switchToMenu();
 	}

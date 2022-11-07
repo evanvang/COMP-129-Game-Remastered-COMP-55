@@ -56,20 +56,28 @@ public class SomePane extends GraphicsPane {
 	private GImage img;
 	private GParagraph para;
 	private Player player;
-
+	private GImage tile;
+	
+	private Map foo;
 	
 	
 	public SomePane(MainApplication app) {
 		this.program = app;
 		player = new Player(characterType.PLAYER,0,0);
+		foo = new Map();
 		
 		img = new GImage("idle1.png", player.getCurrX(), player.getCurrY());
 		img.setSize(100, 100);
+		
+		tile = new GImage("robot head.jpg", foo.getFloorX(), foo.getFloorY());
+		//tile.setSize(100, 100);
 		program.add(img);
-		//para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
-		//para.setFont("Arial-24");
+		program.add(tile);
 		
 	}
+	
+	
+	
 	
 //	public SomePane(MainApplication app) {
 //		this.program = app;
@@ -82,6 +90,7 @@ public class SomePane extends GraphicsPane {
 	@Override
 	public void showContents() {
 		program.add(img);
+		program.add(foo.getFloor());
 		//program.add(para);
 	}
 
@@ -127,42 +136,4 @@ public class SomePane extends GraphicsPane {
 		}
 	}
 
-	
-//	public void keyPressed(int k) {
-//		if (k == KeyEvent.VK_A)
-//			player.setLeft(true);
-//		if (k == KeyEvent.VK_D)
-//			player.setRight(true);
-//		if (k == KeyEvent.VK_S)
-//			player.setDown(true);
-//		if (k == KeyEvent.VK_W)
-//			player.startJumping(true);
-//		if (k == KeyEvent.VK_UP)
-//			player.startJumping(true);
-//		if (k == KeyEvent.VK_RIGHT)
-//			player.setRight(true);
-//		if (k == KeyEvent.VK_DOWN)
-//			player.setDown(true);
-//		if (k == KeyEvent.VK_LEFT)
-//			player.setLeft(true);
-//	}
-//
-//	public void keyReleased(int k) {
-//		if (k == KeyEvent.VK_A)
-//			player.setLeft(false);
-//		if (k == KeyEvent.VK_D)
-//			player.setRight(false);
-//		if (k == KeyEvent.VK_S);
-//			player.setDown(false);
-//		if (k == KeyEvent.VK_W)
-//			player.startJumping(false);
-//		if (k == KeyEvent.VK_UP)
-//			player.startJumping(false);
-//		if (k == KeyEvent.VK_RIGHT)
-//			player.setRight(false);
-//		if (k == KeyEvent.VK_DOWN)
-//			player.setDown(false);
-//		if (k == KeyEvent.VK_LEFT)
-//			player.setLeft(false);
-//	}
 }
