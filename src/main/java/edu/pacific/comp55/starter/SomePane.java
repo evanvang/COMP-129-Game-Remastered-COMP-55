@@ -57,7 +57,7 @@ public class SomePane extends GraphicsPane {
 	private GParagraph para;
 	private Player player;
 	private GImage tile;
-	public int trial;
+	public int yeeeeee;
 	
 	private Map foo;
 	
