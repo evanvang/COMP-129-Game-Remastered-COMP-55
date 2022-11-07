@@ -32,7 +32,7 @@ public class Map extends GraphicsPane{
 	}
 	
 	public Map() {
-		r = new GRect(floorX, floorY, 300, 190);
+		r = new GRect(floorX, floorY, 300, 200);
 	}
 	
 	
