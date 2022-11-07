@@ -14,7 +14,7 @@ public class MenuPane extends GraphicsPane {
 		super();
 		program = app;
 		rect = new GButton("Next", 200, 200, 200, 200);
-		rect.setFillColor(Color.RED);
+		rect.setFillColor(Color.RED); 
 	}
 
 	@Override

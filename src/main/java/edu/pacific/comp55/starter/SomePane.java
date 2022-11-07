@@ -70,7 +70,7 @@ public class SomePane extends GraphicsPane {
 		img.setSize(100, 100);
 		
 		tile = new GImage("robot head.jpg", foo.getFloorX(), foo.getFloorY());
-		//tile.setSize(100, 100);
+		//tile.setSize(100, 100):
 		program.add(img);
 		program.add(tile);
 		
