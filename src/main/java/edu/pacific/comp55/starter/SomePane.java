@@ -80,7 +80,7 @@ public class SomePane extends GraphicsPane {
 		
 		//enemy
 				enemy1 = new Enemy( 200, 150);
-				EImg = new GImage("pumpkin joe.jpg",enemy1.getStartX(), enemy1.getStartY());
+				EImg = new GImage("pumpkin joe.png",enemy1.getStartX(), enemy1.getStartY());
 				EImg.setSize(50, 50);
 				program.add(EImg);
 				
