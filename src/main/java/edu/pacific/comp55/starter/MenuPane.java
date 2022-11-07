@@ -19,8 +19,6 @@ public class MenuPane extends GraphicsPane {
 		rect = new GButton("Play", 300, 450, 200, 100);
 		rect.setFillColor(Color.WHITE);
 		menu = new GImage("Intro.png", -12, 0);
-		rect = new GButton("Next", 200, 200, 200, 200);
-		rect.setFillColor(Color.RED); 
 	}
 
 	@Override
