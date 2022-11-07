@@ -8,53 +8,62 @@ import acm.graphics.GRect;
 
 public class Player extends Character {
 	
-	//players current position within window. NOT IMAGE
-	private int currX;
-
-	private int currY;
+	// Players current position within window. NOT IMAGE
+	private int currX, currY;
 	
-	//Amount player will move by when keyevent occurs
-	public static final int velocityX = 50;
+	// Amount player will move by when keyevent occurs
+	public static final int velocityX = 10;
 	public static final int velocityY = 10;
-	
-	public GRect temp;
-	
-	public int getCurrX() {
-		return currX;
-	}
-
-	public void setCurrX(int currX) {
-		this.currX = currX;
-	}
-
-	public int getCurrY() {
-		return currY;
-	}
-
-	public void setCurrY(int currY) {
-		this.currY = currY;
-	}
-	//GETTERS and SETTERS ^
-
-	//Player Constructor
-	public Player (characterType type, int startRow, int startCol) {
-		super(type, startRow, startCol);
-		currX = 100;
-		currY = 300;
 		
-	temp = new GRect(currX, currY);
+	// Player Constructor
+		public Player (characterType type, int startRow, int startCol) {
+			super(type, startRow, startCol);
+			currX = 100;
+			currY = 300;		
+		}
+
+	// Updates Player (x,y)
+		public void move(MoveDirection direction) {
 		
-	}
-	
-	public void move(boolean direction) {
-		
-		if (direction)
+		switch(direction) {
+		case RIGHT:
 			currX += velocityX;
-		if (direction == false)
+			break;
+		case LEFT: 
 			currX -= velocityX;
-
-		System.out.println(currX);
+			break;
+		case SPACE:
+			currY -= (-1)*velocityY;
+			break;
+			
+		default:
+			System.out.println("Switch case failed");
+		}
 	}
 	
+		// Setters/Getters
+		public int getCurrX() {
+			return currX;
+		}
+
+		public void setCurrX(int currX) {
+			this.currX = currX;
+		}
+
+		public int getCurrY() {
+			return currY;
+		}
+
+		public void setCurrY(int currY) {
+			this.currY = currY;
+		}
+		
+		public int getVelocityX() {
+			return velocityX;
+		}
+		
+		public int getVelocityY() {
+			return velocityY;
+		}
 	
 }

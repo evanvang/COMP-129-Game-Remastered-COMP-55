@@ -42,6 +42,8 @@ import java.awt.event.KeyEvent;
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;
+import javafx.scene.input.KeyCode;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -57,7 +59,6 @@ public class SomePane extends GraphicsPane {
 	private GParagraph para;
 	private Player player;
 	private GImage tile;
-	public int yeeeeee;
 	
 	private Map foo;
 	
@@ -110,30 +111,33 @@ public class SomePane extends GraphicsPane {
 //		}
 //	}
 
+	// This method is the user's controller
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		
-		boolean right = false;
-		boolean left = false;
 
-		if (keyCode == KeyEvent.VK_RIGHT) { // move the player right
-			right = true;
-			player.move(right);
+		// Move the player right
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			player.move(MoveDirection.RIGHT);
+			img.move(player.getVelocityX(), 0);
 			
-			img.setLocation(player.getCurrX(), player.getCurrY());
-			
-			System.out.println("Key 'Right Arrow' has been pressed!");
+			System.out.println("'RIGHT ARROW' key has been pressed.");
 		}
 		
-		if (keyCode == KeyEvent.VK_LEFT) { // move the player right
-			left = false;
-			player.move(left);
+		// Move the player left
+		if (keyCode == KeyEvent.VK_LEFT) {
+			player.move(MoveDirection.LEFT);
+			img.move((-1)*player.getVelocityX(), 0);
 			
+			System.out.println("'LEFT ARROW' key has been pressed.");
+		}
+		
+		// TODO: Implement the player jump mechanic
+		if (keyCode == KeyEvent.VK_SPACE) {
+			player.move(MoveDirection.SPACE);
+			img.move(0, (-1)*player.getVelocityY());
 			
-			img.setLocation(player.getCurrX(), player.getCurrY());
-				
-			System.out.println("Key 'Left Arrow' has been pressed!");
+			System.out.println("'SPACE' key has been pressed.");
 		}
 	}
 
