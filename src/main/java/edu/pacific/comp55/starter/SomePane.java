@@ -103,10 +103,27 @@ public class SomePane extends GraphicsPane {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if (keyCode == KeyEvent.VK_P) {
-			player.getCurrX();
-			System.out.println("Key 'P' has been pressed!");
+		
+		boolean right = false;
+		boolean left = false;
+
+		if (keyCode == KeyEvent.VK_RIGHT) { // move the player right
+			right = true;
+			player.move(right);
 			
+			img.setLocation(player.getCurrX(), player.getCurrY());
+			
+			System.out.println("Key 'Right Arrow' has been pressed!");
+		}
+		
+		if (keyCode == KeyEvent.VK_LEFT) { // move the player right
+			left = false;
+			player.move(left);
+			
+			
+			img.setLocation(player.getCurrX(), player.getCurrY());
+				
+			System.out.println("Key 'Left Arrow' has been pressed!");
 		}
 	}
 

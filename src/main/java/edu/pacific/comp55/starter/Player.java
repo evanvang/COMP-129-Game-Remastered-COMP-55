@@ -2,6 +2,7 @@ package edu.pacific.comp55.starter;
 
 import java.awt.Color;
 
+import acm.console.Console;
 import acm.graphics.GRect;
 
 
@@ -13,7 +14,7 @@ public class Player extends Character {
 	private int currY;
 	
 	//Amount player will move by when keyevent occurs
-	public static final int velocityX = 10;
+	public static final int velocityX = 5;
 	public static final int velocityY = 10;
 	
 	public GRect temp;
@@ -45,7 +46,14 @@ public class Player extends Character {
 		
 	}
 	
-	
+	public void move(boolean direction) {
+		if (direction)
+			currX += velocityX;
+		if (direction == false)
+			currX -= velocityX;
+
+		System.out.println(currX);
+	}
 	
 	
 	
@@ -92,7 +100,7 @@ public class Player extends Character {
 //	}
 	
 	
-//	public void setX(int num) {
+//	public void setX()int num) {
 //		currX = num;
 //	}
 //	public void setY(int num) {
