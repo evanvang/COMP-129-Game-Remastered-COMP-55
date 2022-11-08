@@ -31,19 +31,12 @@ public class Map extends GraphicsPane{
 
 	}
 	
-	public Map() {
+	public Map(MainApplication app) {
 		r = new GRect(floorX, floorY, 800, 200);
 	}
 	
 	
-	public Map(MainApplication app) {
-		super();
-		floor = app;
-		r = new GRect(100, 100, 200, 200);
-		r.setFillColor(Color.BLUE);
-		floor.add(r);
-	}
-	
+
 	public GRect getFloor() {
 		return r;
 	}
@@ -51,13 +44,12 @@ public class Map extends GraphicsPane{
 
 	@Override
 	public void showContents() {
-		floor.add(r);
+		//floor.add(r);
 	}
 
 	@Override
 	public void hideContents() {
 	
-		
 	}
 	
 //	public Map() {

@@ -49,6 +49,8 @@ import java.awt.event.*;
 
 import java.awt.event.MouseEvent;
 
+import javax.swing.Timer;
+
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
@@ -68,7 +70,7 @@ public class SomePane extends GraphicsPane {
 	public SomePane(MainApplication app) {
 		this.program = app;
 		player = new Player(characterType.PLAYER,0,0);
-		foo = new Map();
+		foo = new Map(app);
 		
 		img = new GImage("idle1.png", player.getCurrX(), player.getCurrY());
 		img.setSize(100, 100);
@@ -85,6 +87,23 @@ public class SomePane extends GraphicsPane {
 				program.add(EImg);
 				
 		
+				
+				
+				//SWING TIMER
+				ActionListener taskPerformer = new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						// ...Perform a task...
+
+						System.out.println("Reading SMTP Info.");
+					}
+				};
+				Timer timer = new Timer(100, taskPerformer);
+				timer.setRepeats(false);
+				timer.start();
+
+				//Thread.sleep(5000);
+			
+
 	}
 	
 	
