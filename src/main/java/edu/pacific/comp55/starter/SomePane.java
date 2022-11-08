@@ -73,8 +73,8 @@ public class SomePane extends GraphicsPane {
 		img = new GImage("idle1.png", player.getCurrX(), player.getCurrY());
 		img.setSize(100, 100);
 		
-		tile = new GImage("robot head.jpg", foo.getFloorX(), foo.getFloorY());
-		//tile.setSize(100, 100):
+		tile = new GImage("Ground1.png", foo.getFloorX(), foo.getFloorY());
+		tile.setSize(800, 200);
 		program.add(img);
 		program.add(tile);
 		

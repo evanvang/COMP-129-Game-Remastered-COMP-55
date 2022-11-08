@@ -10,7 +10,7 @@ import acm.graphics.GRoundRect;
 public class Map extends GraphicsPane{
 	
 	
-	public double floorX = 100;
+	public double floorX = 0;
 	public double getFloorX() {
 		return floorX;
 	}
@@ -19,7 +19,7 @@ public class Map extends GraphicsPane{
 		return floorY;
 	}
 
-	public double floorY = 300;
+	public double floorY = 400;
 	
 	public static double width = 300;
 	public static double height = 300;
@@ -32,7 +32,7 @@ public class Map extends GraphicsPane{
 	}
 	
 	public Map() {
-		r = new GRect(floorX, floorY, 300, 200);
+		r = new GRect(floorX, floorY, 800, 200);
 	}
 	
 	
