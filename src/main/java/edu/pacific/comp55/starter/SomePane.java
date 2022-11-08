@@ -69,7 +69,7 @@ public class SomePane extends GraphicsPane {
 	
 	public SomePane(MainApplication app) {
 		this.program = app;
-		player = new Player(characterType.PLAYER,0,0);
+		player = new Player(300, 200);
 		foo = new Map(app);
 		
 		img = new GImage("idle1.png", player.getCurrX(), player.getCurrY());

@@ -6,7 +6,7 @@ import acm.console.Console;
 import acm.graphics.GRect;
 
 
-public class Player extends Character {
+public class Player {
 	
 	// Players current position within window. NOT IMAGE
 	private int currX, currY;
@@ -16,10 +16,9 @@ public class Player extends Character {
 	public static final int velocityY = 10;
 		
 	// Player Constructor
-		public Player (characterType type, int startRow, int startCol) {
-			super(type, startRow, startCol);
-			currX = 100;
-			currY = 300;		
+		public Player (int currX, int currY) {
+			this.currX = currX;
+			this.currY = currY;		
 		}
 
 	// Updates Player (x,y)
