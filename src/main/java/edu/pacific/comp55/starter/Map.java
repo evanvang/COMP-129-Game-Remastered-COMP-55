@@ -1,6 +1,7 @@
 package edu.pacific.comp55.starter;
 
 import java.awt.Color;
+import java.util.HashMap;
 
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
@@ -9,23 +10,32 @@ import acm.graphics.GRoundRect;
 
 public class Map extends GraphicsPane {
 
-    // Floors position
-    public int floorX, floorY;
+    // Chunks position
+    public int chunkX, chunkY;
 
-    // Size of floor
+    // Size of chunk
     public int width, height;
+    
+    // HashMap declaration, key values are names of chunks, actual values are GRect objects
+    private HashMap<String, GRect> chunkToGRect;
 
     // Constructor
     public Map() {
-	this.floorX = 0;
-	this.floorX = 0;
+	this.chunkX = 0;
+	this.chunkX = 0;
 	this.width = 0;
 	this.height = 0;
+	this.chunkToGRect = new HashMap<>();
     }
-
-    // Method to return a generate a floor
-    public GRect createFloor(double floorX, double floorY, double width, double height) {
-	return new GRect(floorX, floorY, width, height);
+    
+    // Method to create a chunk, adds to the HashMap "chunkToGRect"
+    public void createChunk(String name, int chunkX, int chunkY, int width, int height) {
+	GRect chunk = new GRoundRect(chunkX, chunkY, width, height);
+	chunkToGRect.put(name, chunk);
+    }
+    
+    public HashMap<String, GRect> getChunkToGRect() {
+	return chunkToGRect;
     }
 
     // Abstract method from GraphicsPane
@@ -42,11 +52,11 @@ public class Map extends GraphicsPane {
 
     // Setters/Getters
     public double getFloorX() {
-	return floorX;
+	return chunkX;
     }
 
     public double getFloorY() {
-	return floorY;
+	return chunkY;
     }
     
     public int getWidth() {

@@ -70,27 +70,29 @@ public class MainGame extends GraphicsPane {
     public MainGame(MainApplication app) {
 
 	this.program = app;
-	player = new Player(300, 200, new GImage("idle1.png", 300, 200));
+	player = new Player(150, 325, new GImage("idle1.png", 300, 200));
 
 	level1 = new Level();
 
 	img = new GImage("idle1.png", player.getX(), player.getY());
-	img.setSize(100, 100);
+	img.setSize(75, 75);
 
 	tile = new GImage("Ground1.png", 0, 400);
 	tile.setSize(800, 200);
-	program.add(img);
-	program.add(tile);
+	
+	// Commented out for hashmap testing
+	// program.add(img);
+	// program.add(tile);
 
 	// Enemy
-	enemy1 = new Enemy(200, 150);
+	enemy1 = new Enemy(450, 350);
 	EImg = new GImage("pumpkin joe.png", enemy1.getStartX(), enemy1.getStartY());
 	EImg.setSize(50, 50);
 	program.add(EImg);
 	
 	// Testing
-	program.add(level1.getChunkList().get(0));
-	program.add(level1.getChunkList().get(1));
+	program.add(level1.getChunkToGRect().get("chunk1"));
+	program.add(level1.getChunkToGRect().get("chunk2"));
     }
 
     @Override
