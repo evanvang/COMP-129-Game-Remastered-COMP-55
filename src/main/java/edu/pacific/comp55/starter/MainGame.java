@@ -55,7 +55,7 @@ import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-public class SomePane extends GraphicsPane {
+public class MainGame extends GraphicsPane {
     private MainApplication program; // you will use program to get access to
 				     // all of the GraphicsProgram calls
     private GImage img;
@@ -67,7 +67,7 @@ public class SomePane extends GraphicsPane {
 
     private Level level1, level2;
 
-    public SomePane(MainApplication app) {
+    public MainGame(MainApplication app) {
 
 	this.program = app;
 	player = new Player(300, 200, new GImage("idle1.png", 300, 200));

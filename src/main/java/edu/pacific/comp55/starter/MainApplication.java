@@ -12,7 +12,7 @@ public class MainApplication extends GraphicsApplication {
     public static final String MUSIC_FOLDER = "sounds";
     private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
-    private SomePane somePane;
+    private MainGame somePane;
     private MenuPane menu;
     private SettingsPane settings;
     private Map floor;
@@ -24,7 +24,7 @@ public class MainApplication extends GraphicsApplication {
 
     public void run() {
 	System.out.println("Hello, world!");
-	somePane = new SomePane(this);
+	somePane = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
 	floor = new Map();

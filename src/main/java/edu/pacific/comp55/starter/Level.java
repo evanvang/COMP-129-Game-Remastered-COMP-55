@@ -11,6 +11,7 @@ public class Level {
     private Player player;
     private Enemy enemy;
     
+    // Each floor
     static GRect chunk1, chunk2, chunk3, chunk4, chunk5, chunk6;
 
     // Collection to store floors
