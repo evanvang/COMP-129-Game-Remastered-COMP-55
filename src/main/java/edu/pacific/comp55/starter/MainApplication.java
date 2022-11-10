@@ -13,6 +13,7 @@ public class MainApplication extends GraphicsApplication {
 
 	private SomePane somePane;
 	private MenuPane menu;
+	private SettingsPane settings;
 	private Map floor;
 	private int count;
 
@@ -24,20 +25,23 @@ public class MainApplication extends GraphicsApplication {
 		System.out.println("Hello, world!");
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
+		settings = new SettingsPane(this);
 		floor = new Map(this);
 		setupInteractions();
 		switchToMenu();
 	}
 
 	public void switchToMenu() {
-		playRandomSound();
 		count++;
 		switchToScreen(menu);
 	}
 
 	public void switchToSome() {
-		playRandomSound();
 		switchToScreen(somePane);
+	}
+	
+	public void switchToSettings() {
+		switchToScreen(settings);
 	}
 
 	private void playRandomSound() {
