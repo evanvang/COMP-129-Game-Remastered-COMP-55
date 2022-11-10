@@ -9,26 +9,35 @@ public class Level {
     
     private static Map map;
     private Player player;
+    private Enemy enemy;
     
-    static GRect mainFloor;
+    static GRect chunk1, chunk2, chunk3, chunk4, chunk5, chunk6;
 
     // Collection to store floors
-    private ArrayList<GRect> floorList;
+    private ArrayList<GRect> chunkList;
 
     // Constructor
     public Level() {
 	map = new Map();
 	player = new Player(50, 50, new GImage("idle1.png", 50, 50));
-	floorList = new ArrayList<>();
+	chunkList = new ArrayList<>();
 	
-	mainFloor = map.createFloor(50, 50, 50, 50);
-    }
-
-    public static void main(String[] args) {
+	generateChunks();
     }
     
-    public GRect getGRect() {
-	return mainFloor;
+    // Generates every chunk of the game world
+    // TODO: fill this out
+    public void generateChunks() {
+	chunk1 = map.createFloor(50, 50, 50, 50);
+	chunkList.add(chunk1);
+	
+	chunk2 = map.createFloor(75, 75, 75, 75);
+	chunkList.add(chunk2);
     }
-
+    
+    // Return the collection of GRects
+    public ArrayList<GRect> getChunkList() {
+	return this.chunkList;
+    }
+    
 }

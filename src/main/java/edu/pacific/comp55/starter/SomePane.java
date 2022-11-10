@@ -65,14 +65,14 @@ public class SomePane extends GraphicsPane {
     private Enemy enemy1;
     private GImage EImg;
 
-    private Level level;
+    private Level level1, level2;
 
     public SomePane(MainApplication app) {
 
 	this.program = app;
 	player = new Player(300, 200, new GImage("idle1.png", 300, 200));
 
-	level = new Level();
+	level1 = new Level();
 
 	img = new GImage("idle1.png", player.getX(), player.getY());
 	img.setSize(100, 100);
@@ -88,7 +88,9 @@ public class SomePane extends GraphicsPane {
 	EImg.setSize(50, 50);
 	program.add(EImg);
 	
-	program.add(level.getGRect());
+	// Testing
+	program.add(level1.getChunkList().get(0));
+	program.add(level1.getChunkList().get(1));
     }
 
     @Override
