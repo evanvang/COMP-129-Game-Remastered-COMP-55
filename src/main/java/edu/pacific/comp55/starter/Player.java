@@ -1,16 +1,17 @@
 package edu.pacific.comp55.starter;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 
 import acm.console.Console;
 import acm.graphics.GImage;
 import acm.graphics.GRect;
 
-public class Player {
+public class Player extends GraphicsPane {
 
     // For the players image
     private GImage playerIMG;
-    
+
     // Players current position within window
     private int x, y;
 
@@ -42,8 +43,29 @@ public class Player {
 	default:
 	    System.out.println("Switch case failed");
 	}
-    }    
+    }
     
+    // Abstract method from GraphicsPane
+    @Override
+    public void showContents() {
+
+    }
+
+    // Abstract method from GraphicsPane
+    @Override
+    public void hideContents() {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
     // Setters & Getters
     public int getX() {
 	return x;

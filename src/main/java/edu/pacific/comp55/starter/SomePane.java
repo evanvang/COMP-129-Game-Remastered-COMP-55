@@ -1,4 +1,5 @@
 package edu.pacific.comp55.starter;
+
 /*import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
@@ -55,118 +56,47 @@ import acm.graphics.GImage;
 import acm.graphics.GObject;
 
 public class SomePane extends GraphicsPane {
-	private MainApplication program; // you will use program to get access to
-									// all of the GraphicsProgram calls
-	private GImage img;
-	private GParagraph para;
-	private Player player;
-	private GImage tile;
-	private Enemy enemy1;
-	private GImage EImg;
-	
-	private Map foo;
-	
-	
-	public SomePane(MainApplication app) {
-		this.program = app;
-		player = new Player(300, 200);
-		foo = new Map(app);
-		
-		img = new GImage("idle1.png", player.getCurrX(), player.getCurrY());
-		img.setSize(100, 100);
-		
-		tile = new GImage("Ground1.png", foo.getFloorX(), foo.getFloorY());
-		tile.setSize(800, 200);
-		program.add(img);
-		program.add(tile);
-		
-		//enemy
-				enemy1 = new Enemy( 200, 150);
-				EImg = new GImage("pumpkin joe.png",enemy1.getStartX(), enemy1.getStartY());
-				EImg.setSize(50, 50);
-				program.add(EImg);
-				
-		
-				
-				
-				//SWING TIMER
-				ActionListener taskPerformer = new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						// ...Perform a task...
+    private MainApplication program; // you will use program to get access to
+				     // all of the GraphicsProgram calls
+    private GImage img;
+    private GParagraph para;
+    private Player player;
+    private GImage tile;
+    private Enemy enemy1;
+    private GImage EImg;
 
-						System.out.println("Reading SMTP Info.");
-					}
-				};
-				Timer timer = new Timer(100, taskPerformer);
-				timer.setRepeats(false);
-				timer.start();
+    private Level level;
 
-				//Thread.sleep(5000);
-			
+    public SomePane(MainApplication app) {
 
-	}
-	
-	
-	
-	
-//	public SomePane(MainApplication app) {
-//		this.program = app;
-//		img = new GImage("idle1.png", 100, 100);
-//		para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
-//		para.setFont("Arial-24");
-//		
-//	}
+	this.program = app;
+	player = new Player(300, 200, new GImage("idle1.png", 300, 200));
 
-	@Override
-	public void showContents() {
-		program.add(img);
-		program.add(foo.getFloor());
-		//program.add(para);
-	}
+	level = new Level();
 
-	@Override
-	public void hideContents() {
-		program.remove(img);
-	//	program.remove(para);
-	}
+	img = new GImage("idle1.png", player.getX(), player.getY());
+	img.setSize(100, 100);
 
-	//@Override
-//	public void mousePressed(MouseEvent e) {
-//		para.setText("you need\nto click\non the eyes\nto go back");
-//		GObject obj = program.getElementAt(e.getX(), e.getY());
-//		if (obj == img) {
-//			program.switchToMenu();
-//		}
-//	}
+	tile = new GImage("Ground1.png", foo.getFloorX(), foo.getFloorY());
+	tile.setSize(800, 200);
+	program.add(img);
+	program.add(tile);
 
-	// This method is the user's controller
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int keyCode = e.getKeyCode();
+	// Enemy
+	enemy1 = new Enemy(200, 150);
+	EImg = new GImage("pumpkin joe.png", enemy1.getStartX(), enemy1.getStartY());
+	EImg.setSize(50, 50);
+	program.add(EImg);
+    }
 
-		// Move the player right
-		if (keyCode == KeyEvent.VK_RIGHT) {
-			player.move(MoveDirection.RIGHT);
-			img.move(player.getVelocityX(), 0);
-			
-			System.out.println("'RIGHT ARROW' key has been pressed.");
-		}
-		
-		// Move the player left
-		if (keyCode == KeyEvent.VK_LEFT) {
-			player.move(MoveDirection.LEFT);
-			img.move((-1)*player.getVelocityX(), 0);
-			
-			System.out.println("'LEFT ARROW' key has been pressed.");
-		}
-		
-		// TODO: Implement the player jump mechanic
-		if (keyCode == KeyEvent.VK_SPACE) {
-			player.move(MoveDirection.SPACE);
-			img.move(0, (-1)*player.getVelocityY());
-			
-			System.out.println("'SPACE' key has been pressed.");
-		}
-	}
+    @Override
+    public void showContents() {
+	program.add(img);
+    }
+
+    @Override
+    public void hideContents() {
+	program.remove(img);
+    }
 
 }
