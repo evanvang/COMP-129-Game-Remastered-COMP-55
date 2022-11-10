@@ -3,66 +3,70 @@ package edu.pacific.comp55.starter;
 import java.awt.Color;
 
 import acm.console.Console;
+import acm.graphics.GImage;
 import acm.graphics.GRect;
 
-
 public class Player {
-	
-	// Players current position within window. NOT IMAGE
-	private int currX, currY;
-	
-	// Amount player will move by when keyevent occurs
-	public static final int velocityX = 10;
-	public static final int velocityY = 10;
-		
-	// Player Constructor
-		public Player (int currX, int currY) {
-			this.currX = currX;
-			this.currY = currY;		
-		}
 
-	// Updates Player (x,y)
-		public void move(MoveDirection direction) {
-		
-		switch(direction) {
-		case RIGHT:
-			currX += velocityX;
-			break;
-		case LEFT: 
-			currX -= velocityX;
-			break;
-		case SPACE:
-			currY -= (-1)*velocityY;
-			break;
-			
-		default:
-			System.out.println("Switch case failed");
-		}
+    // For the players image
+    private GImage playerIMG;
+    
+    // Players current position within window
+    private int x, y;
+
+    // Amount player will move by when key event occurs
+    public static final int velocityX = 10;
+    public static final int velocityY = 10;
+
+    // Player Constructor
+    public Player(int x, int y, GImage playerIMG) {
+	this.x = x;
+	this.y = y;
+	this.playerIMG = playerIMG;
+    }
+
+    // Updates Player (x,y)
+    public void move(MoveDirection direction) {
+
+	switch (direction) {
+	case RIGHT:
+	    x += velocityX;
+	    break;
+	case LEFT:
+	    x -= velocityX;
+	    break;
+	case SPACE:
+	    y -= (-1) * velocityY;
+	    break;
+
+	default:
+	    System.out.println("Switch case failed");
 	}
-	
-		// Setters/Getters
-		public int getCurrX() {
-			return currX;
-		}
+    }    
+    
+    // Setters & Getters
+    public int getX() {
+	return x;
+    }
 
-		public void setCurrX(int currX) {
-			this.currX = currX;
-		}
+    public void setX(int x) {
+	this.x = x;
+    }
 
-		public int getCurrY() {
-			return currY;
-		}
+    public int getY() {
+	return y;
+    }
 
-		public void setCurrY(int currY) {
-			this.currY = currY;
-		}
-		
-		public int getVelocityX() {
-			return velocityX;
-		}
-		
-		public int getVelocityY() {
-			return velocityY;
-		}
-	
+    public void setY(int y) {
+	this.y = y;
+    }
+
+    public int getVelocityX() {
+	return velocityX;
+    }
+
+    public int getVelocityY() {
+	return velocityY;
+    }
+
 }
