@@ -7,59 +7,43 @@ import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.graphics.GRoundRect;
 
-public class Map extends GraphicsPane{
-	
-	
-	public double floorX = 0;
-	public double getFloorX() {
-		return floorX;
-	}
+public class Map extends GraphicsPane {
 
-	public double getFloorY() {
-		return floorY;
-	}
+    // Floors position 
+    public int floorX, floorY;
 
-	public double floorY = 400;
+    // Size of floor
+    public static double width, height;
+    
+    // Constructor
+    public Map(MainApplication app) {
+	this.floorX = 0;
+	this.floorX = 0;
+    }
+    
+    // Method to return a generate a floor
+    public GRect createFloor(double floorX, double floorY, double width, double height) {
+	return new GRect(floorX, floorY, width, height);
+    }
+    
+    // Abstract method from GraphicsPane
+    @Override
+    public void showContents() {
 	
-	public static double width = 300;
-	public static double height = 300;
-	
-	public GRect r;
-	private MainApplication floor;
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    }
+    // Abstract method from GraphicsPane
+    @Override
+    public void hideContents() {
 
-	}
-	
-	public Map(MainApplication app) {
-		r = new GRect(floorX, floorY, 800, 200);
-	}
-	
-	
+    }
 
-	public GRect getFloor() {
-		return r;
-	}
-	
+    // Setters/Getters
+    public double getFloorX() {
+	return floorX;
+    }
 
-	@Override
-	public void showContents() {
-		//floor.add(r);
-	}
-
-	@Override
-	public void hideContents() {
-	
-	}
-	
-//	public Map() {
-//		GRect r = new GRect(floorX, floorY, 100, 100);
-//		r.setColor(Color.DARK_GRAY);
-//		r.setFillColor(Color.DARK_GRAY);
-//		r.setFilled(true);
-//		r.setLocation(200, 200);
-//	}
-	
-	
+    public double getFloorY() {
+	return floorY;
+    }
 
 }
