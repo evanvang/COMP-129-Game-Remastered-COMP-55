@@ -6,24 +6,22 @@ import java.util.HashMap;
 import acm.graphics.GImage;
 import acm.graphics.GRect;
 
+/**
+ * @author Team No Focus! Level class will generate the game world by
+ *         integrating Map, Player, and Level
+ */
 public class Level {
 
+    // TODO: Integrate Player and Enemy classes with Level
     private static Map map;
     private Player player;
     private Enemy enemy;
 
-    // Collection to store chunks
-    private ArrayList<GRect> chunkList;
-    
-    // Int array to store (x,y) position of a chunk
-    int[] chunkPos;
-
+  
     // Constructor
     public Level() {
 	map = new Map();
 	player = new Player(50, 50, new GImage("idle1.png", 50, 50));
-	chunkList = new ArrayList<>();
-	chunkPos = new int[2];
 
 	generateChunks();
     }
@@ -33,20 +31,21 @@ public class Level {
     public void generateChunks() {
 	map.createChunk("g1", 0, 400, 500, 200);
 	map.createChunk("g2", 600, 450, 500, 200);
-	
     }
 
-    // Return collection of GRects
+    // Returns the HashMap of GRects
     public HashMap<String, GRect> getChunkToGRect() {
 	return map.getChunkToGRect();
     }
-    
-    // Returns an array(x,y) position of a specified chunk
+
+    // Returns a specified chunk within the HashMap
+    public GRect getChunk(String key) {
+	return getChunkToGRect().get(key);
+    }
+
+    // Returns an array{x,y} position of a specified chunk
     public int[] getChunkPos(String key) {
-	chunkPos[0] = (int)getChunkToGRect().get(key).getX();
-	chunkPos[1] = (int)getChunkToGRect().get(key).getY();
-	
-	return chunkPos;
+	return map.getChunkPos(key);
     }
 
 }

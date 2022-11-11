@@ -12,10 +12,9 @@ public class MainApplication extends GraphicsApplication {
     public static final String MUSIC_FOLDER = "sounds";
     private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
-    private MainGame somePane;
+    private MainGame mainGame;
     private MenuPane menu;
     private SettingsPane settings;
-    private Map floor;
     private int count;
 
     public void init() {
@@ -24,10 +23,9 @@ public class MainApplication extends GraphicsApplication {
 
     public void run() {
 	System.out.println("Hello, world!");
-	somePane = new MainGame(this);
+	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
-	floor = new Map();
 	setupInteractions();
 	switchToMenu();
     }
@@ -38,7 +36,7 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void switchToSome() {
-	switchToScreen(somePane);
+	switchToScreen(mainGame);
     }
 
     public void switchToSettings() {
