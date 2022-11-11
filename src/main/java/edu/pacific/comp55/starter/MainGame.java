@@ -93,9 +93,11 @@ public class MainGame extends GraphicsPane {
 	// Testing
 	program.add(level1.getChunkToGRect().get("g1"));
 	program.add(level1.getChunkToGRect().get("g2"));
+	
 	tile = new GImage("ground1.png", 0,400);
 	tile.setSize(500, 200);
 	program.add(tile);
+	
     }
 
     @Override
