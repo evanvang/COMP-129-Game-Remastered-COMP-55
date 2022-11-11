@@ -31,8 +31,9 @@ public class Level {
     // Generates every chunk of the game world
     // TODO: fill this out
     public void generateChunks() {
-	map.createChunk("chunk1", 0, 400, 500, 200);
-	map.createChunk("chunk2", 600, 450, 500, 200);
+	map.createChunk("g1", 0, 400, 500, 200);
+	map.createChunk("g2", 600, 450, 500, 200);
+	
     }
 
     // Return collection of GRects

@@ -77,8 +77,8 @@ public class MainGame extends GraphicsPane {
 	img = new GImage("idle1.png", player.getX(), player.getY());
 	img.setSize(75, 75);
 
-	tile = new GImage("Ground1.png", 0, 400);
-	tile.setSize(800, 200);
+//	tile = new GImage("ground1.png", 0, 400);
+//	tile.setSize(800, 200);
 	
 	// Commented out for hashmap testing
 	// program.add(img);
@@ -91,8 +91,11 @@ public class MainGame extends GraphicsPane {
 	program.add(EImg);
 	
 	// Testing
-	program.add(level1.getChunkToGRect().get("chunk1"));
-	program.add(level1.getChunkToGRect().get("chunk2"));
+	program.add(level1.getChunkToGRect().get("g1"));
+	program.add(level1.getChunkToGRect().get("g2"));
+	tile = new GImage("ground1.png", 0,400);
+	tile.setSize(500, 200);
+	program.add(tile);
     }
 
     @Override
