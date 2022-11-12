@@ -32,9 +32,8 @@ public class Level extends GraphicsPane {
 	
 	mainScreen = program;
 	map = new Map();
-	player = new Player(50, 50, new GImage("idle1.png", 50, 50));
+	
 
-	generateChunks();
 
     }
 
@@ -67,8 +66,13 @@ public class Level extends GraphicsPane {
     // Generates every chunk of the game world
     // TODO: fill this out
     public void generateChunks() {
-	map.createChunk("g1", 0, 400, 500, 200);
-	map.createChunk("g2", 600, 450, 500, 200);
+	
+    }
+    
+    public void setLevel1() {
+    	player = new Player(50, 50, new GImage("idle1.png", 50, 50));
+    	map.createChunk("g1", 0, 400, 500, 200);
+    	map.createChunk("g2", 600, 450, 500, 200);
     }
 
     // Returns the HashMap of GRects
@@ -80,5 +84,7 @@ public class Level extends GraphicsPane {
     public GRect getChunk(String key) {
 	return getChunkToGRect().get(key);
     }
+    
+    
 
 }

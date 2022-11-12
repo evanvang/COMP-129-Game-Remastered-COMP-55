@@ -28,12 +28,10 @@ public class MainGame extends GraphicsPane {
 				     // all of the GraphicsProgram calls
     private GImage img;
     private GParagraph para;
-    private Player player;
     private GImage tile;
-    private Enemy enemy1;
     private GImage EImg;
-
-    private Level level1, level2;
+    private Level level1 = new Level(program);
+    
     
     // Collection to store key inputs
     private HashMap<MoveDirection, Integer> keysPressed;
@@ -43,19 +41,13 @@ public class MainGame extends GraphicsPane {
     public MainGame(MainApplication app) {
 	keysPressed = new HashMap<>();
 	isKeyDown = false;
-
 	this.program = app;
-
-	img = new GImage("idle1.png", player.getX(), player.getY());
-	img.setSize(75, 75);
 
 	// Testing, displaying 2 chunks 
 	program.add(level1.getChunk("g1"));
 	program.add(level1.getChunk("g2"));
-
-//	tile = new GImage("ground1.png", 0, 400);
-//	tile.setSize(500, 200);
-//	program.add(tile);
+	
+	level1.setLevel1();
 
     }
     
