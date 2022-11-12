@@ -17,6 +17,12 @@ import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
+
+/**
+ * @author Team No Focus!
+ *
+ * MainGame class...
+ */
 public class MainGame extends GraphicsPane {
     private MainApplication program; // you will use program to get access to
 				     // all of the GraphicsProgram calls
@@ -29,41 +35,27 @@ public class MainGame extends GraphicsPane {
 
     private Level level1, level2;
     
-    private HashMap<Integer, KeyEvent> keysPressed;
+    // Collection to store key inputs
+    private HashMap<MoveDirection, Integer> keysPressed;
     private boolean isKeyDown;
 
+    // Constructor
     public MainGame(MainApplication app) {
-	
 	keysPressed = new HashMap<>();
+	isKeyDown = false;
 
 	this.program = app;
-	player = new Player(150, 325, new GImage("idle1.png", 300, 200));
-
-	level1 = new Level();
 
 	img = new GImage("idle1.png", player.getX(), player.getY());
 	img.setSize(75, 75);
-
-	// tile = new GImage("ground1.png", 0, 400);
-	// tile.setSize(800, 200);
-
-	// Commented out for hashmap testing
-	// program.add(img);
-	// program.add(tile);
-
-	// Enemy
-	enemy1 = new Enemy(450, 350);
-	EImg = new GImage("pumpkin joe.png", enemy1.getStartX(), enemy1.getStartY());
-	EImg.setSize(50, 50);
-	program.add(EImg);
 
 	// Testing, displaying 2 chunks 
 	program.add(level1.getChunk("g1"));
 	program.add(level1.getChunk("g2"));
 
-	tile = new GImage("ground1.png", 0, 400);
-	tile.setSize(500, 200);
-	program.add(tile);
+//	tile = new GImage("ground1.png", 0, 400);
+//	tile.setSize(500, 200);
+//	program.add(tile);
 
     }
     
@@ -74,25 +66,36 @@ public class MainGame extends GraphicsPane {
 	
 	if (keyCode == KeyEvent.VK_RIGHT) {
 	    isKeyDown = true;
-	    // keysPressed.put(keyCode, KeyEvent.VK_RIGHT);
+	    keysPressed.put(MoveDirection.RIGHT, keyCode);
+	    System.out.println("Key pressed");
+	    System.out.println("   " + keysPressed.toString() + "\n");
 	}
     }
-    
+     
     @Override
     public void keyReleased(KeyEvent e) {
 	
-    }
-    
-    public void ActionPerformed(KeyEvent e) {
-	
-    }
-    
+	// Empty the HashMap after key release
+	keysPressed.clear();
+	System.out.println("Key released");
+	System.out.println("   " + keysPressed.toString() + "\n");
 
+    }
+    
+    public void ActionPerformed() {
+	if (keysPressed.containsKey(MoveDirection.RIGHT)) {
+	    // Do something
+	    System.out.println("'Right Key' down");
+	}
+    }
+    
+    // Abstract method from GraphicsPane
     @Override
     public void showContents() {
 	program.add(img);
+	ActionPerformed();
     }
-
+    // Abstract method from GraphicsPane
     @Override
     public void hideContents() {
 	program.remove(img);

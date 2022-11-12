@@ -3,17 +3,23 @@ package edu.pacific.comp55.starter;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import javax.swing.Timer;
+
 import acm.console.Console;
 import acm.graphics.GImage;
+import acm.graphics.GObject;
 import acm.graphics.GRect;
 
-public class Player extends GraphicsPane {
+public class Player {
 
     // For the players image
     private GImage playerIMG;
 
     // Players current position within window
     private int x, y;
+
+    // the active pressed key
+    MoveDirection currentDirection = null;
 
     // Amount player will move by when key event occurs
     public static final int velocityX = 10;
@@ -23,15 +29,17 @@ public class Player extends GraphicsPane {
     public Player(int x, int y, GImage playerIMG) {
 	this.x = x;
 	this.y = y;
-	this.playerIMG = playerIMG;
+	this.playerIMG = new GImage("default");
     }
 
     // Updates Player (x,y)
-    public void move(MoveDirection direction) {
+    public void move() {
 
-	switch (direction) {
+	switch (currentDirection) {
 	case RIGHT:
 	    x += velocityX;
+	    this.playerIMG = new GImage("forward face image");
+	    this.playerIMG.setLocation(x, y);
 	    break;
 	case LEFT:
 	    x -= velocityX;
@@ -43,27 +51,6 @@ public class Player extends GraphicsPane {
 	default:
 	    System.out.println("Switch case failed");
 	}
-    }
-    
-    // Abstract method from GraphicsPane
-    @Override
-    public void showContents() {
-
-    }
-
-    // Abstract method from GraphicsPane
-    @Override
-    public void hideContents() {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 
     // Setters & Getters
@@ -89,6 +76,11 @@ public class Player extends GraphicsPane {
 
     public int getVelocityY() {
 	return velocityY;
+    }
+
+    public GObject getImage() {
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }
