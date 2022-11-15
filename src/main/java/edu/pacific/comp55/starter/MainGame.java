@@ -30,7 +30,7 @@ public class MainGame extends GraphicsPane {
     private GParagraph para;
     private GImage tile;
     private GImage EImg;
-    private Level level1 = new Level(program);
+    private Level level;
     
     
     // Collection to store key inputs
@@ -39,16 +39,10 @@ public class MainGame extends GraphicsPane {
 
     // Constructor
     public MainGame(MainApplication app) {
-	keysPressed = new HashMap<>();
-	isKeyDown = false;
-	this.program = app;
-
-	// Testing, displaying 2 chunks 
-	program.add(level1.getChunk("g1"));
-	program.add(level1.getChunk("g2"));
-	
-	level1.setLevel1();
-
+    	keysPressed = new HashMap<>();
+    	isKeyDown = false;
+    	this.program = app;
+    	level = new Level(app, 1);
     }
     
     // TODO: Store information of every key that's pressed into a collection
@@ -84,8 +78,9 @@ public class MainGame extends GraphicsPane {
     // Abstract method from GraphicsPane
     @Override
     public void showContents() {
-	program.add(img);
-	ActionPerformed();
+    	level.showContents();
+	//program.add(img);
+	//ActionPerformed();
     }
     // Abstract method from GraphicsPane
     @Override

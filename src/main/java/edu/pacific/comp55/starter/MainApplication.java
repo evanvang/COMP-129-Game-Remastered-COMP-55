@@ -23,7 +23,7 @@ public class MainApplication extends GraphicsApplication {
 
     public void run() {
 	System.out.println("Hello, world!");
-	//mainGame = new MainGame(this);
+	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	//settings = new SettingsPane(this);
 	setupInteractions();

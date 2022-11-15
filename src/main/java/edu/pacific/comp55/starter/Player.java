@@ -26,10 +26,11 @@ public class Player {
     public static final int velocityY = 10;
 
     // Player Constructor
-    public Player(int x, int y, GImage playerIMG) {
+    public Player(int x, int y) {
 	this.x = x;
 	this.y = y;
-	this.playerIMG = new GImage("default");
+	this.playerIMG = new GImage("idle1.png");
+	this.playerIMG.setLocation(x,y);
     }
 
     // Updates Player (x,y)
@@ -79,8 +80,7 @@ public class Player {
     }
 
     public GObject getImage() {
-	// TODO Auto-generated method stub
-	return null;
+    	return playerIMG;
     }
 
 }
