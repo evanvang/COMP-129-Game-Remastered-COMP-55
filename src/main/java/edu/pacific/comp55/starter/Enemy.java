@@ -5,7 +5,7 @@ import javax.swing.Timer;
 
 
 public class Enemy  {
-
+	//lets get github linked
 	public double getStartX() {
 		return startX;
 	}
