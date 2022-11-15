@@ -18,13 +18,14 @@ public class MenuPane extends GraphicsPane {
 		super();
 		program = app;
 		
-		playButton = new GButton("Play", 300, 450, 150, 75);
+		playButton = new GButton("Play", 400, 600, 150, 75);
 		playButton.setFillColor(Color.WHITE);
 		
-		settingsButton = new GButton("Settings", 600, 450, 150, 75);
+		settingsButton = new GButton("Settings", 650, 600, 150, 75);
 		settingsButton.setFillColor(Color.WHITE);
 		
 		menuBackground = new GImage("Intro.png", -12, 0);
+		menuBackground.scale(1.7);
 
 	}
 
