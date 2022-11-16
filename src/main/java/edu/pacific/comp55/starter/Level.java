@@ -46,6 +46,7 @@ public class Level {
 //    mainScreen.add(getChunk("ground1.png"));
 //    mainScreen.add(getChunk("g2"));
 	mainScreen.add(player.getImage());
+	
 	//mainScreen.add(enemy.);
     }
 
@@ -76,6 +77,7 @@ public class Level {
     
     public void setupLevel1() {
     	player = new Player(50, 50);
+    	
     	enemy = new Enemy(300, 300);
     	map.createChunk("g1", 0, 400, 500, 200);
     	map.createChunk("g2", 600, 450, 500, 200);

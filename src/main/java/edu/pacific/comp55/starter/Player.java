@@ -30,6 +30,7 @@ public class Player {
 	this.x = x;
 	this.y = y;
 	this.playerIMG = new GImage("idle1.png");
+	this.playerIMG.setSize(100,100);
 	this.playerIMG.setLocation(x,y);
     }
 

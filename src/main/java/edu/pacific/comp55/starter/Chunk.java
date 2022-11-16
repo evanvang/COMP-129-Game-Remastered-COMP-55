@@ -14,6 +14,8 @@ public class Chunk {
 	this.chunkGRect = new GRoundRect(chunkX, chunkY, width, height);
 
 	this.chunkIMG = new GImage("ground1.png");
+	this.chunkIMG.setSize(width, height);
+	this.chunkIMG.setLocation(chunkX, chunkY);
     }
 
     // Getters
