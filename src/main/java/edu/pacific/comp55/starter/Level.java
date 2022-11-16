@@ -1,5 +1,7 @@
 package edu.pacific.comp55.starter;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,21 +18,21 @@ import acm.graphics.GRect;
  *         and Level
  * 
  */
-public class Level {
+public class Level implements ActionListener{
 
     // TODO: Integrate Player and Enemy classes with Level
     private MainApplication mainScreen;
     private Map map;
     private Player player;
     private Enemy enemy;
-    
     private Timer timer;
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
-    	this.timer = new Timer(1000, program);
+    	this.timer = new Timer(500, this);
     	mainScreen = program;
     	map = new Map();
+    	startTimer();
     	if (levelNum == 1) {
     		setupLevel1();
     	}
@@ -47,7 +49,7 @@ public class Level {
 //    mainScreen.add(getChunk("g2"));
 	mainScreen.add(player.getImage());
 	mainScreen.add(enemy.getImage());
-	//mainScreen.add(enemy.);
+	
     }
 
     public void hideContents() {
@@ -66,22 +68,36 @@ public class Level {
 	timer.stop();
     }
 
-    public void actionPerformed(){
-		player.move();
-	    }
+   
     // Generates every chunk of the game world
     // TODO: fill this out
     public void generateChunks() {
 	
     }
     
+  
+    
     public void setupLevel1() {
     	player = new Player(50, 415);
-   
     	enemy = new Enemy(300, 475);
     	map.createChunk("g1", 0, 515, 650, 250);
     	map.createChunk("g2", 790, 425, 650, 350);
+    	
+ 
     }
     
+    public void startTimer() {
+    	timer.start();
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("hello");
+//		player.move();
+		enemy.move();
+	}
+    
+   
 
 }

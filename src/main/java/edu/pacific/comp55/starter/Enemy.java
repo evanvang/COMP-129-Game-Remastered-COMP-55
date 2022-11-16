@@ -47,7 +47,14 @@ public class Enemy  {
 		this.enemyIMG = new GImage("pumpkin joe.png");
 		this.enemyIMG.setSize(50,50);
 		this.enemyIMG.setLocation(startX,startY);
+		
 	
+	}
+	
+	public boolean move() {
+		System.out.println("move");
+		enemyIMG.move(5, 0);
+		return true;
 	}
 	
 	public void run() {
@@ -56,7 +63,8 @@ public class Enemy  {
 	
 
 	public static void main(String[] args) { 
-		  
+		  Enemy e = new Enemy(100,100);
+		  e.move();
 	}
 
 	
