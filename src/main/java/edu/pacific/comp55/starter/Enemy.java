@@ -8,6 +8,16 @@ import acm.graphics.GObject;
 
 
 public class Enemy  {
+	
+
+	private double startX;
+    private double startY;
+	private GImage enemyIMG;
+//	public static final int velocityX = 5;
+//	public static final int INIT_X_VELOCITY = 5;
+//	public static final int BREAK_MS = 30;
+//	private int xVelocity=5;
+//	Timer t;
 
 	public double getStartX() {
 		return startX;
@@ -25,23 +35,10 @@ public class Enemy  {
 		this.startY = startY;
 	}
 
-	public static int getVelocityx() {
-		return velocityX;
-	}
 	
 	 public GObject getImage() {
 	    	return enemyIMG;
 	    }
-
-	private double startX;
-    private double startY;
-	public static final int velocityX = 5;
-	public static final int INIT_X_VELOCITY = 5;
-	public static final int BREAK_MS = 30;
-	private int xVelocity=5;
-	Timer t;
-	private GImage enemyIMG;
-	
 	
 	public Enemy(int startX, int startY) {
 	
@@ -57,16 +54,6 @@ public class Enemy  {
 			
 	}
 	
-	public void moveEnemy() {
-		double saveIX = startX;
-		startX += xVelocity;
-		if (startX > 300) {
-			startX -= xVelocity;
-		}
-		if (startX < saveIX) {
-			startX += xVelocity;
-		}
-		}
 
 	public static void main(String[] args) { 
 		  
