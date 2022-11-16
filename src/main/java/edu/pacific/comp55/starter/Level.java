@@ -25,11 +25,11 @@ public class Level implements ActionListener{
     private Map map;
     private Player player;
     private Enemy enemy;
-    private javax.swing.Timer  timer;
+    private Timer  timer;
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
-    	this.timer = new javax.swing.Timer(100, this);
+    	this.timer = new Timer(50, this);
     	mainScreen = program;
     	map = new Map();
     	startTimer();

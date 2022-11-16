@@ -16,7 +16,7 @@ public class Enemy  {
 //	public static final int velocityX = 5;
 //	public static final int INIT_X_VELOCITY = 5;
 //	public static final int BREAK_MS = 30;
-    private int xVelocity=5;
+    private int xVelocity=1;
 //	Timer t;
 
 	public double getStartX() {
