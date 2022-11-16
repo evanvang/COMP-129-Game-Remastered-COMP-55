@@ -16,7 +16,7 @@ public class Enemy  {
 //	public static final int velocityX = 5;
 //	public static final int INIT_X_VELOCITY = 5;
 //	public static final int BREAK_MS = 30;
-//	private int xVelocity=5;
+    private int xVelocity=5;
 //	Timer t;
 
 	public double getStartX() {
@@ -51,9 +51,13 @@ public class Enemy  {
 	
 	}
 	
-	public boolean move() {
+	public boolean move(int finalX) {
 		System.out.println("move");
-		enemyIMG.move(5, 0);
+		enemyIMG.move(xVelocity, 0);
+		if(enemyIMG.getX()+enemyIMG.getWidth() >= finalX || enemyIMG.getX() <= startX) {
+			xVelocity *= -1;
+		}
+		
 		return true;
 	}
 	
@@ -64,7 +68,7 @@ public class Enemy  {
 
 	public static void main(String[] args) { 
 		  Enemy e = new Enemy(100,100);
-		  e.move();
+		 
 	}
 
 	

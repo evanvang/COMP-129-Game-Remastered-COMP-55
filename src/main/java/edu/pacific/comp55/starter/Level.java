@@ -95,7 +95,7 @@ public class Level implements ActionListener{
 		// TODO Auto-generated method stub
 		System.out.println("hello");
 //		player.move();
-		enemy.move();
+		enemy.move(400);
 	}
     
    
