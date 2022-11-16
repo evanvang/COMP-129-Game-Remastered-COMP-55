@@ -37,8 +37,14 @@ public class Level {
     }
 
     public void showContents() {
-    mainScreen.add(getChunk("g1"));
-    mainScreen.add(getChunk("g2"));
+    mainScreen.add(map.getChunks().get(0).getChunkGRect());
+    mainScreen.add(map.getChunks().get(0).getChunkIMG());
+    
+    mainScreen.add(map.getChunks().get(1).getChunkGRect());
+    mainScreen.add(map.getChunks().get(1).getChunkIMG());
+    
+//    mainScreen.add(getChunk("ground1.png"));
+//    mainScreen.add(getChunk("g2"));
 	mainScreen.add(player.getImage());
 	//mainScreen.add(enemy.);
     }
@@ -74,17 +80,6 @@ public class Level {
     	map.createChunk("g1", 0, 400, 500, 200);
     	map.createChunk("g2", 600, 450, 500, 200);
     }
-
-    // Returns the HashMap of GRects
-    public HashMap<String, GRect> getChunkToGRect() {
-    	return map.getChunkToGRect();
-    }
-
-    // Returns a specified chunk within the HashMap
-    public GRect getChunk(String key) {
-	return getChunkToGRect().get(key);
-    }
-    
     
 
 }

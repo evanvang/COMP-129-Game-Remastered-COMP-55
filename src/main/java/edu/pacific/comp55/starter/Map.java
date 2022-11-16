@@ -15,7 +15,15 @@ public class Map {
     // Array list holds GRect objects for our game world
     private ArrayList<Chunk> chunks;
 
-    // Constructor
+    public ArrayList<Chunk> getChunks() {
+		return chunks;
+	}
+
+	public void setChunks(ArrayList<Chunk> chunks) {
+		this.chunks = chunks;
+	}
+
+	// Constructor
     public Map() {
 	this.chunks = new ArrayList<>();
     }
