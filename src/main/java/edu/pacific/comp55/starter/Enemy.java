@@ -51,14 +51,12 @@ public class Enemy  {
 	
 	}
 	
-	public boolean move(int finalX) {
+	public void move(int finalX) {
 		System.out.println("move");
 		enemyIMG.move(xVelocity, 0);
 		if(enemyIMG.getX()+enemyIMG.getWidth() >= finalX || enemyIMG.getX() <= startX) {
 			xVelocity *= -1;
 		}
-		
-		return true;
 	}
 	
 	public void run() {
