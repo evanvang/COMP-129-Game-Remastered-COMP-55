@@ -15,6 +15,7 @@ public class MainApplication extends GraphicsApplication {
     private MainGame mainGame;
     private MenuPane menu;
     private SettingsPane settings;
+    private Level level;
     private int count;
 
     public void init() {
@@ -22,6 +23,7 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void run() {
+	level = new Level(this, 1);
 	System.out.println("Hello, world!");
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
@@ -30,14 +32,14 @@ public class MainApplication extends GraphicsApplication {
 	switchToMenu();
     }
 
-    //Start Screen
+    // Start Screen
     public void switchToMenu() {
 	count++;
 	switchToScreen(menu);
     }
 
     public void switchToLevel() {
-	switchToScreen(mainGame);
+	switchToScreen(level);
     }
 
     public void switchToSettings() {
