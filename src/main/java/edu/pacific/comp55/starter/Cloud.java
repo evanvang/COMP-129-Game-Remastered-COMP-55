@@ -1,21 +1,17 @@
 package edu.pacific.comp55.starter;
+
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-
-public class Cloud  {
+public class Cloud {
 
 	private double startX;
-    private double startY;
-	private GImage enemyIMG;
-//	public static final int velocityX = 5;
-//	public static final int INIT_X_VELOCITY = 5;
-//	public static final int BREAK_MS = 30;
-    private int xVelocity=100;
-//	Timer t;
+	private double startY;
+	private GImage cloudIMG;
+	private int xVelocity = 10;
 
 	public double getStartX() {
 		return startX;
@@ -33,38 +29,33 @@ public class Cloud  {
 		this.startY = startY;
 	}
 
-	
-	 public GObject getImage() {
-	    	return enemyIMG;
-	    }
-	
+	public GObject getImage() {
+		return cloudIMG;
+	}
+
 	public Cloud(int startX, int startY) {
-	
+
 		this.startX = startX;
 		this.startY = startY;
-		this.enemyIMG = new GImage("cloud.png");
-		this.enemyIMG.setSize(235,150);
-		this.enemyIMG.setLocation(startX,startY);
-		
-	
+		this.cloudIMG = new GImage("cloud.png");
+		this.cloudIMG.setSize(235, 150);
+		this.cloudIMG.setLocation(startX, startY);
+
 	}
-	
+
 	public void move(int finalX) {
-		enemyIMG.move(xVelocity, 0);
-		if(enemyIMG.getX()+enemyIMG.getWidth() >= finalX || enemyIMG.getX() <= startX) {
+		cloudIMG.move(xVelocity, 0);
+		if (cloudIMG.getX() + cloudIMG.getWidth() >= finalX || cloudIMG.getX() <= startX) {
 			xVelocity *= -1;
 		}
 	}
 
 	public void run() {
-			
-	}
-	
 
-	public static void main(String[] args) { 
-		  //Enemy e = new Enemy(100,100);
-		 
 	}
 
-	
+	public static void main(String[] args) {
+
+	}
+
 }
