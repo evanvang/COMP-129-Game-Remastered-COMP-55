@@ -2,7 +2,6 @@ package edu.pacific.comp55.starter;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
