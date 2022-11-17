@@ -81,7 +81,7 @@ public class Level implements ActionListener{
     
     public void setupLevel1() {
     	player = new Player(50, 415);
-    	enemy = new Enemy(300, 475);
+    	enemy = new Enemy(300, 470);
     	map.createChunk("g1", 0, 515, 650, 250);
     	map.createChunk("g2", 790, 425, 650, 350);
     	

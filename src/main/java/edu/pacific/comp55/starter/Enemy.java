@@ -58,7 +58,7 @@ public class Enemy  {
 			xVelocity *= -1;
 		}
 	}
-	
+
 	public void run() {
 			
 	}
