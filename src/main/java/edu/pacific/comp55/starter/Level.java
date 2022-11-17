@@ -108,7 +108,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	
+    	
+	for ( Enemy ene : map.getEnemies()) {
+		
+		ene.move(ene.getStartX()+100);
+	}
 	
     }
 

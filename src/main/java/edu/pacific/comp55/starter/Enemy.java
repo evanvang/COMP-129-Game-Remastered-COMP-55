@@ -47,9 +47,9 @@ public class Enemy  {
 	
 	}
 	
-	public void move(int finalX) {
+	public void move(double d) {
 		enemyIMG.move(xVelocity, 0);
-		if(enemyIMG.getX()+enemyIMG.getWidth() >= finalX || enemyIMG.getX() <= startX) {
+		if(enemyIMG.getX()+enemyIMG.getWidth() >= d || enemyIMG.getX() <= startX) {
 			xVelocity *= -1;
 		}
 	}
