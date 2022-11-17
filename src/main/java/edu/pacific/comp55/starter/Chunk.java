@@ -16,7 +16,6 @@ public class Chunk {
 		this.chunkIMG = new GImage("ground1.png", chunkX, chunkY);
 		this.chunkIMG.setSize(width, height);
 
-
 		this.spikeIMG = new GImage("Spike.png", chunkX, chunkY);
 		this.spikeIMG.setSize(width, height);
 

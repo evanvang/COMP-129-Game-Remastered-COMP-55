@@ -28,7 +28,7 @@ public class Map {
 	this.chunks = new ArrayList<>();
     }
 
-    // Method to create a chunk, adds to the HashMap "chunkToGRect"
+    // Method to create a chunk, adds to the ArrayList "chunkToGRect"
     public void createChunk(String chunkName,String path, int chunkX, int chunkY, int width, int height) {
 	Chunk chunk = new Chunk(chunkName, path, chunkX, chunkY, width, height);
 
