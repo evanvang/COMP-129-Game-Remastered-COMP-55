@@ -40,6 +40,7 @@ public class MainApplication extends GraphicsApplication {
 
     public void switchToLevel() {
 	switchToScreen(level);
+	playRandomSound();
    }
 
     public void switchToSettings() {
