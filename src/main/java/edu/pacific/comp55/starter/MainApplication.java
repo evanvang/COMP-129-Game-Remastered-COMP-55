@@ -10,7 +10,7 @@ public class MainApplication extends GraphicsApplication {
     public static final int WINDOW_WIDTH = 1900;
     public static final int WINDOW_HEIGHT = 850;
     public static final String MUSIC_FOLDER = "sounds";
-    private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
+    private static final String[] SOUND_FILES = {"minecraft.mp3"};
 
     private MainGame mainGame;
     private MenuPane menu;
@@ -37,6 +37,7 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void switchToLevel() {
+    playRandomSound();
 	switchToScreen(mainGame);
     }
 
