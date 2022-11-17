@@ -58,15 +58,7 @@ public class Enemy  {
 		}
 	}
 
-	public void run() {
-			
-	}
 	
-
-	public static void main(String[] args) { 
-		  //Enemy e = new Enemy(100,100);
-		 
-	}
 
 	
 }
