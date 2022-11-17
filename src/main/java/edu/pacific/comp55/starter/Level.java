@@ -27,6 +27,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private Enemy enemy;
 	private Timer timer;
 	private Cloud cloud;
+    private double vel = 3;
 
 	// Constructor
 	public Level(MainApplication program, int levelNum) {
@@ -48,9 +49,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		mainScreen.add(map.getChunks().get(1).getChunkIMG());
 		mainScreen.add(map.getChunks().get(2).getspikeIMG());
 		mainScreen.add(map.getChunks().get(3).getChunkIMG());
-
-		mainScreen.add(player.getImage());
-		mainScreen.add(enemy.getImage());
+	    mainScreen.add(player.getImage());
+	    mainScreen.add(map.getEnemies().get(0).getImage());
+		mainScreen.add(map.getEnemies().get(1).getImage());
 		mainScreen.add(cloud.getImage());
 
 	}
@@ -92,14 +93,25 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
 		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
 		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+		
+		map.createEnemy( 900, 375);
+		map.createEnemy( 150, 465);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-//	player.move();
-		enemy.move(400);
-		cloud.move(1350);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	for ( Enemy ene : map.getEnemies()) {
+		//vel *= -1;
+		ene.getImage().move(vel,0);
+		if(ene.getImage().getX()+ene.getImage().getWidth() >= ene.getStartX()+200 || 
+		   ene.getImage().getX() <= ene.getStartX()) {
+			vel*= -1;
+			cloud.move(1350);
+
+		}
 	}
+	
+    }
 
 	@Override
 	public void keyTyped(KeyEvent e) {

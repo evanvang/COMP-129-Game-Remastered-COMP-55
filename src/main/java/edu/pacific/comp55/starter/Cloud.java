@@ -14,7 +14,7 @@ public class Cloud  {
 //	public static final int velocityX = 5;
 //	public static final int INIT_X_VELOCITY = 5;
 //	public static final int BREAK_MS = 30;
-    private int xVelocity=1;
+    private int xVelocity=100;
 //	Timer t;
 
 	public double getStartX() {
