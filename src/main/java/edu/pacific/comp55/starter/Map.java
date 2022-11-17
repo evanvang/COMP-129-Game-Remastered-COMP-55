@@ -29,8 +29,8 @@ public class Map {
     }
 
     // Method to create a chunk, adds to the HashMap "chunkToGRect"
-    public void createChunk(String imgName, int chunkX, int chunkY, int width, int height) {
-	Chunk chunk = new Chunk(imgName, chunkX, chunkY, width, height);
+    public void createChunk(String chunkName,String path, int chunkX, int chunkY, int width, int height) {
+	Chunk chunk = new Chunk(chunkName, path, chunkX, chunkY, width, height);
 
 	chunks.add(chunk);
     }
