@@ -65,7 +65,7 @@ public class Enemy  {
 	
 
 	public static void main(String[] args) { 
-		  Enemy e = new Enemy(100,100);
+		  //Enemy e = new Enemy(100,100);
 		 
 	}
 

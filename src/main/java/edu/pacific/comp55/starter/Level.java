@@ -30,12 +30,14 @@ public class Level implements ActionListener{
     // Constructor
     public Level(MainApplication program, int levelNum) {
     	this.timer = new Timer(50, this);
+    	//this.enemy = new Enemy (50,50);
     	mainScreen = program;
     	map = new Map();
-    	startTimer();
+    	
     	if (levelNum == 1) {
     		setupLevel1();
     	}
+    	startTimer();
     }
 
     public void showContents() {

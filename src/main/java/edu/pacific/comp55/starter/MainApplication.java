@@ -25,7 +25,7 @@ public class MainApplication extends GraphicsApplication {
 	System.out.println("Hello, world!");
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
-	//settings = new SettingsPane(this);
+	settings = new SettingsPane(this);
 	setupInteractions();
 	switchToMenu();
     }
