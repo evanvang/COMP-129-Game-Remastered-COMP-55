@@ -26,7 +26,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private MainApplication mainScreen;
     private Map map;
     private Player player;
-    private Enemy enemy;
     private Timer timer;
     
 
@@ -51,9 +50,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		mainScreen.add(map.getChunks().get(1).getChunkIMG());
 		mainScreen.add(map.getChunks().get(2).getspikeIMG());
 		mainScreen.add(map.getChunks().get(3).getChunkIMG());
+	    mainScreen.add(player.getImage());
+	    mainScreen.add(map.getEnemies().get(0).getImage());
+		mainScreen.add(map.getEnemies().get(1).getImage());
+		
 
-	mainScreen.add(player.getImage());
-	mainScreen.add(enemy.getImage());
 
     }
 
@@ -95,18 +96,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     }
 	public void setupLevel1() {
 		player = new Player(50, 415);
-		enemy = new Enemy(300, 475);
+		
 		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
 		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
 		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
 		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+		
+		map.createEnemy( 900, 375);
+		map.createEnemy( 150, 465);
 	}
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-//		player.move();
-	enemy.move(400);
+	
+	
     }
 
     @Override
