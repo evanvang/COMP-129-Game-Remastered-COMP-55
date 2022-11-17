@@ -27,7 +27,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Map map;
     private Player player;
     private Timer timer;
-    
+    private double vel = 2;
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
@@ -81,15 +81,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     }
 
-    
-    
-    
-    
-    
-    public void ActionPerformed() {
-
-    }
-
 
     public void startTimer() {
 	timer.start();
@@ -108,10 +99,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	
 	for ( Enemy ene : map.getEnemies()) {
-		
-		ene.move(ene.getStartX()+100);
+		//vel *= -1;
+		ene.getImage().move(vel,0);
+		if(ene.getImage().getX()+ene.getImage().getWidth() >= ene.getStartX()+200 || ene.getImage().getX() <= ene.getStartX()) {
+			vel*= -1;
+		}
 	}
 	
     }

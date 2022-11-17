@@ -47,12 +47,12 @@ public class Enemy  {
 	
 	}
 	
-	public void move(double d) {
-		enemyIMG.move(xVelocity, 0);
-		if(enemyIMG.getX()+enemyIMG.getWidth() >= d || enemyIMG.getX() <= startX) {
-			xVelocity *= -1;
-		}
-	}
+//	public void move(double d) {
+//		enemyIMG.move(vel, 0);
+//		if(enemyIMG.getX()+enemyIMG.getWidth() >= d || enemyIMG.getX() <= startX) {
+//			xVelocity *= -1;
+//		}
+//	}
 
 	
 
