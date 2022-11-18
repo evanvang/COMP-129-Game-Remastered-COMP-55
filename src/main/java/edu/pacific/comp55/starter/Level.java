@@ -57,6 +57,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		mainScreen.add(map.getEnemies().get(0).getImage());
 		mainScreen.add(map.getEnemies().get(1).getImage());
 		mainScreen.add(cloud.getImage());
+		mainScreen.add(timeLabel);
 		startTimer();
 
 	}
