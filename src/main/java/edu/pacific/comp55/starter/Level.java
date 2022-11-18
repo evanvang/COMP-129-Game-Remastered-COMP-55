@@ -112,8 +112,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		count++;
 		for (Enemy ene : map.getEnemies()) {
-			count++;
 			ene.getImage().move(enemyVel, 0);
 			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
 					|| ene.getImage().getX() <= ene.getStartX()) {
@@ -122,7 +122,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 		cloud.move(1325);
 		//decrement time
-				if(count % 10 == 0) {
+				if(count % 15 == 0) {
 				time--;
 				timeLabel.setLabel(String.valueOf(time));
 				}
