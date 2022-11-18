@@ -25,7 +25,7 @@ public class MenuPane extends GraphicsPane {
 
 		settingsButton = new GButton("Settings", 850, 600, 150, 75);
 		settingsButton.setFillColor(Color.WHITE);
-
+		
 		menuBackground = new GImage("Intro.png", 0, 0);
 		menuBackground.scale(1.8);
 

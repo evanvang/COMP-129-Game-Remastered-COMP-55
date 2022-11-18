@@ -27,7 +27,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private Enemy enemy;
 	private Timer timer;
 	private Cloud cloud;
-	private double enemyVel = 9;
+	private double enemyVel = 3;
 //	private double cloudVel = 3;
 
 	// Constructor
