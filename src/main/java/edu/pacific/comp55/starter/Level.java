@@ -28,7 +28,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Player player;
     private Timer timer;
     private Cloud cloud;
-    private double enemyVel = 9;
+    private double enemyVel = 3;
 //	private double cloudVel = 3;
     private int time = 30;
     private GLabel timeLabel;
@@ -79,20 +79,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	    player.moveState = MoveDirection.RIGHT;
 	    playerTimer.start();
-	}
 
-	if (keyCode == KeyEvent.VK_LEFT) {
+	    if (keyCode == KeyEvent.VK_LEFT) {
 
-	    player.moveState = MoveDirection.LEFT;
-	    playerTimer.start();
+		player.moveState = MoveDirection.LEFT;
+		playerTimer.start();
 
-	}
+	    }
 
-	if (keyCode == KeyEvent.VK_SPACE) {
+	    if (keyCode == KeyEvent.VK_SPACE) {
 
-	    player.moveState = MoveDirection.SPACE;
-	    playerTimer.start();
+		player.moveState = MoveDirection.SPACE;
+		playerTimer.start();
 
+	    }
 	}
     }
 
@@ -100,16 +100,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     public void keyReleased(KeyEvent e) {
 	playerTimer.stop();
 	if (player.moveState == MoveDirection.LEFT || player.moveState == MoveDirection.RIGHT) {
-	    
+
 	}
 	player.moveState = null;
-    }
-
-    public void drawTimeLabel() {
-	timeLabel = new GLabel("30", 50, 50);
-	timeLabel.setLocation(200, 50);
-	timeLabel.setColor(Color.WHITE);
-	timeLabel.setFont("Arial-Bold-30");
     }
 
     @Override
@@ -143,7 +136,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    } else if (player.moveState == MoveDirection.SPACE) {
 		int jumpTime = 10;
 		System.out.println(jumpTime);
-		
+
 		while (jumpTime != 0) {
 		    if (!(jumpTime < 5)) {
 			player.move(0, 1);
@@ -155,7 +148,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 	    }
 	}
+    }
 
+    public void drawTimeLabel() {
+	timeLabel = new GLabel("30", 50, 50);
+	timeLabel.setLocation(200, 50);
+	timeLabel.setColor(Color.WHITE);
+	timeLabel.setFont("Arial-Bold-30");
     }
 
     public void startTimer() {
@@ -175,27 +174,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	map.createEnemy(150, 465);
     }
 
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		count++;
-//		for (Enemy ene : map.getEnemies()) {
-//			ene.getImage().move(enemyVel, 0);
-//			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-//					|| ene.getImage().getX() <= ene.getStartX()) {
-//				enemyVel *= -1;
-//				ene.getImage().move(enemyVel, 0);
-//			}
-//		}
-//		cloud.move(1325);
-//		//decrement time
-//				if(count % 15 == 0) {
-//				time--;
-//				timeLabel.setLabel(String.valueOf(time));
-//				}
-//				
-
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
 }
+    
