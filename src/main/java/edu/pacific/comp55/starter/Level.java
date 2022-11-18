@@ -113,6 +113,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
 					|| ene.getImage().getX() <= ene.getStartX()) {
 				enemyVel *= -1;
+				ene.getImage().move(enemyVel, 0);
 			}
 		}
 		cloud.move(1325);
