@@ -66,6 +66,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	public void hideContents() {
 	}
+	
+	public void timeOut() {
+		if (time <= 0) {
+			mainScreen.removeAll();
+		}
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
