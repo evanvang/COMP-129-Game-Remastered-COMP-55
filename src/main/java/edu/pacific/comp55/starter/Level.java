@@ -27,8 +27,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private Enemy enemy;
 	private Timer timer;
 	private Cloud cloud;
-	private double enemyVel = 3;
-	private double cloudVel = 3;
+	private double enemyVel = 9;
+//	private double cloudVel = 3;
 
 	// Constructor
 	public Level(MainApplication program, int levelNum) {
@@ -88,7 +88,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void setupLevel1() {
 		player = new Player(50, 415);
 		enemy = new Enemy(300, 475);
-		cloud = new Cloud(100, 25);
+		cloud = new Cloud(50, 25);
 
 		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
 		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
@@ -107,17 +107,15 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
 					|| ene.getImage().getX() <= ene.getStartX()) {
 				enemyVel *= -1;
-
-				// cloud.move(1350);
-
 			}
 		}
-		cloud.getImage().move(cloudVel, 0);
-		if (cloud.getImage().getX() + cloud.getImage().getWidth() >= cloud.getStartX() + 1325
-				|| cloud.getImage().getX() <= cloud.getStartX()) {
-			cloudVel *= -1;
+		cloud.move(1325);
 
-		}
+//		cloud.getImage().move(cloudVel, 0);
+//		if (cloud.getImage().getX() + cloud.getImage().getWidth() >= cloud.getStartX() + 1325
+//				|| cloud.getImage().getX() <= cloud.getStartX()) {
+//			cloudVel *= -1;
+//		}
 	}
 
 	@Override

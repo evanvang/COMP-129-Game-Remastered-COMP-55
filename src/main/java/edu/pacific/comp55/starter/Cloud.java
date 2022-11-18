@@ -11,7 +11,7 @@ public class Cloud {
 	private double startX;
 	private double startY;
 	private GImage cloudIMG;
-	private int xVelocity = 10;
+	private double cloudVel = 3;
 
 	public double getStartX() {
 		return startX;
@@ -43,19 +43,18 @@ public class Cloud {
 
 	}
 
+//	public void move(int finalX) {
+//		cloudIMG.move(xVelocity, 0);
+//		if (cloudIMG.getX() + cloudIMG.getWidth() >= finalX || cloudIMG.getX() <= startX) {
+//			xVelocity *= -1;
+//		}
+//	}
+
 	public void move(int finalX) {
-		cloudIMG.move(xVelocity, 0);
-		if (cloudIMG.getX() + cloudIMG.getWidth() >= finalX || cloudIMG.getX() <= startX) {
-			xVelocity *= -1;
+		getImage().move(cloudVel, 0);
+		if (getImage().getX() + getImage().getWidth() >= getStartX() + 1325 || getImage().getX() <= getStartX()) {
+			cloudVel *= -1;
 		}
-	}
-
-	public void run() {
-
-	}
-
-	public static void main(String[] args) {
-
 	}
 
 }
