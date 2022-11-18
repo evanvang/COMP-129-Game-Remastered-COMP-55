@@ -77,13 +77,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	if (keyCode == KeyEvent.VK_RIGHT) {
 
-	    player.currentDirection = MoveDirection.RIGHT;
+	    player.moveState = MoveDirection.RIGHT;
 	    playerTimer.start();
 	}
 
 	if (keyCode == KeyEvent.VK_LEFT) {
 
-	    player.currentDirection = MoveDirection.LEFT;
+	    player.moveState = MoveDirection.LEFT;
+	    playerTimer.start();
+
+	}
+
+	if (keyCode == KeyEvent.VK_SPACE) {
+
+	    player.moveState = MoveDirection.SPACE;
 	    playerTimer.start();
 
 	}
@@ -92,7 +99,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {
 	playerTimer.stop();
-	player.currentDirection = null;
+	if (player.moveState == MoveDirection.LEFT || player.moveState == MoveDirection.RIGHT) {
+	    
+	}
+	player.moveState = null;
     }
 
     public void drawTimeLabel() {
@@ -106,32 +116,44 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
 	Object source = e.getSource();
 	count++;
-	
-	
 
-	for (Enemy ene : map.getEnemies()) {
-	    ene.getImage().move(enemyVel, 0);
-	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-		    || ene.getImage().getX() <= ene.getStartX()) {
-		enemyVel *= -1;
-	ene.getImage().move(enemyVel, 0);
+	if (source == timer) {
+	    for (Enemy ene : map.getEnemies()) {
+		ene.getImage().move(enemyVel, 0);
+		if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+			|| ene.getImage().getX() <= ene.getStartX()) {
+		    enemyVel *= -1;
+		    ene.getImage().move(enemyVel, 0);
 
+		}
 	    }
+
+	    if (count % 15 == 0) {
+		time--;
+		timeLabel.setLabel(String.valueOf(time));
+	    }
+
+	    cloud.move(1325);
+
 	}
-	
-	cloud.move(1325);
 
 	if (source == playerTimer) {
-	    if (playerTimer.isRunning() && player.currentDirection != MoveDirection.SPACE) {
+	    if (playerTimer.isRunning() && player.moveState != MoveDirection.SPACE) {
 		player.move(5, 0);
-	    } else {
+	    } else if (player.moveState == MoveDirection.SPACE) {
+		int jumpTime = 10;
+		System.out.println(jumpTime);
+		
+		while (jumpTime != 0) {
+		    if (!(jumpTime < 5)) {
+			player.move(0, 1);
+		    } else {
+			player.move(0, -1);
+		    }
+		    jumpTime--;
 
+		}
 	    }
-	}
-
-	if (count % 15 == 0) {
-	    time--;
-	    timeLabel.setLabel(String.valueOf(time));
 	}
 
     }
@@ -139,8 +161,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     public void startTimer() {
 	timer.start();
     }
-
- 
 
     public void setupLevel1() {
 	player = new Player(50, 415);
@@ -154,7 +174,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	map.createEnemy(900, 375);
 	map.createEnemy(150, 465);
     }
-
 
 //	@Override
 //	public void actionPerformed(ActionEvent e) {
@@ -177,7 +196,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
 
     }
 }

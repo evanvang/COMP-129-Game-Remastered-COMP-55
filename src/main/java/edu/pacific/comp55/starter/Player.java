@@ -19,7 +19,7 @@ public class Player {
     private int x, y;
 
     // the active pressed key
-    MoveDirection currentDirection = null;
+    MoveDirection moveState = null;
 
     // Amount player will move by when key event occurs
     public static final int velocityX = 10;
@@ -36,7 +36,7 @@ public class Player {
 
     public void move(int x, int y) {
 
-	switch (currentDirection) {
+	switch (moveState) {
 
 	case RIGHT:
 	    playerIMG.move(x, y);
@@ -47,6 +47,8 @@ public class Player {
 	    updatePlayerPos();
 	    break;
 	case SPACE:
+	    playerIMG.move(x, -y);
+	    updatePlayerPos();
 	    break;
 
 	default:
