@@ -82,10 +82,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	}
 
-	public void ActionPerformed() {
-
-	}
-
 	public void startTimer() {
 		timer.start();
 	}
