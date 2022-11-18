@@ -30,29 +30,34 @@ public class Player {
 	this.x = x;
 	this.y = y;
 	this.playerIMG = new GImage("idle1.png");
-	this.playerIMG.setSize(100,100);
-	this.playerIMG.setLocation(x,y);
+	this.playerIMG.setSize(100, 100);
+	this.playerIMG.setLocation(x, y);
     }
 
-    // Updates Player (x,y)
-    public void move() {
+    public void move(int x, int y) {
 
 	switch (currentDirection) {
+	
 	case RIGHT:
-	    x += velocityX;
-	    this.playerIMG = new GImage("forward face image");
-	    this.playerIMG.setLocation(x, y);
+	    playerIMG.move(x, y);
+	    updatePlayerPos();
 	    break;
 	case LEFT:
-	    x -= velocityX;
+	    playerIMG.move(-x, y);
+	    updatePlayerPos();
 	    break;
 	case SPACE:
-	    y -= (-1) * velocityY;
 	    break;
 
 	default:
-	    System.out.println("Switch case failed");
+
 	}
+
+    }
+
+    public void updatePlayerPos() {
+	x = (int) playerIMG.getX();
+	y = (int) playerIMG.getY();
     }
 
     // Setters & Getters
@@ -81,7 +86,7 @@ public class Player {
     }
 
     public GObject getImage() {
-    	return playerIMG;
+	return playerIMG;
     }
 
 }

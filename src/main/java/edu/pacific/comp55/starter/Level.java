@@ -27,13 +27,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Map map;
     private Player player;
     private Enemy enemy;
-    private Timer timer;
-    
+    private Timer eTimer;
+
+    private Timer playerTimer;
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
-	this.timer = new Timer(50, this);
-	// this.enemy = new Enemy (50,50);
+	this.eTimer = new Timer(50, this);
 	mainScreen = program;
 	map = new Map();
 
@@ -41,16 +41,15 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    setupLevel1();
 	}
 	startTimer();
-	
+	playerTimer = new Timer(2, this);
 	mainScreen.setupInteractions();
     }
 
-
-	public void showContents() {
-		mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-		mainScreen.add(map.getChunks().get(1).getChunkIMG());
-		mainScreen.add(map.getChunks().get(2).getspikeIMG());
-		mainScreen.add(map.getChunks().get(3).getChunkIMG());
+    public void showContents() {
+	mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+	mainScreen.add(map.getChunks().get(1).getChunkIMG());
+	mainScreen.add(map.getChunks().get(2).getspikeIMG());
+	mainScreen.add(map.getChunks().get(3).getChunkIMG());
 
 	mainScreen.add(player.getImage());
 	mainScreen.add(enemy.getImage());
@@ -61,59 +60,64 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     }
 
-    
-    
-    
     @Override
     public void keyPressed(KeyEvent e) {
 
 	int keyCode = e.getKeyCode();
 
 	if (keyCode == KeyEvent.VK_RIGHT) {
-	    System.out.println("Level Key pressed");
+
+	    player.currentDirection = MoveDirection.RIGHT;
+	    playerTimer.start();
+	}
+
+	if (keyCode == KeyEvent.VK_LEFT) {
+
+	    player.currentDirection = MoveDirection.LEFT;
+	    playerTimer.start();
 	}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	System.out.println("Level Key released");
-
+	playerTimer.stop();
+	player.currentDirection = null;
     }
-
-    
-    
-    
-    
-    
-    public void ActionPerformed() {
-
-    }
-
 
     public void startTimer() {
-	timer.start();
+	eTimer.start();
     }
-	public void setupLevel1() {
-		player = new Player(50, 415);
-		enemy = new Enemy(300, 475);
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
-	}
+
+    public void setupLevel1() {
+	player = new Player(50, 415);
+	enemy = new Enemy(300, 475);
+	map.createChunk("g0", "background.png", 0, 0, 1900, 850);
+	map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
+	map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
+	map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-//		player.move();
-	enemy.move(400);
+	Object source = e.getSource();
+
+	if (source == eTimer) {
+	    enemy.move(400);
+	}
+
+	if (source == playerTimer) {
+	    if (playerTimer.isRunning() && player.currentDirection != MoveDirection.SPACE) {
+		player.move(5, 0);
+	    } else {
+		
+	    }
+	}
+
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-	// TODO Auto-generated method stub
-	
-    }
 
+    }
 
 }

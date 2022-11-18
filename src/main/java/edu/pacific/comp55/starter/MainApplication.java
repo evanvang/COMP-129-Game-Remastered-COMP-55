@@ -10,7 +10,7 @@ public class MainApplication extends GraphicsApplication {
     public static final int WINDOW_WIDTH = 1900;
     public static final int WINDOW_HEIGHT = 850;
     public static final String MUSIC_FOLDER = "sounds";
-    private static final String[] SOUND_FILES = {"minecraft.mp3"};
+    private static final String[] SOUND_FILES = { "minecraft.mp3" };
 
     private MainGame mainGame;
     private MenuPane menu;
@@ -24,7 +24,6 @@ public class MainApplication extends GraphicsApplication {
 
     public void run() {
 	level = new Level(this, 1);
-	System.out.println("Hello, world!");
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
@@ -41,7 +40,7 @@ public class MainApplication extends GraphicsApplication {
     public void switchToLevel() {
 	switchToScreen(level);
 	playRandomSound();
-   }
+    }
 
     public void switchToSettings() {
 	switchToScreen(settings);
