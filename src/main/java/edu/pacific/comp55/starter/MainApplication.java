@@ -7,52 +7,53 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainApplication extends GraphicsApplication {
-	public static final int WINDOW_WIDTH = 1440;
-	public static final int WINDOW_HEIGHT = 850;
-	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = {"wesbrook.mp3"};
 
-	private MainGame mainGame;
-	private MenuPane menu;
-	private SettingsPane settings;
-	private Level level;
-	private int count;
+    public static final int WINDOW_WIDTH = 1440;
+    public static final int WINDOW_HEIGHT = 850;
+    public static final String MUSIC_FOLDER = "sounds";
+    private static final String[] SOUND_FILES = { "wesbrook.mp3" };
 
-	public void init() {
-		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-	}
+    private MainGame mainGame;
+    private MenuPane menu;
+    private SettingsPane settings;
+    private Level level;
+    private int count;
 
-	public void run() {
-		level = new Level(this, 1);
-		System.out.println("Hello, world!");
-		mainGame = new MainGame(this);
-		menu = new MenuPane(this);
-		settings = new SettingsPane(this);
-		setupInteractions();
-		switchToMenu();
-	}
+    public void init() {
+	setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+    }
 
-	// Start Screen
-	public void switchToMenu() {
-		count++;
-		switchToScreen(menu);
-	}
+    public void run() {
+	level = new Level(this, 1);
+	System.out.println("Hello, world!");
+	mainGame = new MainGame(this);
+	menu = new MenuPane(this);
+	settings = new SettingsPane(this);
+	setupInteractions();
+	switchToMenu();
+    }
 
-	public void switchToLevel() {
-		switchToScreen(level);
-		playRandomSound();
-	}
+    // Start Screen
+    public void switchToMenu() {
+	count++;
+	switchToScreen(menu);
+    }
 
-	public void switchToSettings() {
-		switchToScreen(settings);
-	}
+    public void switchToLevel() {
+	switchToScreen(level);
+	playRandomSound();
+    }
 
-	private void playRandomSound() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
-	}
+    public void switchToSettings() {
+	switchToScreen(settings);
+    }
 
-	public static void main(String[] args) {
-		new MainApplication().start();
-	}
+    private void playRandomSound() {
+	AudioPlayer audio = AudioPlayer.getInstance();
+	audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+    }
+
+    public static void main(String[] args) {
+	new MainApplication().start();
+    }
 }
