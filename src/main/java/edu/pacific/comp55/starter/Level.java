@@ -1,5 +1,6 @@
 package edu.pacific.comp55.starter;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,6 +10,7 @@ import java.util.EventListener;
 import java.util.HashMap;
 import javax.swing.Timer;
 import acm.graphics.GImage;
+import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 
@@ -24,11 +26,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private MainApplication mainScreen;
 	private Map map;
 	private Player player;
-	private Enemy enemy;
 	private Timer timer;
 	private Cloud cloud;
 	private double enemyVel = 9;
 //	private double cloudVel = 3;
+	private int time = 30;
+	private GLabel timeLabel;
+	private int count = 0;
 
 	// Constructor
 	public Level(MainApplication program, int levelNum) {
@@ -36,11 +40,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		// this.enemy = new Enemy (50,50);
 		mainScreen = program;
 		map = new Map();
-
+		 drawTimeLabel();
 		if (levelNum == 1) {
 			setupLevel1();
 		}
-		startTimer();
 
 		mainScreen.setupInteractions();
 	}
@@ -54,6 +57,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		mainScreen.add(map.getEnemies().get(0).getImage());
 		mainScreen.add(map.getEnemies().get(1).getImage());
 		mainScreen.add(cloud.getImage());
+		startTimer();
 
 	}
 
@@ -84,10 +88,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void startTimer() {
 		timer.start();
 	}
+	
+	public void drawTimeLabel() {
+		timeLabel = new GLabel("30", 50, 50);
+		timeLabel.setLocation(200,50);
+		timeLabel.setColor(Color.WHITE);
+		timeLabel.setFont("Arial-Bold-30");	
+	}
 
 	public void setupLevel1() {
 		player = new Player(50, 415);
-		enemy = new Enemy(300, 475);
 		cloud = new Cloud(50, 25);
 
 		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
@@ -102,7 +112,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (Enemy ene : map.getEnemies()) {
-			// vel *= -1;
+			count++;
 			ene.getImage().move(enemyVel, 0);
 			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
 					|| ene.getImage().getX() <= ene.getStartX()) {
@@ -110,6 +120,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			}
 		}
 		cloud.move(1325);
+		//decrement time
+				if(count % 10 == 0) {
+				time--;
+				timeLabel.setLabel(String.valueOf(time));
+				}
+				
 
 //		cloud.getImage().move(cloudVel, 0);
 //		if (cloud.getImage().getX() + cloud.getImage().getWidth() >= cloud.getStartX() + 1325
