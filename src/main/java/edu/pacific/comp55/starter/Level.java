@@ -76,23 +76,23 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	int keyCode = e.getKeyCode();
 
 	if (keyCode == KeyEvent.VK_RIGHT) {
-
+	    System.out.println("right");
 	    player.moveState = MoveDirection.RIGHT;
 	    playerTimer.start();
+	}
 
-	    if (keyCode == KeyEvent.VK_LEFT) {
+	if (keyCode == KeyEvent.VK_LEFT) {
 
-		player.moveState = MoveDirection.LEFT;
-		playerTimer.start();
+	    player.moveState = MoveDirection.LEFT;
+	    playerTimer.start();
 
-	    }
+	}
 
-	    if (keyCode == KeyEvent.VK_SPACE) {
+	if (keyCode == KeyEvent.VK_SPACE) {
 
-		player.moveState = MoveDirection.SPACE;
-		playerTimer.start();
+	    player.moveState = MoveDirection.SPACE;
+	    playerTimer.start();
 
-	    }
 	}
     }
 
@@ -179,4 +179,3 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     }
 }
-    
