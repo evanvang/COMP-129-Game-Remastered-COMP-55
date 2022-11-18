@@ -11,7 +11,6 @@ public class Enemy {
 	private double startX;
 	private double startY;
 	private GImage enemyIMG;
-	private int xVelocity = 1;
 
 	public double getStartX() {
 		return startX;

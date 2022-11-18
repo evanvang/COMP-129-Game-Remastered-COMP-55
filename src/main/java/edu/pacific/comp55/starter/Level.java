@@ -42,18 +42,15 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     // Constructor
     public Level(MainApplication program, int levelNum) {
 	this.timer = new Timer(50, this);
-	// this.enemy = new Enemy (50,50);
 	mainScreen = program;
 	map = new Map();
 	drawTimeLabel();
 	if (levelNum == 1) {
 	    setupLevel1();
 	}
-
 	mainScreen.setupInteractions();
-
-	startTimer();
 	playerTimer = new Timer(2, this);
+
     }
 
     public void showContents() {
@@ -98,10 +95,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	player.currentDirection = null;
     }
 
-    public void startTimer() {
-	timer.start();
-    }
-
     public void drawTimeLabel() {
 	timeLabel = new GLabel("30", 50, 50);
 	timeLabel.setLocation(200, 50);
@@ -109,25 +102,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	timeLabel.setFont("Arial-Bold-30");
     }
 
-    public void setupLevel1() {
-	player = new Player(50, 415);
-	cloud = new Cloud(50, 25);
-
-	map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-	map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-	map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-	map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
-
-	map.createEnemy(900, 375);
-	map.createEnemy(150, 465);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 	Object source = e.getSource();
+	count++;
 
 	for (Enemy ene : map.getEnemies()) {
-	    count++;
 	    ene.getImage().move(enemyVel, 0);
 	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
 		    || ene.getImage().getX() <= ene.getStartX()) {
@@ -144,11 +124,30 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    }
 	}
 
-	if (count % 10 == 0) {
+	if (count % 15 == 0) {
 	    time--;
 	    timeLabel.setLabel(String.valueOf(time));
 	}
 
+    }
+
+    public void startTimer() {
+	timer.start();
+    }
+
+ 
+
+    public void setupLevel1() {
+	player = new Player(50, 415);
+	cloud = new Cloud(50, 25);
+
+	map.createChunk("g0", "background.png", 0, 0, 1900, 850);
+	map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
+	map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
+	map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+
+	map.createEnemy(900, 375);
+	map.createEnemy(150, 465);
     }
 
     @Override
