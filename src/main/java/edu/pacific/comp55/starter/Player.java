@@ -12,18 +12,18 @@ import acm.graphics.GRect;
 
 public class Player {
 
-    // For the players image
-    private GImage playerIMG;
+	// For the players image
+	private GImage playerIMG;
 
-    // Players current position within window
-    private int x, y;
+	// Players current position within window
+	private int x, y;
 
-    // the active pressed key
-    MoveDirection currentDirection = null;
+	// the active pressed key
+	MoveDirection currentDirection = null;
 
-    // Amount player will move by when key event occurs
-    public static final int velocityX = 10;
-    public static final int velocityY = 10;
+	// Amount player will move by when key event occurs
+	public static final int velocityX = 10;
+	public static final int velocityY = 10;
 
     // Player Constructor
     public Player(int x, int y) {
@@ -50,43 +50,47 @@ public class Player {
 	    break;
 
 	default:
+	    
+	}
+
 
 	}
 
-    }
+    
 
     public void updatePlayerPos() {
 	x = (int) playerIMG.getX();
 	y = (int) playerIMG.getY();
     }
+	
+	// Setters & Getters
+	public int getX() {
+		return x;
+	}
 
-    // Setters & Getters
-    public int getX() {
-	return x;
-    }
+	public void setX(int x) {
+		this.x = x;
+	}
 
-    public void setX(int x) {
-	this.x = x;
-    }
+	public int getY() {
+		return y;
+	}
 
-    public int getY() {
-	return y;
-    }
 
-    public void setY(int y) {
-	this.y = y;
-    }
+	public void setY(int y) {
+		this.y = y;
+	}
 
-    public int getVelocityX() {
-	return velocityX;
-    }
+	public int getVelocityX() {
+		return velocityX;
+	}
 
-    public int getVelocityY() {
-	return velocityY;
-    }
+	public int getVelocityY() {
+		return velocityY;
+	}
 
-    public GObject getImage() {
-	return playerIMG;
-    }
+	public GObject getImage() {
+		return playerIMG;
+	}
 
 }

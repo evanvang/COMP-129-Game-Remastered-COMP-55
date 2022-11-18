@@ -16,7 +16,7 @@ public class Chunk {
 
 		this.backgroundIMG = new GImage("background.png", chunkX, chunkY);
 		this.backgroundIMG.setSize(width, height);
-		
+
 		this.chunkIMG = new GImage("ground1.png", chunkX, chunkY);
 		this.chunkIMG.setSize(width, height);
 
@@ -29,6 +29,7 @@ public class Chunk {
 	public GImage getbackgroundIMG() {
 		return backgroundIMG;
 	}
+
 	public GImage getChunkIMG() {
 		return chunkIMG;
 	}
