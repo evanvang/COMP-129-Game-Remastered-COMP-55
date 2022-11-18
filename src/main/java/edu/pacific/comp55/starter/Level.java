@@ -23,153 +23,160 @@ import acm.program.GraphicsProgram;
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
-	private MainApplication mainScreen;
-	private Map map;
-	private Player player;
-	private Timer timer;
-	private Cloud cloud;
-	private double enemyVel = 3;
+    private MainApplication mainScreen;
+    private Map map;
+    private Player player;
+    private Timer timer;
+    private Cloud cloud;
+    private double enemyVel = 3;
 //	private double cloudVel = 3;
-	private int time = 30;
-	private GLabel timeLabel;
-	private int count = 0;
+    private int time = 30;
+    private GLabel timeLabel;
+    private int count = 0;
 
-	private Enemy enemy;
-	private Timer eTimer;
+    private Enemy enemy;
+    private Timer eTimer;
 
-	private Timer playerTimer;
+    private Timer playerTimer;
 
-	// Constructor
-	public Level(MainApplication program, int levelNum) {
-		this.timer = new Timer(50, this);
-		mainScreen = program;
-		map = new Map();
-		drawTimeLabel();
-		if (levelNum == 1) {
-			setupLevel1();
+    // Constructor
+    public Level(MainApplication program, int levelNum) {
+	this.timer = new Timer(50, this);
+	mainScreen = program;
+	map = new Map();
+	drawTimeLabel();
+	if (levelNum == 1) {
+	    setupLevel1();
+	}
+	mainScreen.setupInteractions();
+	playerTimer = new Timer(2, this);
+
+    }
+
+    public void showContents() {
+	mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+	mainScreen.add(map.getChunks().get(1).getChunkIMG());
+	mainScreen.add(map.getChunks().get(2).getspikeIMG());
+	mainScreen.add(map.getChunks().get(3).getChunkIMG());
+	mainScreen.add(player.getImage());
+	mainScreen.add(map.getEnemies().get(0).getImage());
+	mainScreen.add(map.getEnemies().get(1).getImage());
+	mainScreen.add(cloud.getImage());
+	mainScreen.add(timeLabel);
+	startTimer();
+    }
+
+    public void hideContents() {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+	int keyCode = e.getKeyCode();
+
+	if (keyCode == KeyEvent.VK_RIGHT) {
+
+	    player.moveState = MoveDirection.RIGHT;
+	    playerTimer.start();
+
+	    if (keyCode == KeyEvent.VK_LEFT) {
+
+		player.moveState = MoveDirection.LEFT;
+		playerTimer.start();
+
+	    }
+
+	    if (keyCode == KeyEvent.VK_SPACE) {
+
+		player.moveState = MoveDirection.SPACE;
+		playerTimer.start();
+
+	    }
+	}
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+	playerTimer.stop();
+	if (player.moveState == MoveDirection.LEFT || player.moveState == MoveDirection.RIGHT) {
+
+	}
+	player.moveState = null;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	Object source = e.getSource();
+	count++;
+
+	if (source == timer) {
+	    for (Enemy ene : map.getEnemies()) {
+		ene.getImage().move(enemyVel, 0);
+		if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+			|| ene.getImage().getX() <= ene.getStartX()) {
+		    enemyVel *= -1;
+		    ene.getImage().move(enemyVel, 0);
+
 		}
-		mainScreen.setupInteractions();
-		playerTimer = new Timer(2, this);
+	    }
+
+	    if (count % 15 == 0) {
+		time--;
+		timeLabel.setLabel(String.valueOf(time));
+	    }
+
+	    cloud.move(1325);
+
 	}
 
-	public void showContents() {
-		mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-		mainScreen.add(map.getChunks().get(1).getChunkIMG());
-		mainScreen.add(map.getChunks().get(2).getspikeIMG());
-		mainScreen.add(map.getChunks().get(3).getChunkIMG());
-		mainScreen.add(player.getImage());
-		mainScreen.add(map.getEnemies().get(0).getImage());
-		mainScreen.add(map.getEnemies().get(1).getImage());
-		mainScreen.add(cloud.getImage());
-		mainScreen.add(timeLabel);
-		startTimer();
-	}
-	public void hideContents() {
-	}
-	
-	public void timeOut() {
-		if (time <= 0) {
-			mainScreen.removeAll();
-		}
-	}
+	if (source == playerTimer) {
+	    if (playerTimer.isRunning() && player.moveState != MoveDirection.SPACE) {
+		player.move(5, 0);
+	    } else if (player.moveState == MoveDirection.SPACE) {
+		int jumpTime = 10;
+		System.out.println(jumpTime);
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-
-		int keyCode = e.getKeyCode();
-
-		if (keyCode == KeyEvent.VK_RIGHT) {
-
-			player.currentDirection = MoveDirection.RIGHT;
-			playerTimer.start();
-		}
-
-		if (keyCode == KeyEvent.VK_LEFT) {
-
-			player.currentDirection = MoveDirection.LEFT;
-			playerTimer.start();
+		while (jumpTime != 0) {
+		    if (!(jumpTime < 5)) {
+			player.move(0, 1);
+		    } else {
+			player.move(0, -1);
+		    }
+		    jumpTime--;
 
 		}
+	    }
 	}
+    }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		playerTimer.stop();
-		player.currentDirection = null;
-	}
+    public void drawTimeLabel() {
+	timeLabel = new GLabel("30", 50, 50);
+	timeLabel.setLocation(200, 50);
+	timeLabel.setColor(Color.WHITE);
+	timeLabel.setFont("Arial-Bold-30");
+    }
 
-	public void drawTimeLabel() {
-		timeLabel = new GLabel("30", 50, 50);
-		timeLabel.setLocation(200, 50);
-		timeLabel.setColor(Color.WHITE);
-		timeLabel.setFont("Arial-Bold-30");
-	}
+    public void startTimer() {
+	timer.start();
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		count++;
+    public void setupLevel1() {
+	player = new Player(50, 415);
+	cloud = new Cloud(50, 25);
 
-		for (Enemy ene : map.getEnemies()) {
-			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-					|| ene.getImage().getX() <= ene.getStartX()) {
-				enemyVel *= -1;
-				ene.getImage().move(enemyVel, 0);
-			}
-		}
-		cloud.move(1325);
+	map.createChunk("g0", "background.png", 0, 0, 1900, 850);
+	map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
+	map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
+	map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
 
-		if (source == playerTimer) {
-			if (playerTimer.isRunning() && player.currentDirection != MoveDirection.SPACE) {
-				player.move(5, 0);
-			} else {
-			}
-		}
-		if (count % 15 == 0) {
-			time--;
-			timeLabel.setLabel(String.valueOf(time));
-		}
-	}
+	map.createEnemy(900, 375);
+	map.createEnemy(150, 465);
+    }
 
-	public void startTimer() {
-		timer.start();
-	}
+    @Override
+    public void keyTyped(KeyEvent e) {
 
-	public void setupLevel1() {
-		player = new Player(50, 415);
-		cloud = new Cloud(50, 25);
-
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
-
-		map.createEnemy(900, 375);
-		map.createEnemy(150, 465);
-	}
-
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		count++;
-//		for (Enemy ene : map.getEnemies()) {
-//			ene.getImage().move(enemyVel, 0);
-//			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-//					|| ene.getImage().getX() <= ene.getStartX()) {
-//				enemyVel *= -1;
-//				ene.getImage().move(enemyVel, 0);
-//			}
-//		}
-//		cloud.move(1325);
-//		//decrement time
-//				if(count % 15 == 0) {
-//				time--;
-//				timeLabel.setLabel(String.valueOf(time));
-//				}
-//				
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
+    }
 }
+    
