@@ -1,5 +1,6 @@
 package edu.pacific.comp55.starter;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,6 +10,7 @@ import java.util.EventListener;
 import java.util.HashMap;
 import javax.swing.Timer;
 import acm.graphics.GImage;
+import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 
@@ -24,25 +26,30 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private MainApplication mainScreen;
 	private Map map;
 	private Player player;
-	private Enemy enemy;
 	private Timer timer;
 	private Cloud cloud;
 	private double enemyVel = 3;
 //	private double cloudVel = 3;
+	private int time = 30;
+	private GLabel timeLabel;
+	private int count = 0;
+
+	private Enemy enemy;
+	private Timer eTimer;
+
+	private Timer playerTimer;
 
 	// Constructor
 	public Level(MainApplication program, int levelNum) {
 		this.timer = new Timer(50, this);
-		// this.enemy = new Enemy (50,50);
 		mainScreen = program;
 		map = new Map();
-
+		drawTimeLabel();
 		if (levelNum == 1) {
 			setupLevel1();
 		}
-		startTimer();
-
 		mainScreen.setupInteractions();
+		playerTimer = new Timer(2, this);
 	}
 
 	public void showContents() {
@@ -54,11 +61,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		mainScreen.add(map.getEnemies().get(0).getImage());
 		mainScreen.add(map.getEnemies().get(1).getImage());
 		mainScreen.add(cloud.getImage());
-
+		mainScreen.add(timeLabel);
+		startTimer();
 	}
-
 	public void hideContents() {
-
 	}
 
 	@Override
@@ -67,18 +73,57 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		int keyCode = e.getKeyCode();
 
 		if (keyCode == KeyEvent.VK_RIGHT) {
-			System.out.println("Level Key pressed");
+
+			player.currentDirection = MoveDirection.RIGHT;
+			playerTimer.start();
+		}
+
+		if (keyCode == KeyEvent.VK_LEFT) {
+
+			player.currentDirection = MoveDirection.LEFT;
+			playerTimer.start();
+
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("Level Key released");
-
+		playerTimer.stop();
+		player.currentDirection = null;
 	}
 
-	public void ActionPerformed() {
+	public void drawTimeLabel() {
+		timeLabel = new GLabel("30", 50, 50);
+		timeLabel.setLocation(200, 50);
+		timeLabel.setColor(Color.WHITE);
+		timeLabel.setFont("Arial-Bold-30");
+	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		count++;
+
+		for (Enemy ene : map.getEnemies()) {
+			ene.getImage().move(enemyVel, 0);
+			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+					|| ene.getImage().getX() <= ene.getStartX()) {
+				enemyVel *= -1;
+				ene.getImage().move(enemyVel, 0);
+			}
+		}
+		cloud.move(1325);
+
+		if (source == playerTimer) {
+			if (playerTimer.isRunning() && player.currentDirection != MoveDirection.SPACE) {
+				player.move(5, 0);
+			} else {
+			}
+		}
+		if (count % 15 == 0) {
+			time--;
+			timeLabel.setLabel(String.valueOf(time));
+		}
 	}
 
 	public void startTimer() {
@@ -87,7 +132,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public void setupLevel1() {
 		player = new Player(50, 415);
-		enemy = new Enemy(300, 475);
 		cloud = new Cloud(50, 25);
 
 		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
@@ -99,24 +143,24 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createEnemy(150, 465);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		for (Enemy ene : map.getEnemies()) {
-			// vel *= -1;
-			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-					|| ene.getImage().getX() <= ene.getStartX()) {
-				enemyVel *= -1;
-			}
-		}
-		cloud.move(1325);
-
-//		cloud.getImage().move(cloudVel, 0);
-//		if (cloud.getImage().getX() + cloud.getImage().getWidth() >= cloud.getStartX() + 1325
-//				|| cloud.getImage().getX() <= cloud.getStartX()) {
-//			cloudVel *= -1;
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		count++;
+//		for (Enemy ene : map.getEnemies()) {
+//			ene.getImage().move(enemyVel, 0);
+//			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+//					|| ene.getImage().getX() <= ene.getStartX()) {
+//				enemyVel *= -1;
+//				ene.getImage().move(enemyVel, 0);
+//			}
 //		}
-	}
+//		cloud.move(1325);
+//		//decrement time
+//				if(count % 15 == 0) {
+//				time--;
+//				timeLabel.setLabel(String.valueOf(time));
+//				}
+//				
 
 	@Override
 	public void keyTyped(KeyEvent e) {
