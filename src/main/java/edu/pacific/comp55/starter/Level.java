@@ -23,39 +23,46 @@ import acm.program.GraphicsProgram;
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
+    private final int jumpHeight = 20;
+    private int jumpStep = 0;
+    private Timer jumpUp = new Timer(2, this);
+    private Timer jumpDn = new Timer(2, this);
+
+    private final int PLAYER_VELOCITY_WALK = 5;
+
     private MainApplication mainScreen;
     private Map map;
     private Player player;
     private Map ground;
     private Timer timer;
+    private Timer eTimer;
     private Cloud cloud;
     private double enemyVel = 3;
-//	private double cloudVel = 3;
     private int time = 30;
     private GLabel timeLabel;
+    private GLabel liveLabel;
     private int count = 0;
-
-    private Enemy enemy;
-    private Timer eTimer;
-
-    private Timer playerTimer;
+    private GImage liveIMG;
     private GImage newPlayer;
     private ArrayList<Chunk> chunky;
     
+    private Timer playerTimer = new Timer(2, this);
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
-	this.timer = new Timer(50, this);
+
+	this.eTimer = new Timer(50, this);
 	mainScreen = program;
 	map = new Map();
 	drawTimeLabel();
+	drawLiveLabel();
 	if (levelNum == 1) {
 	    setupLevel1();
 	}
 	mainScreen.setupInteractions();
 	playerTimer = new Timer(2, this);
 	newPlayer = player.getplayerIMG();
-	chunky = ground.getChunks();
+	chunky = map.getChunks();
     }
     
 
@@ -69,6 +76,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	mainScreen.add(map.getEnemies().get(1).getImage());
 	mainScreen.add(cloud.getImage());
 	mainScreen.add(timeLabel);
+	mainScreen.add(liveIMG);
+	mainScreen.add(liveLabel);
 	startTimer();
     }
 
@@ -97,7 +106,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (keyCode == KeyEvent.VK_SPACE) {
 
 	    player.moveState = MoveDirection.SPACE;
-	    playerTimer.start();
+	    jumpStep = 0;
+	    jumpUp.start();
 
 	}
     }
@@ -115,7 +125,29 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (player.moveState == MoveDirection.LEFT || player.moveState == MoveDirection.RIGHT) {
 
 	}
-	player.moveState = null;
+	if (player.moveState != MoveDirection.SPACE) {
+	    player.moveState = null;
+	}
+
+    }
+
+    void moveEandC() {
+	for (Enemy ene : map.getEnemies()) {
+	    ene.getImage().move(enemyVel, 0);
+	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+		    || ene.getImage().getX() <= ene.getStartX()) {
+		enemyVel *= -1;
+		ene.getImage().move(enemyVel, 0);
+
+	    }
+	}
+
+	if (count % 15 == 0) {
+	    time--;
+	    timeLabel.setLabel(String.valueOf(time));
+	}
+
+	cloud.move(1325);
     }
 
     @Override
@@ -123,55 +155,68 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	Object source = e.getSource();
 	count++;
 
-	if (source == timer) {
-	    for (Enemy ene : map.getEnemies()) {
-		ene.getImage().move(enemyVel, 0);
-		if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-			|| ene.getImage().getX() <= ene.getStartX()) {
-		    enemyVel *= -1;
-		    ene.getImage().move(enemyVel, 0);
-
-		}
-	    }
-
-	    if (count % 15 == 0) {
-		time--;
-		timeLabel.setLabel(String.valueOf(time));
-	    }
-
-	    cloud.move(1325);
-
+	if (source == eTimer) {
+	    moveEandC();
 	}
 
-	if (source == playerTimer) {
-	    if (playerTimer.isRunning() && player.moveState != MoveDirection.SPACE) {
-		player.move(3, 0);
-	    } else if (player.moveState == MoveDirection.SPACE) {
-		int jumpTime = 10;
-		System.out.println(jumpTime);
+	if (source == playerTimer && playerTimer.isRunning()) {
+	    // horizontal motion
+	    if (player.moveState == MoveDirection.RIGHT || player.moveState == MoveDirection.LEFT) {
+		player.move(PLAYER_VELOCITY_WALK, 0);
+	    }
+	}
 
-		while (jumpTime != 0) {
-		    if (!(jumpTime < 5)) {
-			player.move(0, 1);
-		    } else {
-			player.move(0, -1);
-		    }
-		    jumpTime--;
+	if (source == jumpUp) {
+	    System.out.println("go up");
+	    player.move(0, 2);
+	    System.out.println("after up");
+	    jumpStep += 2;
+	    if (jumpStep >= jumpHeight) {
+		jumpUp.stop();
+		jumpDn.start();
+	    }
+	}
 
-		}
+	if (source == jumpDn) {
+	    player.move(0, -2);
+	    jumpStep -= 2;
+	    if (jumpStep <= 0) {
+		jumpDn.stop();
+		player.moveState = null;
+	    }
+	}
+
+    }
+
+    public void callEnemyMovement() {
+	for (Enemy ene : map.getEnemies()) {
+	    ene.getImage().move(enemyVel, 0);
+	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+		    || ene.getImage().getX() <= ene.getStartX()) {
+		enemyVel *= -1;
+		ene.getImage().move(enemyVel, 0);
+
 	    }
 	}
     }
 
     public void drawTimeLabel() {
-	timeLabel = new GLabel("30", 50, 50);
-	timeLabel.setLocation(200, 50);
+	timeLabel = new GLabel("30", 200, 50);
 	timeLabel.setColor(Color.WHITE);
 	timeLabel.setFont("Arial-Bold-30");
     }
 
+    public void drawLiveLabel() {
+	liveLabel = new GLabel("3", 95, 50);
+	liveLabel.setColor(Color.WHITE);
+	liveLabel.setFont("Arial-Bold-30");
+	liveIMG = new GImage("liveshead.png", 20, 8);
+	liveIMG.setSize(65, 65);
+
+    }
+
     public void startTimer() {
-	timer.start();
+	eTimer.start();
     }
 
     public void setupLevel1() {
