@@ -23,7 +23,7 @@ import acm.program.GraphicsProgram;
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
-    private final int jumpHeight = 20;
+    private final int jumpHeight = 150;
     private int jumpStep = 0;
     private Timer jumpUp = new Timer(2, this);
     private Timer jumpDn = new Timer(2, this);
