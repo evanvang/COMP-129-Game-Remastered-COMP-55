@@ -29,29 +29,30 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Timer jumpDn = new Timer(2, this);
 
     private final int PLAYER_VELOCITY_WALK = 5;
-    private final int PLAYER_VELOCITY_JUMP = 3;
 
     private MainApplication mainScreen;
     private Map map;
     private Player player;
-    private Timer timer = new Timer(50, this);
+    private Timer eTimer;
     private Cloud cloud;
     private double enemyVel = 3;
     // private double cloudVel = 3;
     private int time = 30;
     private GLabel timeLabel;
+    private GLabel liveLabel;
     private int count = 0;
-
-    private Enemy enemy;
-    private Timer eTimer;
+    private GImage liveIMG;
 
     private Timer playerTimer = new Timer(2, this);
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
+
+	this.eTimer = new Timer(50, this);
 	mainScreen = program;
 	map = new Map();
 	drawTimeLabel();
+	drawLiveLabel();
 	if (levelNum == 1) {
 	    setupLevel1();
 	}
@@ -69,6 +70,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	mainScreen.add(map.getEnemies().get(1).getImage());
 	mainScreen.add(cloud.getImage());
 	mainScreen.add(timeLabel);
+	mainScreen.add(liveIMG);
+	mainScreen.add(liveLabel);
 	startTimer();
     }
 
@@ -108,30 +111,39 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	playerTimer.stop();
 	if (player.moveState == MoveDirection.LEFT || player.moveState == MoveDirection.RIGHT) {
 
-	} 
+	}
 	if (player.moveState != MoveDirection.SPACE) {
 	    player.moveState = null;
 	}
-	
+
+    }
+
+    void moveEandC() {
+	for (Enemy ene : map.getEnemies()) {
+	    ene.getImage().move(enemyVel, 0);
+	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+		    || ene.getImage().getX() <= ene.getStartX()) {
+		enemyVel *= -1;
+		ene.getImage().move(enemyVel, 0);
+
+	    }
+	}
+
+	if (count % 15 == 0) {
+	    time--;
+	    timeLabel.setLabel(String.valueOf(time));
+	}
+
+	cloud.move(1325);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 	Object source = e.getSource();
 	count++;
-	
 
-
-	if (source == timer) {
-	    callEnemyMovement();
-
-	    if (count % 15 == 0) {
-		time--;
-		timeLabel.setLabel(String.valueOf(time));
-	    }
-
-	    cloud.move(1325);
-
+	if (source == eTimer) {
+	    moveEandC();
 	}
 
 	if (source == playerTimer && playerTimer.isRunning()) {
@@ -140,7 +152,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		player.move(PLAYER_VELOCITY_WALK, 0);
 	    }
 	}
-	
+
 	if (source == jumpUp) {
 	    System.out.println("go up");
 	    player.move(0, 2);
@@ -151,7 +163,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		jumpDn.start();
 	    }
 	}
-	
+
 	if (source == jumpDn) {
 	    player.move(0, -2);
 	    jumpStep -= 2;
@@ -162,28 +174,36 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
     }
-    
+
     public void callEnemyMovement() {
 	for (Enemy ene : map.getEnemies()) {
+	    ene.getImage().move(enemyVel, 0);
+	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+		    || ene.getImage().getX() <= ene.getStartX()) {
+		enemyVel *= -1;
 		ene.getImage().move(enemyVel, 0);
-		if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-			|| ene.getImage().getX() <= ene.getStartX()) {
-		    enemyVel *= -1;
-		    ene.getImage().move(enemyVel, 0);
 
-		}
+	    }
 	}
     }
 
     public void drawTimeLabel() {
-	timeLabel = new GLabel("30", 50, 50);
-	timeLabel.setLocation(200, 50);
+	timeLabel = new GLabel("30", 200, 50);
 	timeLabel.setColor(Color.WHITE);
 	timeLabel.setFont("Arial-Bold-30");
     }
 
+    public void drawLiveLabel() {
+	liveLabel = new GLabel("3", 95, 50);
+	liveLabel.setColor(Color.WHITE);
+	liveLabel.setFont("Arial-Bold-30");
+	liveIMG = new GImage("liveshead.png", 20, 8);
+	liveIMG.setSize(65, 65);
+
+    }
+
     public void startTimer() {
-	timer.start();
+	eTimer.start();
     }
 
     public void setupLevel1() {
