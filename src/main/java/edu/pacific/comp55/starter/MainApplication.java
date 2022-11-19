@@ -3,8 +3,12 @@ package edu.pacific.comp55.starter;
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;
+import javafx.beans.binding.When;
+
 import java.awt.*;
 import java.awt.event.*;
+
+import org.apache.commons.math3.random.ISAACRandom;
 
 public class MainApplication extends GraphicsApplication {
 
@@ -42,6 +46,7 @@ public class MainApplication extends GraphicsApplication {
     public void switchToLevel() {
 	switchToScreen(level);
 	playRandomSound();
+	
     }
 
     public void switchToSettings() {
