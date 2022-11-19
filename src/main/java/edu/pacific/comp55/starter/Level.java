@@ -26,6 +26,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private MainApplication mainScreen;
     private Map map;
     private Player player;
+    private Map ground;
     private Timer timer;
     private Cloud cloud;
     private double enemyVel = 3;
@@ -38,6 +39,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Timer eTimer;
 
     private Timer playerTimer;
+    private GImage newPlayer;
+    private ArrayList<Chunk> chunky;
+    
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
@@ -50,8 +54,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	mainScreen.setupInteractions();
 	playerTimer = new Timer(2, this);
-
+	newPlayer = player.getplayerIMG();
+	chunky = ground.getChunks();
     }
+    
 
     public void showContents() {
 	mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
@@ -96,6 +102,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
     }
 
+    public boolean checkGround() {
+    	if (mainScreen.getElementAt(newPlayer.getX() ,newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1).getChunkIMG() ) {
+    		
+    	}
+    	return true;
+    }
+    
     @Override
     public void keyReleased(KeyEvent e) {
 	playerTimer.stop();
@@ -132,7 +145,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	if (source == playerTimer) {
 	    if (playerTimer.isRunning() && player.moveState != MoveDirection.SPACE) {
-		player.move(5, 0);
+		player.move(3, 0);
 	    } else if (player.moveState == MoveDirection.SPACE) {
 		int jumpTime = 10;
 		System.out.println(jumpTime);
