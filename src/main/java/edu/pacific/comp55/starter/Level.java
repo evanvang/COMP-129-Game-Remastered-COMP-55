@@ -14,6 +14,7 @@ import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 
+
 /**
  * @author Team No Focus!
  * 
@@ -35,6 +36,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private GLabel liveLabel;
     private int count = 0;
     private GImage liveIMG;
+    private GImage clockIMG;
 
 
     private Timer playerTimer;
@@ -66,6 +68,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	mainScreen.add(timeLabel);
 	mainScreen.add(liveIMG);
 	mainScreen.add(liveLabel);
+	mainScreen.add(clockIMG);
 	startTimer();
     }
 
@@ -160,6 +163,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	timeLabel = new GLabel("30", 200, 50);
 	timeLabel.setColor(Color.WHITE);
 	timeLabel.setFont("Arial-Bold-30");
+	clockIMG = new GImage("clock guy.png", 145, 15);
+	clockIMG.setSize(45,45);
     }
     
     public void drawLiveLabel() {
