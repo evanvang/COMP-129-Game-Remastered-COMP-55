@@ -61,6 +61,15 @@ public class Player {
 	x = (int) playerIMG.getX();
 	y = (int) playerIMG.getY();
     }
+//    
+//    public GImage getplayerIMG() {
+//    	return playerIMG;
+//    }
+    
+//    public void setplayerIMG() {
+//    	this.playerIMG = playerIMG;
+//    }
+    
 
     // Setters & Getters
     public int getX() {
@@ -90,5 +99,9 @@ public class Player {
     public GObject getImage() {
 	return playerIMG;
     }
+
+	public GImage getplayerIMG() {
+		return playerIMG;
+	}
 
 }
