@@ -20,6 +20,7 @@ public class MainApplication extends GraphicsApplication {
     private MainGame mainGame;
     private MenuPane menu;
     private SettingsPane settings;
+    private PausePane pause;
     private Level level;
     private int count;
 
@@ -29,10 +30,10 @@ public class MainApplication extends GraphicsApplication {
 
     public void run() {
 	level = new Level(this, 1);
-	System.out.println("Hello, world!");
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
+	pause = new PausePane(this, level);
 	setupInteractions();
 	switchToMenu();
     }
@@ -52,10 +53,18 @@ public class MainApplication extends GraphicsApplication {
     public void switchToSettings() {
 	switchToScreen(settings);
     }
+    
+    public void switchToPause() {
+    	switchToScreen(pause);
+        }
 
     private void playRandomSound() {
 	AudioPlayer audio = AudioPlayer.getInstance();
 	audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+    }
+    
+    public void stopRandomSound() {
+    	
     }
 
     public static void main(String[] args) {
