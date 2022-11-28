@@ -8,12 +8,14 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
-
 
 /**
  * @author Team No Focus!
@@ -24,19 +26,26 @@ import acm.program.GraphicsProgram;
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
-    private final int jumpHeight = 150;
+    private static final int PLAYER_DN_VELOCITY = -5;
+    private static final int PLAYER_UP_VELOCITY = 50;
+    private final int jumpHeight = 70;
     private int jumpStep = 0;
-    private Timer jumpUp = new Timer(2, this);
-    private Timer jumpDn = new Timer(2, this);
+    private Timer jumpUpTimer = new Timer(2, this);
+    private Timer jumpDnTimer = new Timer(2, this);
 
-    private final int PLAYER_VELOCITY_WALK = 5;
+    private final double PLAYER_WALK_VELOCITY = 10;
+
+    public double initSpeed = 0;
+
+    /* List to store keys that are pressed, stores no duplicates */
+    private Set<Integer> keyList = new HashSet<>();
 
     private MainApplication mainScreen;
     private Map map;
     private Player player;
     private Map ground;
     private Timer timer;
-    private Timer eTimer;
+    private Timer eTimer = new Timer(50, this);
     private Cloud cloud;
     private double enemyVel = 3;
     private  int time;
@@ -45,16 +54,21 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private int count = 0;
     private GImage liveIMG;
     private GImage clockIMG;
+
     private GLabel pause;
     private GImage newPlayer;
     private ArrayList<Chunk> chunky;
+
+    private Timer playerMoveTimer = new Timer(2, this);
+
+
     
     private Timer playerTimer = new Timer(2, this);
     private int levelNum;
+
     // Constructor
     public Level(MainApplication program, int levelNum) {
 
-	this.eTimer = new Timer(50, this);
 	mainScreen = program;
 	map = new Map();
 	this.levelNum = levelNum;
@@ -63,11 +77,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (levelNum == 1) {
 	    setupLevel1();
 	}
-	mainScreen.setupInteractions();
-	playerTimer = new Timer(2, this);
 	newPlayer = player.getplayerIMG();
 	chunky = map.getChunks();
     }
+
     public GLabel getTimeLabel() {
 		return timeLabel;
 	}
@@ -95,7 +108,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	mainScreen.add(liveIMG);
 	mainScreen.add(liveLabel);
 	mainScreen.add(clockIMG);
-	startTimer();
+	startEnemyTimer();
     }
 
     public void hideContents() {
@@ -107,25 +120,36 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	int keyCode = e.getKeyCode();
 
-	if (keyCode == KeyEvent.VK_RIGHT) {
-	    System.out.println("right");
-	    player.moveState = MoveDirection.RIGHT;
-	    playerTimer.start();
-	}
+	/*
+	 * Player key movements
+	 */
+	switch (keyCode) {
 
-	if (keyCode == KeyEvent.VK_LEFT) {
+	case KeyEvent.VK_RIGHT:
+	    keyList.add(KeyEvent.VK_RIGHT);
 
-	    player.moveState = MoveDirection.LEFT;
-	    playerTimer.start();
+	    player.setMoveState(MoveState.RIGHT);
+	    playerMoveTimer.start();
+	    break;
 
-	}
+	case KeyEvent.VK_LEFT:
+	    keyList.add(KeyEvent.VK_LEFT);
 
-	if (keyCode == KeyEvent.VK_SPACE) {
+	    player.setMoveState(MoveState.LEFT);
+	    playerMoveTimer.start();
+	    break;
 
-	    player.moveState = MoveDirection.SPACE;
+	case KeyEvent.VK_SPACE:
+	    keyList.add(KeyEvent.VK_SPACE);
+
+	    player.setJumping(true);
 	    jumpStep = 0;
-	    jumpUp.start();
+	    player.setMoveState(MoveState.SPACE);
+	    jumpUpTimer.start();
+	    break;
 
+	default:
+	    break;
 	}
 	
 	if ( keyCode == KeyEvent.VK_P) {
@@ -135,25 +159,43 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     }
 
     public boolean checkGround() {
-    	if (mainScreen.getElementAt(newPlayer.getX() ,newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1).getChunkIMG() ) {
-    		
-    	}
-    	return true;
-    }
-    
-    @Override
-    public void keyReleased(KeyEvent e) {
-	playerTimer.stop();
-	if (player.moveState == MoveDirection.LEFT || player.moveState == MoveDirection.RIGHT) {
+	if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+		.getChunkIMG()) {
 
 	}
-	if (player.moveState != MoveDirection.SPACE) {
+	return true;
+    }
+
+    public void releasePlayerFlags() {
+	playerMoveTimer.stop();
+	player.releaseKeyFlags();
+
+	if (player.moveState != MoveState.SPACE) {
 	    player.moveState = null;
 	}
 
+	initSpeed = 0;
     }
 
-    void moveEandC() {
+    @Override
+    public void keyReleased(KeyEvent e) {
+	releasePlayerFlags();
+
+//	if (keyList.contains(KeyEvent.VK_RIGHT)) {  WESSSSSSSSSSSSSSS
+//	    player.setMoveState(MoveState.RIGHT_STOP);
+//	    Double temp = PLAYER_WALK_VELOCITY;
+//	    temp -= 0.45;
+//	    if (initSpeed >= 0) {
+//		player.move(PLAYER_WALK_VELOCITY, 0);
+//	    } else {
+//		player.move(initSpeed, 0);
+//	    }
+//	}
+	
+	keyList.clear();
+    }
+
+    void callEnemyCLoudMovement() {
 	for (Enemy ene : map.getEnemies()) {
 	    ene.getImage().move(enemyVel, 0);
 	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
@@ -172,62 +214,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	cloud.move(1325);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-	Object source = e.getSource();
-	count++;
-
-	if (source == eTimer) {
-	    moveEandC();
-	}
-
-	if (source == playerTimer && playerTimer.isRunning()) {
-	    // horizontal motion
-	    if (player.moveState == MoveDirection.RIGHT || player.moveState == MoveDirection.LEFT) {
-		player.move(PLAYER_VELOCITY_WALK, 0);
-	    }
-	}
-
-	if (source == jumpUp) {
-	    System.out.println("go up");
-	    player.move(0, 2);
-	    System.out.println("after up");
-	    jumpStep += 2;
-	    if (jumpStep >= jumpHeight) {
-		jumpUp.stop();
-		jumpDn.start();
-	    }
-	}
-
-	if (source == jumpDn) {
-	    player.move(0, -2);
-	    jumpStep -= 2;
-	    if (jumpStep <= 0) {
-		jumpDn.stop();
-		player.moveState = null;
-	    }
-	}
-
-    }
-
-    public void callEnemyMovement() {
-	for (Enemy ene : map.getEnemies()) {
-	    ene.getImage().move(enemyVel, 0);
-	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-		    || ene.getImage().getX() <= ene.getStartX()) {
-		enemyVel *= -1;
-		ene.getImage().move(enemyVel, 0);
-
-	    }
-	}
-    }
-
     public void drawTimeLabel() {
 	timeLabel = new GLabel("30", 200, 50);
 	timeLabel.setColor(Color.WHITE);
 	timeLabel.setFont("Arial-Bold-30");
 	clockIMG = new GImage("clock guy.png", 145, 15);
-	clockIMG.setSize(45,45);
+	clockIMG.setSize(45, 45);
     }
 
     public void drawLiveLabel() {
@@ -239,7 +231,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     }
 
-    public void startTimer() {
+    public void startEnemyTimer() {
 	eTimer.start();
     }
  
@@ -274,6 +266,77 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	Object source = e.getSource();
+	count++;
+
+	if (source == eTimer) {
+	    callEnemyCLoudMovement();
+	}
+
+	if (player.moveState != null) {
+
+	    if (source == playerMoveTimer) {
+		if (keyList.contains(KeyEvent.VK_RIGHT) && keyList.contains(KeyEvent.VK_LEFT)) {
+		    return;
+		}
+
+		if (keyList.contains(KeyEvent.VK_RIGHT)) {
+		    // player.setRightStep(true);
+
+		    initSpeed += 0.45;
+		    if (initSpeed >= PLAYER_WALK_VELOCITY) {
+			player.move(PLAYER_WALK_VELOCITY, 0);
+		    } else {
+			player.move(initSpeed, 0);
+		    }
+
+		}
+
+		if (keyList.contains(KeyEvent.VK_LEFT)) {
+		    // player.setLeftStep(true);
+
+		    initSpeed += 0.45;
+		    if (initSpeed >= PLAYER_WALK_VELOCITY) {
+			player.move(PLAYER_WALK_VELOCITY, 0);
+		    } else {
+			player.move(initSpeed, 0);
+		    }
+
+		}
+
+	    }
+
+	    if (source == jumpUpTimer) {
+
+		player.move(0, PLAYER_UP_VELOCITY);
+
+		jumpStep += 30;
+		if (jumpStep >= jumpHeight) {
+		    jumpUpTimer.stop();
+		    jumpDnTimer.start();
+		}
+	    }
+
+	    if (source == jumpDnTimer) {
+
+		player.move(0, PLAYER_DN_VELOCITY);
+
+		jumpStep -= 3;
+		if (jumpStep <= 0) {
+		    jumpDnTimer.stop();
+		    player.moveState = null;
+		    player.setJumping(false);
+		}
+	    }
+
+	} else {
+	    // player.callIdleAnimation();
+	}
 
     }
 }
