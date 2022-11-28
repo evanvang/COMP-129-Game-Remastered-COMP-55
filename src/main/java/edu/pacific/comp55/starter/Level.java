@@ -48,23 +48,30 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Timer eTimer = new Timer(50, this);
     private Cloud cloud;
     private double enemyVel = 3;
-    private int time = 30;
-    private GLabel timeLabel;
+    private  int time;
+	private GLabel timeLabel;
     private GLabel liveLabel;
     private int count = 0;
     private GImage liveIMG;
     private GImage clockIMG;
 
+    private GLabel pause;
     private GImage newPlayer;
     private ArrayList<Chunk> chunky;
 
     private Timer playerMoveTimer = new Timer(2, this);
+
+
+    
+    private Timer playerTimer = new Timer(2, this);
+    private int levelNum;
 
     // Constructor
     public Level(MainApplication program, int levelNum) {
 
 	mainScreen = program;
 	map = new Map();
+	this.levelNum = levelNum;
 	drawTimeLabel();
 	drawLiveLabel();
 	if (levelNum == 1) {
@@ -73,6 +80,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	newPlayer = player.getplayerIMG();
 	chunky = map.getChunks();
     }
+
+    public GLabel getTimeLabel() {
+		return timeLabel;
+	}
+
+
+	public void setTimeLabel(GLabel timeLabel) {
+		this.timeLabel = timeLabel;
+	}
+
+	public int getLevelNum() {
+		return levelNum;
+	}
+    
 
     public void showContents() {
 	mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
@@ -129,6 +150,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	default:
 	    break;
+	}
+	
+	if ( keyCode == KeyEvent.VK_P) {
+		mainScreen.switchToPause();
+		eTimer.stop();
 	}
     }
 
@@ -208,8 +234,23 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     public void startEnemyTimer() {
 	eTimer.start();
     }
+ 
+    public void stopTimer() {
+    eTimer.stop();
+    }
+    
+    
+    public int getTime() {
+		return time;
+	}
 
-    public void setupLevel1() {
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+
+	public void setupLevel1() {
 	player = new Player(50, 415);
 	cloud = new Cloud(50, 25);
 
@@ -220,6 +261,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	map.createEnemy(900, 375);
 	map.createEnemy(150, 465);
+	time = 30;
     }
 
     @Override
