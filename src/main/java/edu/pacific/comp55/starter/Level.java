@@ -155,7 +155,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     public void keyReleased(KeyEvent e) {
 	releasePlayerFlags();
 
-//	if (keyList.contains(KeyEvent.VK_RIGHT)) {
+//	if (keyList.contains(KeyEvent.VK_RIGHT)) {  WESSSSSSSSSSSSSSS
 //	    player.setMoveState(MoveState.RIGHT_STOP);
 //	    Double temp = PLAYER_WALK_VELOCITY;
 //	    temp -= 0.45;
