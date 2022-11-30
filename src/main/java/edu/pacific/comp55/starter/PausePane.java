@@ -38,8 +38,9 @@ public class PausePane extends GraphicsPane {
 		hideContents();
 		//numLevel = level.getLevelNum();
 		if (obj == quit) {
-//            level.stopTimer();
-//			program.switchToMenu();
+           level.stopTimer();
+           program.switchToMenu();
+			//program.removeAll();
 		}
 		if (obj == resume) {
 			program.switchToLevel();

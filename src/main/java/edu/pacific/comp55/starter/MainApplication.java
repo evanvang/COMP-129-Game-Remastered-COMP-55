@@ -45,6 +45,8 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void switchToLevel() {
+    int levelNum = level.getLevelNum();
+    level = new Level(this, levelNum);
 	switchToScreen(level);
 	playRandomSound();
 	
