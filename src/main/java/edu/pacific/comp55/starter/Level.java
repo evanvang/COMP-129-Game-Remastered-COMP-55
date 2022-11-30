@@ -8,14 +8,12 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
+
 
 /**
  * @author Team No Focus!
@@ -40,7 +38,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public double initSpeed = 10;
 
 	/* List to store keys that are pressed, stores no duplicates */
-	private Set<Integer> keyList = new HashSet<>();
+//	private Set<Integer> keyList = new HashSet<>();
 
 	private MainApplication mainScreen;
 	private Map map;
@@ -82,8 +80,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public GLabel getTimeLabel() {
-		return timeLabel;
-	}
+	mainScreen.setupInteractions();
+	playerTimer = new Timer(2, this);
+	newPlayer = player.getplayerIMG();
+	chunky = map.getChunks();
+	return timeLabel;
+    }
 
 	public void setTimeLabel(GLabel timeLabel) {
 		this.timeLabel = timeLabel;
@@ -93,25 +95,34 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return levelNum;
 	}
 
-	public void showContents() {
-		mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-		mainScreen.add(map.getChunks().get(1).getChunkIMG());
-		mainScreen.add(map.getChunks().get(2).getspikeIMG());
-		mainScreen.add(map.getChunks().get(3).getChunkIMG());
-		mainScreen.add(player.getImage());
-		mainScreen.add(map.getEnemies().get(0).getImage());
-		mainScreen.add(map.getEnemies().get(1).getImage());
-		mainScreen.add(cloud.getImage());
-		mainScreen.add(timeLabel);
-		mainScreen.add(liveIMG);
-		mainScreen.add(liveLabel);
-		mainScreen.add(clockIMG);
-		startEnemyTimer();
-	}
+    public void showContents() {
+	mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+	mainScreen.add(map.getChunks().get(1).getChunkIMG());
+	mainScreen.add(map.getChunks().get(2).getspikeIMG());
+	mainScreen.add(map.getChunks().get(3).getChunkIMG());
+	mainScreen.add(player.getImage());
+	mainScreen.add(map.getEnemies().get(0).getImage());
+	mainScreen.add(map.getEnemies().get(1).getImage());
+	mainScreen.add(cloud.getImage());
+	mainScreen.add(timeLabel);
+	mainScreen.add(liveIMG);
+	mainScreen.add(liveLabel);
+	mainScreen.add(clockIMG);
+	startTimer();
+    }
 
-	public void hideContents() {
+    public void hideContents() {
 
-	}
+    }
+
+    public boolean checkGround() {
+    	if (mainScreen.getElementAt(newPlayer.getX() ,newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1).getChunkIMG() ) {
+    		
+    	}
+    	return true;
+    }
+    
+	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -216,7 +227,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 //	    }
 //	}
 
-		keyList.clear();
+//		keyList.clear();
 	}
 
 	void callEnemyCLoudMovement() {
@@ -252,18 +263,67 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		liveLabel.setFont("Arial-Bold-30");
 		liveIMG = new GImage("liveshead.png", 20, 8);
 		liveIMG.setSize(65, 65);
-
 	}
+		
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//	Object source = e.getSource();
+//	
+//
+//	if (source == eTimer) {
+//	    moveEandC();
+//	}
+//
+//	if (source == playerTimer && playerTimer.isRunning()) {
+//	    // horizontal motion
+//	    if (player.moveState == MoveState.RIGHT || player.moveState == MoveState.LEFT) {
+//		player.move(PLAYER_VELOCITY_WALK, 0);
+//	    }
+//	}
+//
+//	if (source == jumpUp) {
+//	    System.out.println("go up");
+//	    player.move(0, 2);
+//	    System.out.println("after up");
+//	    jumpStep += 2;
+//	    if (jumpStep >= jumpHeight) {
+//		jumpUp.stop();
+//		jumpDn.start();
+//	    }
+//	}
+//
+//	if (source == jumpDn) {
+//	    player.move(0, -2);
+//	    jumpStep -= 2;
+//	    if (jumpStep <= 0) {
+//		jumpDn.stop();
+//		player.moveState = null;
+//	    }
+//	}
+//
+//    }
 
-	public void startEnemyTimer() {
-		eTimer.start();
+    public void callEnemyMovement() {
+	for (Enemy ene : map.getEnemies()) {
+	    ene.getImage().move(enemyVel, 0);
+	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+		    || ene.getImage().getX() <= ene.getStartX()) {
+		enemyVel *= -1;
+		ene.getImage().move(enemyVel, 0);
+
+	    }
 	}
+    }
 
-	public void stopTimer() {
-		eTimer.stop();
-	}
-
-	public int getTime() {
+    public void startTimer() {
+	eTimer.start();
+    }
+ 
+    public void stopTimer() {
+    eTimer.stop();
+    }
+    
+    public int getTime() {
 		return time;
 	}
 
@@ -377,5 +437,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 //			// player.callIdleAnimation();
 //		}
 
-	}
+	map.createEnemy(900, 375);
+	map.createEnemy(150, 465);
+	time = 30;
+    }
+	
+	
+
 }
