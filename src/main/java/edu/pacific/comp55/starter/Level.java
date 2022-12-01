@@ -199,6 +199,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     }
 
     void callEnemyCLoudMovement() {
+    	count++;
 	for (Enemy ene : map.getEnemies()) {
 	    ene.getImage().move(enemyVel, 0);
 	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
@@ -321,7 +322,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 	Object source = e.getSource();
-	count++;
+	
 
 	if (source == eTimer) {
 	    callEnemyCLoudMovement();
