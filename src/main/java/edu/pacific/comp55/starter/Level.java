@@ -405,9 +405,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 //			// player.callIdleAnimation();
 //		}
 
-	map.createEnemy(900, 375);
-	map.createEnemy(150, 465);
-	time = 30;
     }
 
 }
