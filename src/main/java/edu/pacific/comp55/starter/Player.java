@@ -12,90 +12,48 @@ import acm.graphics.GRect;
 
 public class Player {
 
-	private final int jumpHeight = 60;
-	private int jumpStep = 0;
+    // For the players image
+    private GImage playerIMG;
 
-	// For the players image
-	private GImage playerIMG;
+    // Players current position within window
+    private int x, y;
 
-	/* Key movement flags */
-	private boolean isJumping = false;
-	private boolean isRightStep = false;
-	private boolean isLeftStep = false;
+    // the active pressed key
+    public MoveState moveState = null;
 
-	// Players current position within window
-	private int x, y;
+    // Amount player will move by when key event occurs
+    public static final int velocityX = 10;
+    public static final int velocityY = 10;
 
-	// the active pressed key
-	public MoveState moveState = null;
+    // Player Constructor
+    public Player(int x, int y) {
+	this.x = x;
+	this.y = y;
+	playerIMG = new GImage("idle1.png");
+	playerIMG.setSize(100, 100);
+	playerIMG.setLocation(x, y);
+    }
 
-	// Amount player will move by when key event occurs
-	public static final int velocityX = 10;
-	public static final int velocityY = 10;
+    public void move(double x1, double y1) {
 
-	private final int PLAYER_WALK_VELOCITY = 5;
+	playerIMG.setLocation(x + x1, y + y1);
 
-	// Player Constructor
-	public Player(int x, int y) {
-		this.x = x;
-		this.y = y;
-		playerIMG = new GImage("idle1.png");
-		playerIMG.setSize(100, 100);
-		playerIMG.setLocation(x, y);
-	}
+	System.out.println("inside move functon");
 
-	public void move(double x1, double y1) {
+	updatePlayerPos();
 
-//	switch (moveState) {
-//
-//	case RIGHT:
-//	    playerIMG.move(x, y);
-//	    break;
-//	case LEFT:
-//	    playerIMG.move(-x, y);
-//	    break;
-//	case SPACE:
-//	    playerIMG.move(x, -y);
-//	    break;
-//	case SPACE_LEFT:
-//	    break;
-//	case SPACE_RIGHT:
-//	    break;
-//	case RIGHT_STOP:
-//	    playerIMG.move(x, y);
-//	    break;
-//
-//	default:
+    }
 
-//	}
-		playerIMG.setLocation(x + x1, y + y1);
-		
-		System.out.println("inside move functon");
+    public void updatePlayerPos() {
+	x = (int) playerIMG.getX();
+	y = (int) playerIMG.getY();
+    }
 
-		updatePlayerPos();
-
-	}
-
-//	public void releaseKeyFlags() {
-//		isJumping = false;
-//		isLeftStep = false;
-//		isRightStep = false;
-//	}
-//
-//	public void setMoveState(MoveState direction) {
-//		moveState = direction;
-//	}
-//
-	public void updatePlayerPos() {
-		x = (int) playerIMG.getX();
-		y = (int) playerIMG.getY();
-	}
-
-	/*
-	 * 
-	 * Setters & Getters
-	 * 
-	 */
+    /*
+     * 
+     * Setters & Getters
+     * 
+     */
 //	public boolean isJumping() {
 //		return isJumping;
 //	}
@@ -144,17 +102,17 @@ public class Player {
 //		return velocityY;
 //	}
 
-	public GObject getImage() {
-		return playerIMG;
-	}
+    public GObject getImage() {
+	return playerIMG;
+    }
 
-	public GImage getplayerIMG() {
-		return playerIMG;
-	}
+    public GImage getplayerIMG() {
+	return playerIMG;
+    }
 
-	public void setPlayerImage(String img) {
-		GImage newIMGImage = new GImage(img);
-		this.playerIMG = newIMGImage;
-	}
+    public void setPlayerImage(String img) {
+	GImage newIMGImage = new GImage(img);
+	this.playerIMG = newIMGImage;
+    }
 
 }
