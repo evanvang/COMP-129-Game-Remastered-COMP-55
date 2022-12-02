@@ -1,5 +1,4 @@
 package edu.pacific.comp55.starter;
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GObject;
@@ -36,17 +35,17 @@ public class PausePane extends GraphicsPane {
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		hideContents();
-		//numLevel = level.getLevelNum();
+		numLevel = level.getLevelNum();
 		if (obj == quit) {
-           level.stopTimer();
+           
+		   program.removeAll();
            program.switchToMenu();
-			//program.removeAll();
+			
 		}
 		if (obj == resume) {
-			program.switchToLevel();
+			program.switchToCurrLevel();
 		}
 		if (obj == retry) {
-			numLevel = level.getLevelNum();
 			level = new Level(program,numLevel);
 			program.switchToScreen(level);
 		}

@@ -51,6 +51,10 @@ public class MainApplication extends GraphicsApplication {
 	playRandomSound();
 	
     }
+    public void switchToCurrLevel() {
+    	switchToScreen(level);
+    	playRandomSound();
+    }
 
     public void switchToSettings() {
 	switchToScreen(settings);
