@@ -45,11 +45,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private GImage liveIMG;
     private GImage clockIMG;
 
-    private GLabel pause;
     private GImage newPlayer;
     private ArrayList<Chunk> chunky;
-
-
+    private GImage goalSpace;
     private int levelNum;
 
     // Constructor
@@ -95,7 +93,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	mainScreen.add(liveIMG);
 	mainScreen.add(liveLabel);
 	mainScreen.add(clockIMG);
+	mainScreen.add(goalSpace);
 	startTimer();
+	
     }
 
     public void hideContents() {
@@ -196,6 +196,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	liveIMG = new GImage("liveshead.png", 20, 8);
 	liveIMG.setSize(65, 65);
     }
+    
+    public void drawGoalSpace() {
+      goalSpace = new GImage("redflag.png");
+      goalSpace.setSize(70,70);
+    }
 
     public void callEnemyMovement() {
 	for (Enemy ene : map.getEnemies()) {
@@ -237,6 +242,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	map.createEnemy(900, 375);
 	map.createEnemy(150, 465);
 	time = 30;
+	
+	drawGoalSpace();
+	goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
     }
 
     @Override
