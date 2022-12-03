@@ -99,8 +99,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void hideContents() {
-       mainScreen.removeAll();
-       System.out.println("hide");
+       
+       
 	}
 
 	public boolean checkGround() {
@@ -286,7 +286,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 		
 		if(passedLevel() == true) {
-			eTimer.stop();
+			mainScreen.removeAll();
+			
 			
 		}
 
