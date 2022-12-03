@@ -287,7 +287,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		
 		if(passedLevel() == true) {
 			mainScreen.removeAll();
-			
+			setupLevel2();
 			
 		}
 
