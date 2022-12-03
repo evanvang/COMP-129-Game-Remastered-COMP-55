@@ -30,6 +30,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private Timer rightMoveTimer = new Timer(50, this);
 
     public double initSpeed = 10;
+    
 
  
     private MainApplication mainScreen;
@@ -44,6 +45,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private int count = 0;
     private GImage liveIMG;
     private GImage clockIMG;
+    private boolean playerOnEdge = false;
+    
 
     private GImage newPlayer;
     private ArrayList<Chunk> chunky;
@@ -124,7 +127,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    rightMoveTimer.start();
 	    break;
 	case KeyEvent.VK_LEFT:
-	    leftMoveTimer = new Timer(20, this);
+		if (isPlayerOnEdge()) {
+			break;
+		}
+		leftMoveTimer = new Timer(20, this);
 	    leftMoveTimer.start();
 	    break;
 	case KeyEvent.VK_SPACE:
@@ -151,6 +157,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	}
 	return false;
+    }
+    
+    public boolean isPlayerOnEdge() {
+    	if (newPlayer.getX() <= -5) {
+    		return true;
+    	}
+    	return false;
     }
 
     @Override
@@ -261,11 +274,15 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	if (source == rightMoveTimer) {
+		
 	    player.move(initSpeed, 0);
 
 	}
 	if (source == leftMoveTimer) {
-	    player.move(-initSpeed, 0);
+		if (!isPlayerOnEdge()) {
+			player.move(-initSpeed, 0);
+		}
+	    
 
 	}
 	if (source == jumpUpTimer) {
@@ -277,6 +294,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    jumpUpTimer.stop();
 	    jumpCounter = 0;
 	}
+	
 	
 // OLD CODE FOR REFERENCE
 //		if (player.moveState != null) {
