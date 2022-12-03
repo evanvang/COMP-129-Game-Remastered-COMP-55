@@ -25,9 +25,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	private static final int PLAYER_UP_VELOCITY = -20;
 	private static int jumpCounter = 0;
-	private Timer jumpUpTimer = new Timer(50, this);
-	private Timer leftMoveTimer = new Timer(50, this);
-	private Timer rightMoveTimer = new Timer(50, this);
+	private Timer jumpUpTimer = new Timer(20, this);
+	private Timer leftMoveTimer = new Timer(20, this);
+	private Timer rightMoveTimer = new Timer(20, this);
 
 	public double initSpeed = 10;
 
@@ -121,15 +121,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		 */
 		switch (keyCode) {
 		case KeyEvent.VK_RIGHT:
-			rightMoveTimer = new Timer(20, this);
 			rightMoveTimer.start();
 			break;
 		case KeyEvent.VK_LEFT:
-			leftMoveTimer = new Timer(20, this);
 			leftMoveTimer.start();
 			break;
 		case KeyEvent.VK_SPACE:
-			jumpUpTimer = new Timer(20, this);
 			jumpUpTimer.start();
 			break;
 		case KeyEvent.VK_P:
@@ -203,18 +200,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		goalSpace.setSize(70,70);
 	}
 
-	public void callEnemyMovement() {
-		for (Enemy ene : map.getEnemies()) {
-			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-					|| ene.getImage().getX() <= ene.getStartX()) {
-				enemyVel *= -1;
-				ene.getImage().move(enemyVel, 0);
-
-			}
-		}
-	}
-
+	
 	public void startTimer() {
 		eTimer.start();
 	}
@@ -260,7 +246,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	
 	boolean passedLevel() {
-		if (player.getImage().getX() == goalSpace.getX()) {
+		if (player.getImage().getX() + 50== goalSpace.getX()) {
 			System.out.println("win");
 			return true;
 		}
@@ -276,6 +262,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
+
 		if (source == eTimer) {
 			callEnemyCLoudMovement();
 		}
