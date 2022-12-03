@@ -26,8 +26,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private static final int PLAYER_UP_VELOCITY = -20;
 	private static int jumpCounter = 0;
 	private Timer jumpUpTimer = new Timer(50, this);
-	private Timer leftMoveTimer = new Timer(50, this);
-	private Timer rightMoveTimer = new Timer(50, this);
+	private Timer leftMoveTimer = new Timer(20, this);
+	private Timer rightMoveTimer = new Timer(20, this);
 
 	public double initSpeed = 10;
 
@@ -121,11 +121,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		 */
 		switch (keyCode) {
 		case KeyEvent.VK_RIGHT:
-			rightMoveTimer = new Timer(20, this);
+		//	rightMoveTimer = new Timer(20, this);
 			rightMoveTimer.start();
 			break;
 		case KeyEvent.VK_LEFT:
-			leftMoveTimer = new Timer(20, this);
+		//	leftMoveTimer = new Timer(20, this);
 			leftMoveTimer.start();
 			break;
 		case KeyEvent.VK_SPACE:
@@ -146,11 +146,18 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				.getChunkIMG() && (jumpCounter > 1)) {
 			return true;
 		}
+		
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(3)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			return true;
-
+			
 		}
+//		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) != chunky.get(3)
+//				.getChunkIMG() && (jumpCounter > 1)) {
+//			return true;
+//			
+//		}
+		
 		return false;
 	}
 
@@ -260,7 +267,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	
 	boolean passedLevel() {
-		if (player.getImage().getX() == goalSpace.getX()) {
+		if (player.getImage().getX() + 50 == goalSpace.getX()) {
+			
 			System.out.println("win");
 			return true;
 		}
