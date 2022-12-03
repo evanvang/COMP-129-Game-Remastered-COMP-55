@@ -102,13 +102,13 @@ public class Player {
 //		return velocityY;
 //	}
 
-    public GObject getImage() {
+    public GImage getImage() {
 	return playerIMG;
     }
 
-    public GImage getplayerIMG() {
-	return playerIMG;
-    }
+//    public GImage getplayerIMG() {
+//	return playerIMG;
+//    }
 
     public void setPlayerImage(String img) {
 	GImage newIMGImage = new GImage(img);

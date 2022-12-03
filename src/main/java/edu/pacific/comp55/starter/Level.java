@@ -26,8 +26,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     private static final int PLAYER_UP_VELOCITY = -20;
     private static int jumpCounter = 0;
     private Timer jumpUpTimer = new Timer(50, this);
-    private Timer leftMoveTimer = new Timer(50, this);
-    private Timer rightMoveTimer = new Timer(50, this);
+    private Timer leftMoveTimer = new Timer(20, this);
+    private Timer rightMoveTimer = new Timer(20, this);
 
     public double initSpeed = 10;
     
@@ -64,13 +64,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (levelNum == 1) {
 	    setupLevel1();
 	}
-	newPlayer = player.getplayerIMG();
+	newPlayer = player.getImage();
 	chunky = map.getChunks();
     }
 
     public GLabel getTimeLabel() {
 	mainScreen.setupInteractions();
-	newPlayer = player.getplayerIMG();
+	newPlayer = player.getImage();
 	chunky = map.getChunks();
 	return timeLabel;
     }
@@ -123,14 +123,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	 */
 	switch (keyCode) {
 	case KeyEvent.VK_RIGHT:
-	    rightMoveTimer = new Timer(20, this);
+	    //rightMoveTimer = new Timer(20, this);
 	    rightMoveTimer.start();
 	    break;
 	case KeyEvent.VK_LEFT:
 		if (isPlayerOnEdge()) {
 			break;
 		}
-		leftMoveTimer = new Timer(20, this);
+		//leftMoveTimer = new Timer(20, this);
 	    leftMoveTimer.start();
 	    break;
 	case KeyEvent.VK_SPACE:

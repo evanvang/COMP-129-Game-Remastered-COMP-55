@@ -61,7 +61,9 @@ public class MainApplication extends GraphicsApplication {
     }
     
     public void switchToPause() {
-    	switchToScreen(pause);
+    	switchToPause(pause);
+
+//    	switchToScreen(pause);
         }
 
     private void playRandomSound() {
