@@ -208,17 +208,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		goalSpace.setSize(70, 70);
 	}
 
-	public void callEnemyMovement() {
-		for (Enemy ene : map.getEnemies()) {
-			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-					|| ene.getImage().getX() <= ene.getStartX()) {
-				enemyVel *= -1;
-				ene.getImage().move(enemyVel, 0);
-
-			}
-		}
-	}
 
 	public void startTimer() {
 		eTimer.start();
