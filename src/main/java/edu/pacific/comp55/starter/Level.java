@@ -18,8 +18,7 @@ import acm.program.GraphicsProgram;
  * @author Team No Focus!
  * 
  *         Level class will generate the game world by integrating Map, Player,
- *         and Level
- * 
+ *         and Level aasd
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
@@ -30,7 +29,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private Timer rightMoveTimer = new Timer(20, this);
 
 	public double initSpeed = 10;
-
 
 	private MainApplication mainScreen;
 	private Map map;
@@ -44,6 +42,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private int count = 0;
 	private GImage liveIMG;
 	private GImage clockIMG;
+	private boolean playerOnEdge = false;
 
 	private GImage newPlayer;
 	private ArrayList<Chunk> chunky;
@@ -80,93 +79,24 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return levelNum;
 	}
 
-	public void showContents() {
-		mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-		mainScreen.add(map.getChunks().get(1).getChunkIMG());
-		mainScreen.add(map.getChunks().get(2).getspikeIMG());
-		mainScreen.add(map.getChunks().get(3).getChunkIMG());
-		mainScreen.add(player.getImage());
-		mainScreen.add(map.getEnemies().get(0).getImage());
-		mainScreen.add(map.getEnemies().get(1).getImage());
-		mainScreen.add(cloud.getImage());
-		mainScreen.add(timeLabel);
-		mainScreen.add(liveIMG);
-		mainScreen.add(liveLabel);
-		mainScreen.add(clockIMG);
-		mainScreen.add(goalSpace);
-		startTimer();
-
-	}
-
-	public void hideContents() {
-       mainScreen.removeAll();
-       System.out.println("hide");
-	}
-
-	public boolean checkGround() {
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
-				.getChunkIMG()) {
-
-		}
-		return true;
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-
-		int keyCode = e.getKeyCode();
-
-		/*
-		 * Player key movements
-		 */
-		switch (keyCode) {
-		case KeyEvent.VK_RIGHT:
-		//	rightMoveTimer = new Timer(20, this);
-			rightMoveTimer.start();
-			break;
-		case KeyEvent.VK_LEFT:
-		//	leftMoveTimer = new Timer(20, this);
-			leftMoveTimer.start();
-			break;
-		case KeyEvent.VK_SPACE:
-			jumpUpTimer = new Timer(20, this);
-			jumpUpTimer.start();
-			break;
-		case KeyEvent.VK_P:
-			mainScreen.switchToPause();
-			eTimer.stop();
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + keyCode);
-		}
-
-	}
-
 	public boolean isPlayerOnGround() {
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			return true;
 		}
-		
+
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(3)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			return true;
-			
+
 		}
 //		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) != chunky.get(3)
 //				.getChunkIMG() && (jumpCounter > 1)) {
 //			return true;
 //			
 //		}
-		
+
 		return false;
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-
-		rightMoveTimer.stop();
-		leftMoveTimer.stop();
-		System.out.println("key is released");
 	}
 
 	void callEnemyCLoudMovement() {
@@ -207,7 +137,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public void drawGoalSpace() {
 		goalSpace = new GImage("redflag.png");
-		goalSpace.setSize(70,70);
+		goalSpace.setSize(70, 70);
 	}
 
 	public void callEnemyMovement() {
@@ -248,27 +178,93 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createEnemy(900, 375);
 		map.createEnemy(150, 465);
 		time = 30;
+
 		drawGoalSpace();
 		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
+
 	}
-	
-	public void setupLevel2() {
-		player = new Player(50, 415);
-		cloud = new Cloud(50, 25);
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
-		map.createEnemy(900, 375);
-		map.createEnemy(150, 465);
-		time = 30;
-		drawGoalSpace();
-		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
+
+	public void showContents() {
+		mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+		mainScreen.add(map.getChunks().get(1).getChunkIMG());
+		mainScreen.add(map.getChunks().get(2).getspikeIMG());
+		mainScreen.add(map.getChunks().get(3).getChunkIMG());
+		mainScreen.add(player.getImage());
+		mainScreen.add(map.getEnemies().get(0).getImage());
+		mainScreen.add(map.getEnemies().get(1).getImage());
+		mainScreen.add(cloud.getImage());
+		mainScreen.add(timeLabel);
+		mainScreen.add(liveIMG);
+		mainScreen.add(liveLabel);
+		mainScreen.add(clockIMG);
+		mainScreen.add(goalSpace);
+		startTimer();
+
 	}
-	
+
+	public void hideContents() {
+
+	}
+
+	public boolean checkGround() {
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+				.getChunkIMG()) {
+
+		}
+		return true;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+		int keyCode = e.getKeyCode();
+
+		/*
+		 * Player key movements
+		 */
+		switch (keyCode) {
+		case KeyEvent.VK_RIGHT:
+			// rightMoveTimer = new Timer(20, this);
+			rightMoveTimer.start();
+			break;
+		case KeyEvent.VK_LEFT:
+			if (isPlayerOnEdge()) {
+				break;
+			}
+			// leftMoveTimer = new Timer(20, this);
+			leftMoveTimer.start();
+			break;
+		case KeyEvent.VK_SPACE:
+			jumpUpTimer = new Timer(20, this);
+			jumpUpTimer.start();
+			break;
+		case KeyEvent.VK_P:
+			mainScreen.switchToPause();
+			eTimer.stop();
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + keyCode);
+		}
+
+	}
+
+	public boolean isPlayerOnEdge() {
+		if (newPlayer.getX() <= -5) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+		rightMoveTimer.stop();
+		leftMoveTimer.stop();
+		System.out.println("key is released");
+	}
+
 	boolean passedLevel() {
 		if (player.getImage().getX() + 50 == goalSpace.getX()) {
-			
+
 			System.out.println("win");
 			return true;
 		}
@@ -284,16 +280,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
+
 		if (source == eTimer) {
 			callEnemyCLoudMovement();
 		}
 
 		if (source == rightMoveTimer) {
+
 			player.move(initSpeed, 0);
 
 		}
 		if (source == leftMoveTimer) {
-			player.move(-initSpeed, 0);
+			if (!isPlayerOnEdge()) {
+				player.move(-initSpeed, 0);
+			}
 
 		}
 		if (source == jumpUpTimer) {
@@ -305,57 +305,52 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			jumpUpTimer.stop();
 			jumpCounter = 0;
 		}
-		
-		if(passedLevel() == true) {
-			eTimer.stop();
-			
-		}
 
-		// OLD CODE FOR REFERENCE
-		//		if (player.moveState != null) {
-		//
-		//			if (source == rightMoveTimer) {
-		////				if (keyList.contains(KeyEvent.VK_RIGHT) && keyList.contains(KeyEvent.VK_LEFT)) {
-		////					return;
-		////				}
-		////
-		////				if (keyList.contains(KeyEvent.VK_RIGHT)) {
-		//					// player.setRightStep(true);
-		//
-		////		    initSpeed += 0.45;
-		////		    if (initSpeed >= PLAYER_WALK_VELOCITY) {
-		////			player.move(PLAYER_WALK_VELOCITY, 0);
-		////		    } else {
-		//					player.move(initSpeed, 0);
-		////		    }
-		//
-		//				}
-		//
-		//				if (keyList.contains(KeyEvent.VK_LEFT)) {
-		//					// player.setLeftStep(true);
-		//
-		//					initSpeed += 0.45;
-		//					if (initSpeed >= PLAYER_WALK_VELOCITY) {
-		//						player.move(PLAYER_WALK_VELOCITY, 0);
-		//					} else {
-		//						player.move(initSpeed, 0);
-		//					}
-		//
-		//				}
-		//
-		//			}
+// OLD CODE FOR REFERENCE
+//		if (player.moveState != null) {
+//
+//			if (source == rightMoveTimer) {
+////				if (keyList.contains(KeyEvent.VK_RIGHT) && keyList.contains(KeyEvent.VK_LEFT)) {
+////					return;
+////				}
+////
+////				if (keyList.contains(KeyEvent.VK_RIGHT)) {
+//					// player.setRightStep(true);
+//
+////		    initSpeed += 0.45;
+////		    if (initSpeed >= PLAYER_WALK_VELOCITY) {
+////			player.move(PLAYER_WALK_VELOCITY, 0);
+////		    } else {
+//					player.move(initSpeed, 0);
+////		    }
+//
+//				}
+//
+//				if (keyList.contains(KeyEvent.VK_LEFT)) {
+//					// player.setLeftStep(true);
+//
+//					initSpeed += 0.45;
+//					if (initSpeed >= PLAYER_WALK_VELOCITY) {
+//						player.move(PLAYER_WALK_VELOCITY, 0);
+//					} else {
+//						player.move(initSpeed, 0);
+//					}
+//
+//				}
+//
+//			}
 
-		//		if (source == jumpUpTimer) {
-		//			jumpCounter++;
-		//
-		//			player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
-		//
-		////			jumpStep += 20;
-		//		if (jumpStep >= jumpHeight) {
-		//		    jumpUpTimer.stop();
+//		if (source == jumpUpTimer) {
+//			jumpCounter++;
+//
+//			player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
+//
+////			jumpStep += 20;
+//		if (jumpStep >= jumpHeight) {
+//		    jumpUpTimer.stop();
 		// jumpDnTimer.start();
-		//		}
-		//		}
+//		}
+//		}
 
 	}
 
