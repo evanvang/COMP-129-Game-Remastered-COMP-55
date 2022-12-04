@@ -1,3 +1,4 @@
+
 package edu.pacific.comp55.starter;
 
 import java.awt.Button;
@@ -394,16 +395,24 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	if (source == hitTimer) {
-	    if (hitImpact == 0) {
+	    if (hitImpact < 0) {
 		hitImpact = 10;
 		hitTimer.stop();
 	    }
-	    
-	    player.move(-hitImpact, 0);
-	    
+
+	    // Player hit from left side of enemy
+	    if (lastPCollision_Ref < lastECollision_Ref) {
+		player.move(-hitImpact, 0);
+	    }
+
+	    // Player hit from right side of enemy
+	    if (lastPCollision_Ref > lastECollision_Ref) {
+		player.move(hitImpact, 0);
+	    }
+
 	    hitImpact--;
 	}
-
+	
 	if (source == rightWalkFrictionTimer) {
 	    player.move(walkFriction, 0);
 	    walkFriction--;
