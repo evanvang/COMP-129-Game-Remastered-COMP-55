@@ -143,6 +143,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 			break;
 		case KeyEvent.VK_LEFT:
+			if(isPlayerOnEdge()) {
+				break;
+			}
 			leftMoveTimer.start();
 
 			break;
@@ -224,6 +227,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		rightMoveTimer.stop();
 		leftMoveTimer.stop();
+	}
+	public boolean isPlayerOnEdge() {
+		if (newPlayer.getX() <= -5) {
+			return true;
+		}
+		return false;
 	}
 
 	void callEnemyCloudMovement() {
@@ -353,8 +362,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	if (source == leftMoveTimer) {
+		if(!isPlayerOnEdge()) {
 	    player.move(-initSpeed, 0);
-	}
+	}}
 
 	if (source == jumpUpTimer) {
 	    jumpCounter++;
