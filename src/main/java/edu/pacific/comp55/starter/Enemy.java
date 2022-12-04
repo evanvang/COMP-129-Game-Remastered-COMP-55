@@ -28,7 +28,7 @@ public class Enemy {
 		this.startY = startY;
 	}
 
-	public GObject getImage() {
+	public GImage getImage() {
 		return enemyIMG;
 	}
 
