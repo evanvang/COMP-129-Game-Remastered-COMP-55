@@ -387,10 +387,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		hitImpact = 10;
 		hitTimer.stop();
 	    }
-
 	    
 	    player.move(-hitImpact, 0);
-	    
 	    
 	    hitImpact--;
 	}
