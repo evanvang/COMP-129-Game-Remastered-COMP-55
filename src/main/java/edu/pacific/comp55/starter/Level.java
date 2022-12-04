@@ -24,7 +24,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	private static final int PLAYER_UP_VELOCITY = -20;
 	private static int jumpCounter = 0;
-	private Timer jumpUpTimer = new Timer(50, this);
+	private Timer jumpUpTimer = new Timer(20, this);
 	private Timer leftMoveTimer = new Timer(20, this);
 	private Timer rightMoveTimer = new Timer(20, this);
 
@@ -119,6 +119,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		 */
 		switch (keyCode) {
 		case KeyEvent.VK_RIGHT:
+			
 			rightMoveTimer.start();
 			break;
 		case KeyEvent.VK_LEFT:
