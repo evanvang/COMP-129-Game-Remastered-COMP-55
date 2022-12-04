@@ -9,51 +9,63 @@ import acm.console.Console;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
+import acm.graphics.GRectangle;
 
 public class Player {
 
-    // For the players image
-    private GImage playerIMG;
+	// For the players image
+	private GImage playerIMG;
+	private GImage playerIMG_idle2;
 
-    // Players current position within window
-    private int x, y;
+	// Players current position within window
+	private double x, y;
 
-    // the active pressed key
-    public MoveState moveState = null;
+	// the active pressed key
+	public MoveState moveState = null;
 
-    // Amount player will move by when key event occurs
-    public static final int velocityX = 10;
-    public static final int velocityY = 10;
+	// Amount player will move by when key event occurs
+	public static final int velocityX = 10;
+	public static final int velocityY = 10;
 
-    // Player Constructor
-    public Player(int x, int y) {
-	this.x = x;
-	this.y = y;
-	playerIMG = new GImage("idle1.png");
-	playerIMG.setSize(100, 100);
-	playerIMG.setLocation(x, y);
-    }
+	public GRectangle bounds;
 
-    public void move(double x1, double y1) {
+	// Player Constructor
+	public Player(double x, double y) {
+		this.x = x;
+		this.y = y;
+		playerIMG = new GImage("idle1.png");
+		playerIMG.setSize(100, 100);
+		playerIMG.setLocation(x, y);
 
-	playerIMG.setLocation(x + x1, y + y1);
+		playerIMG_idle2 = new GImage("idle2.png");
+		playerIMG_idle2.setSize(100, 100);
+		playerIMG_idle2.setLocation(x, y);
+		playerIMG_idle2.setVisible(false);
 
-	System.out.println("inside move functon");
+		bounds = new GRectangle(x + 10, y, getImage().getWidth() - 50, getImage().getHeight());
+	}
 
-	updatePlayerPos();
+	public void move(double x1, double y1) {
 
-    }
+		playerIMG.setLocation(x + x1, y + y1);
+		playerIMG_idle2.setLocation(x + x1, y + y1);
 
-    public void updatePlayerPos() {
-	x = (int) playerIMG.getX();
-	y = (int) playerIMG.getY();
-    }
+		updatePlayerPos();
 
-    /*
-     * 
-     * Setters & Getters
-     * 
-     */
+	}
+
+	public void updatePlayerPos() {
+		x = playerIMG.getX();
+		y = playerIMG.getY();
+
+		bounds.setLocation(x + 10, y);
+	}
+
+	/*
+	 * 
+	 * Setters & Getters
+	 * 
+	 */
 //	public boolean isJumping() {
 //		return isJumping;
 //	}
@@ -102,17 +114,21 @@ public class Player {
 //		return velocityY;
 //	}
 
-    public GImage getImage() {
-	return playerIMG;
-    }
+	public GImage getImage() {
+		return playerIMG;
+	}
+
+	public GImage getImage_2() {
+		return playerIMG_idle2;
+	}
 
 //    public GImage getplayerIMG() {
 //	return playerIMG;
 //    }
 
-    public void setPlayerImage(String img) {
-	GImage newIMGImage = new GImage(img);
-	this.playerIMG = newIMGImage;
-    }
+	public void setPlayerImage(String img) {
+		GImage newIMGImage = new GImage(img);
+		this.playerIMG = newIMGImage;
+	}
 
 }
