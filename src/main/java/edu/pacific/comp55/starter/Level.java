@@ -326,6 +326,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		player = new Player(50, 415);
 		cloud = new Cloud(50, 25);
 		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
+		
 		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
 		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
 		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
