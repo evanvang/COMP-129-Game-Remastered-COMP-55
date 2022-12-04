@@ -156,8 +156,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    eTimer.stop();
 	    break;
 	case KeyEvent.VK_T:
-	    System.out.println("P: " + player.getImage().getX());
-	    System.out.println("E: " + map.getEnemies().get(1).getImage().getX() + "\n");
+	    System.out.println("P: " + lastPCollision_Ref);
+	    System.out.println("E: " + lastECollision_Ref);
+
 	    break;
 
 	default:
@@ -165,9 +166,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
     }
-    
-    private int lastPCollision_Ref;
-    private int lastECollision_Ref;
+
+    private double lastPCollision_Ref;
+    private double lastECollision_Ref;
 
     public boolean isPlayerEnemyCollision() {
 
@@ -187,6 +188,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		System.out.println("Collision Detected");
 		/* <<Test code */
+
+		lastPCollision_Ref = temp.getBounds().getX();
+		lastECollision_Ref = foo.getBounds().getX() + e.getImage().getWidth() / 2;
 
 		return true;
 	    }
@@ -384,16 +388,21 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	if (source == hitTimer) {
-	    if (hitImpact == 0) {
+	    if (hitImpact < 0) {
 		hitImpact = 10;
 		hitTimer.stop();
 	    }
 
-	    if ()
-	    
-	    player.move(-hitImpact, 0);
-	    
-	    
+	    // Player hit from left side of enemy
+	    if (lastPCollision_Ref < lastECollision_Ref) {
+		player.move(-hitImpact, 0);
+	    }
+
+	    // Player hit from right side of enemy
+	    if (lastPCollision_Ref > lastECollision_Ref) {
+		player.move(hitImpact, 0);
+	    }
+
 	    hitImpact--;
 	}
 
@@ -408,7 +417,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	}
 
-	if (source == leftWalkFrictionTimer) {
+	if (source == leftWalkFrictionTimer ) {
 	    player.move(-walkFriction, 0);
 	    walkFriction--;
 
