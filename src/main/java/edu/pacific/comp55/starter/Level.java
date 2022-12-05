@@ -1,21 +1,16 @@
 
 package edu.pacific.comp55.starter;
-
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.NotActiveException;
 import java.util.ArrayList;
-import java.util.EventListener;
 import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
-import acm.graphics.GRectangle;
-import acm.program.GraphicsProgram;
+
 
 /**
  * @author Team No Focus!
@@ -98,21 +93,40 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return levelNum;
 	}
 
-	public void showContents() {
-		mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-		mainScreen.add(map.getChunks().get(1).getChunkIMG());
-		mainScreen.add(map.getChunks().get(2).getspikeIMG());
-		mainScreen.add(map.getChunks().get(3).getChunkIMG());
-		mainScreen.add(player.getImage());
-		mainScreen.add(player.getImage_2());
-		mainScreen.add(map.getEnemies().get(0).getImage());
-		mainScreen.add(map.getEnemies().get(1).getImage());
-		mainScreen.add(cloud.getImage());
+	public void showDetails() {
 		mainScreen.add(timeLabel);
 		mainScreen.add(liveIMG);
 		mainScreen.add(liveLabel);
 		mainScreen.add(clockIMG);
 		mainScreen.add(goalSpace);
+	}
+
+	public void showContents() {
+		if(levelNum == 1) {
+			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+			mainScreen.add(map.getChunks().get(1).getChunkIMG());
+			mainScreen.add(map.getChunks().get(2).getspikeIMG());
+			mainScreen.add(map.getChunks().get(3).getChunkIMG());
+			mainScreen.add(player.getImage());
+			mainScreen.add(player.getImage_2());
+			mainScreen.add(map.getEnemies().get(0).getImage());
+			mainScreen.add(map.getEnemies().get(1).getImage());
+			mainScreen.add(cloud.getImage());
+		}else {
+			System.out.println("add level 2");
+			mainScreen.add(map.getChunks().get(4).getbackgroundIMG());
+			mainScreen.add(map.getChunks().get(5).getChunkIMG());
+			mainScreen.add(map.getChunks().get(6).getspikeIMG());
+			mainScreen.add(map.getChunks().get(7).getChunkIMG());
+			mainScreen.add(map.getChunks().get(8).getspikeIMG());
+			mainScreen.add(map.getChunks().get(9).getChunkIMG());
+			mainScreen.add(map.getEnemies().get(2).getImage());
+			mainScreen.add(map.getEnemies().get(3).getImage());
+			mainScreen.add(player.getImage());
+			mainScreen.add(player.getImage_2());
+		}
+
+		showDetails();
 		startTimer();
 
 	}
@@ -120,6 +134,50 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void hideContents() {
 		mainScreen.removeAll();
 		System.out.println("hide");
+	}
+	public void setupLevel1() {
+		player = new Player(50, 415);
+		cloud = new Cloud(50, 25);
+		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
+		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
+		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
+		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+		map.createEnemy(900, 375);
+		map.createEnemy(150, 465);
+		time = 30;
+		lives = 3;
+		drawGoalSpace();
+		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
+
+		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
+	}
+
+	public void setupLevel2() {
+		player = new Player(50, 200);
+		System.out.println("setupLevel2"); 
+		cloud = new Cloud(50, 25);
+		map.createChunk("g0", "backround.png", 0, 0, 1900, 850);
+		map.createChunk("g1", "ground1.png", 0, 300, 300, 500);
+		map.createChunk("g2", "Spike.png", 300, 665, 140, 100);
+		map.createChunk("g3", "ground1.png", 440, 425, 400, 350);
+		map.createChunk("g4", "Spike.png", 840, 665, 140, 100);
+		map.createChunk("g5", "ground1.png", 980, 300, 300, 450);
+		map.createEnemy(150, 250);
+		map.createEnemy(650, 375);
+		time = 30;
+		timeLabel.setLabel(String.valueOf(time));
+		drawGoalSpace();
+		goalSpace.setLocation(1150, 300 - goalSpace.getHeight());
+	}
+
+	boolean passedLevel() {
+		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
+			System.out.println("win");
+			eTimer.stop();
+			return true;
+		}
+		// System.out.println("lose");
+		return false;
 	}
 
 	public boolean checkGround() {
@@ -306,168 +364,125 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		this.time = time;
 	}
 
-	public void setupLevel1() {
-		player = new Player(50, 415);
-		cloud = new Cloud(50, 25);
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
-		map.createEnemy(900, 375);
-		map.createEnemy(150, 465);
-		time = 30;
-		lives = 3;
-		drawGoalSpace();
-		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
-
-		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
-	}
-
-	public void setupLevel2() {
-		player = new Player(50, 415);
-		cloud = new Cloud(50, 25);
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
-		map.createEnemy(900, 375);
-		map.createEnemy(150, 465);
-		time = 30;
-		drawGoalSpace();
-		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
-	}
-
-	boolean passedLevel() {
-		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
-			System.out.println("win");
-			return true;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source == eTimer) {
+			callEnemyCloudMovement();
 		}
-		// System.out.println("lose");
-		return false;
+
+		if (source == rightMoveTimer) {
+			player.move(initSpeed, 0);
+		}
+
+		if (source == leftMoveTimer) {
+			if(!isPlayerOnEdge()) {
+				player.move(-initSpeed, 0);
+			}}
+
+		if (source == jumpUpTimer) {
+			jumpCounter++;
+			player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
+		}
+
+		if (isPlayerOnGround()) {
+			jumpUpTimer.stop();
+			jumpCounter = 0;
+		}
+
+		if (isPlayerEnemyCollision()) {
+			if (source == rightMoveTimer)
+				rightMoveTimer.stop();
+
+			if (source == leftMoveTimer)
+				leftMoveTimer.stop();
+
+			hitTimer.start();
+			lives--;
+			liveLabel.setLabel(String.valueOf(lives));
+		}
+
+		if (source == hitTimer) {
+			if (hitImpact < 0) {
+				hitImpact = 10;
+				hitTimer.stop();
+			}
+
+			// Player hit from left side of enemy
+			if (lastPCollision_Ref < lastECollision_Ref) {
+				player.move(-hitImpact, 0);
+			}
+
+			// Player hit from right side of enemy
+			if (lastPCollision_Ref > lastECollision_Ref) {
+				player.move(hitImpact, 0);
+			}
+
+			hitImpact--;
+		}
+
+		if (source == rightWalkFrictionTimer) {
+			player.move(walkFriction, 0);
+			walkFriction--;
+
+			if (walkFriction == 0) {
+				walkFriction = 10;
+				rightWalkFrictionTimer.stop();
+			}
+
+		}
+
+		if (source == leftWalkFrictionTimer && player.getImage().getX() > 1) {
+			player.move(-walkFriction, 0);
+			walkFriction--;
+
+			if (walkFriction == 0) {
+				walkFriction = 10;
+				leftWalkFrictionTimer.stop();
+			}
+
+		}
+
+		if (!(isPlayerMoving())) {
+
+			idleAnimationTimer_1.start();
+		}
+
+		if (source == idleAnimationTimer_1) {
+			player.getImage().setVisible(false);
+			player.getImage_2().setVisible(true);
+			idleAnimationCount--;
+
+			if (idleAnimationCount == 0) {
+				idleAnimationCount = 100;
+				idleAnimationTimer_1.stop();
+				idleAnimationTimer_2.start();
+			}
+		}
+
+		if (source == idleAnimationTimer_2) {
+			player.getImage_2().setVisible(false);
+			player.getImage().setVisible(true);
+			idleAnimationCount--;
+
+			if (idleAnimationCount == 0) {
+				idleAnimationCount = 100;
+				idleAnimationTimer_2.stop();
+				idleAnimationTimer_1.start();
+			}
+		}
+
+		if(source == eTimer) {
+			if(passedLevel() && levelNum ==1) {
+				hideContents();
+				levelNum = 2;
+				setupLevel2();
+				showContents();
+
+			}
+		}
+
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
-
-	@Override
-    public void actionPerformed(ActionEvent e) {
-	Object source = e.getSource();
-	if (source == eTimer) {
-	    callEnemyCloudMovement();
-	}
-
-	if (source == rightMoveTimer) {
-	    player.move(initSpeed, 0);
-	}
-
-	if (source == leftMoveTimer) {
-		if(!isPlayerOnEdge()) {
-	    player.move(-initSpeed, 0);
-	}}
-
-	if (source == jumpUpTimer) {
-	    jumpCounter++;
-	    player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
-	}
-
-	if (isPlayerOnGround()) {
-	    jumpUpTimer.stop();
-	    jumpCounter = 0;
-	}
-
-	if (passedLevel() == true) {
-	    eTimer.stop();
-	}
-
-	if (isPlayerEnemyCollision()) {
-	    if (source == rightMoveTimer)
-		rightMoveTimer.stop();
-
-	    if (source == leftMoveTimer)
-		leftMoveTimer.stop();
-
-	    hitTimer.start();
-	    lives--;
-	    liveLabel.setLabel(String.valueOf(lives));
-	}
-
-	if (source == hitTimer) {
-	    if (hitImpact < 0) {
-		hitImpact = 10;
-		hitTimer.stop();
-	    }
-
-	    // Player hit from left side of enemy
-	    if (lastPCollision_Ref < lastECollision_Ref) {
-		player.move(-hitImpact, 0);
-	    }
-
-	    // Player hit from right side of enemy
-	    if (lastPCollision_Ref > lastECollision_Ref) {
-		player.move(hitImpact, 0);
-	    }
-
-	    hitImpact--;
-	}
-	
-	if (source == rightWalkFrictionTimer) {
-	    player.move(walkFriction, 0);
-	    walkFriction--;
-
-	    if (walkFriction == 0) {
-		walkFriction = 10;
-		rightWalkFrictionTimer.stop();
-	    }
-
-	}
-
-	if (source == leftWalkFrictionTimer) {
-	    player.move(-walkFriction, 0);
-	    walkFriction--;
-
-	    if (walkFriction == 0) {
-		walkFriction = 10;
-		leftWalkFrictionTimer.stop();
-	    }
-
-	}
-
-	if (!(isPlayerMoving())) {
-
-	    idleAnimationTimer_1.start();
-	}
-
-	if (source == idleAnimationTimer_1) {
-	    player.getImage().setVisible(false);
-	    player.getImage_2().setVisible(true);
-	    idleAnimationCount--;
-
-	    if (idleAnimationCount == 0) {
-		idleAnimationCount = 100;
-		idleAnimationTimer_1.stop();
-		idleAnimationTimer_2.start();
-	    }
-	}
-
-	if (source == idleAnimationTimer_2) {
-	    player.getImage_2().setVisible(false);
-	    player.getImage().setVisible(true);
-	    idleAnimationCount--;
-
-	    if (idleAnimationCount == 0) {
-		idleAnimationCount = 100;
-		idleAnimationTimer_2.stop();
-		idleAnimationTimer_1.start();
-	    }
-	}
-
-	if (lives == 0) {
-	    // mainScreen.removeAll();
-	}
-
-    }
 
 	private boolean isPlayerMoving() {
 		if (rightMoveTimer.isRunning() || leftMoveTimer.isRunning() || jumpUpTimer.isRunning()
