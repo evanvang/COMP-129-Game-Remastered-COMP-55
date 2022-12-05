@@ -114,14 +114,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(cloud.getImage());
 		}else {
 			System.out.println("add level 2");
-			mainScreen.add(map.getChunks().get(4).getbackgroundIMG());
+			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+			mainScreen.add(map.getChunks().get(1).getChunkIMG());
+			mainScreen.add(map.getChunks().get(2).getspikeIMG());
+			mainScreen.add(map.getChunks().get(3).getChunkIMG());
+			mainScreen.add(map.getChunks().get(4).getspikeIMG());
 			mainScreen.add(map.getChunks().get(5).getChunkIMG());
-			mainScreen.add(map.getChunks().get(6).getspikeIMG());
-			mainScreen.add(map.getChunks().get(7).getChunkIMG());
-			mainScreen.add(map.getChunks().get(8).getspikeIMG());
-			mainScreen.add(map.getChunks().get(9).getChunkIMG());
-			mainScreen.add(map.getEnemies().get(2).getImage());
-			mainScreen.add(map.getEnemies().get(3).getImage());
+			mainScreen.add(map.getEnemies().get(0).getImage());
+			mainScreen.add(map.getEnemies().get(1).getImage());
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
 		}
@@ -153,6 +153,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void setupLevel2() {
+		map.removeChunks(chunky);
+		map.removeEnemies(map.getEnemies());
 		player = new Player(50, 200);
 		System.out.println("setupLevel2"); 
 		cloud = new Cloud(50, 25);
@@ -161,9 +163,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk("g2", "Spike.png", 300, 665, 140, 100);
 		map.createChunk("g3", "ground1.png", 440, 425, 400, 350);
 		map.createChunk("g4", "Spike.png", 840, 665, 140, 100);
-		map.createChunk("g5", "ground1.png", 980, 300, 300, 450);
-		map.createEnemy(150, 250);
-		map.createEnemy(650, 375);
+		map.createChunk("g5", "ground1.png", 980, 300, 300, 500);
+		map.createEnemy(100, 250);
+		map.createEnemy(600, 375);
 		time = 30;
 		timeLabel.setLabel(String.valueOf(time));
 		drawGoalSpace();
@@ -334,18 +336,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void drawGoalSpace() {
 		goalSpace = new GImage("redflag.png");
 		goalSpace.setSize(70, 70);
-	}
-
-	public void callEnemyMovement() {
-		for (Enemy ene : map.getEnemies()) {
-			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-					|| ene.getImage().getX() <= ene.getStartX()) {
-				enemyVel *= -1;
-				ene.getImage().move(enemyVel, 0);
-
-			}
-		}
 	}
 
 	public void startTimer() {
