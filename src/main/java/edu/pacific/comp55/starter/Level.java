@@ -38,14 +38,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	// Enemy collision impact
 	private Timer hitTimer = new Timer(20, this);
-	private double hitImpact = 10;
+	private double hitImpact = 5;
 
 	// Player movement
 	private static final int PLAYER_UP_VELOCITY = -20;
 	private static int jumpCounter = 0;
-	private Timer jumpUpTimer = new Timer(10, this);
-	private Timer leftMoveTimer = new Timer(10, this);
-	private Timer rightMoveTimer = new Timer(10, this);
+	private Timer jumpUpTimer = new Timer(20, this);
+	private Timer leftMoveTimer = new Timer(20, this);
+	private Timer rightMoveTimer = new Timer(20, this);
 
 	public double initSpeed = 10;
 
@@ -169,8 +169,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	}
 
-	private int lastPCollision_Ref;
-	private int lastECollision_Ref;
+	private double lastPCollision_Ref;
+	private double lastECollision_Ref;
 
 	public boolean isPlayerEnemyCollision() {
 
@@ -187,6 +187,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 						e.getImage().getHeight());
 				foo.setColor(Color.red);
 				mainScreen.add(foo);
+				
+				lastPCollision_Ref = temp.getBounds().getX() +temp.getBounds().getWidth()/2;
+				lastECollision_Ref = foo.getBounds().getX() +foo.getBounds().getWidth()/2;
+				
 
 				System.out.println("Collision Detected");
 				/* <<Test code */
@@ -200,12 +204,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public boolean isPlayerOnGround() {
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +3) == chunky.get(1)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			return true;
 		}
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(3)
-				.getChunkIMG() && (jumpCounter > 1)) {
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +5) == chunky.get(3)
+				.getChunkIMG()  && (jumpCounter > 1)) {
 			return true;
 
 		}
@@ -418,7 +422,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    walkFriction--;
 
 	    if (walkFriction == 0) {
-		walkFriction = 10;
+		walkFriction = 5;
 		rightWalkFrictionTimer.stop();
 	    }
 
@@ -429,7 +433,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    walkFriction--;
 
 	    if (walkFriction == 0) {
-		walkFriction = 10;
+		walkFriction = 5;
 		leftWalkFrictionTimer.stop();
 	    }
 
