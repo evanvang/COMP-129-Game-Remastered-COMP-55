@@ -21,7 +21,9 @@ public class MainApplication extends GraphicsApplication {
     private MenuPane menu;
     private SettingsPane settings;
     private PausePane pause;
-    private Level level = new Level(this,1);
+    private Level level;
+    private boolean isMuted;
+
     private int count;
     
     public void init() {
@@ -42,6 +44,7 @@ public class MainApplication extends GraphicsApplication {
     public void switchToMenu() {
 	count++;
 	switchToScreen(menu);
+	stopRandomSound();
     }
 
     public void switchToLevel() {
@@ -66,12 +69,18 @@ public class MainApplication extends GraphicsApplication {
         }
 
     private void playRandomSound() {
-	AudioPlayer audio = AudioPlayer.getInstance();
-	audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+    	isMuted = settings.checkIfMute();
+    	AudioPlayer audio = AudioPlayer.getInstance();
+    	if (!isMuted) {
+    		
+			audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+    	}
+    
     }
     
     public void stopRandomSound() {
-    	
+    	AudioPlayer audio = AudioPlayer.getInstance();
+    	audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
     }
 
     public static void main(String[] args) {
