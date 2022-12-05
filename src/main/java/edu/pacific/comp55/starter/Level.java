@@ -160,16 +160,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void setupLevel2() {
-
-		
 		player = new Player(50, 200);
-
-		map.removeChunks(chunky);
-		map.removeEnemies(map.getEnemies());
 		startX = 50;
 		startY = 200;
 		player = new Player(startX, startY);
-
 		System.out.println("setupLevel2"); 
 		cloud = new Cloud(50, 25);
 		map.createChunk("g0", "backround.png", 0, 0, 1900, 850);

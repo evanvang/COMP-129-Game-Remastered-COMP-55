@@ -21,7 +21,7 @@ public class MainApplication extends GraphicsApplication {
     private MenuPane menu;
     private SettingsPane settings;
     private PausePane pause;
-    private Level level;
+    private Level level = new Level(this,1);
     private boolean isMuted;
 
     private int count;
