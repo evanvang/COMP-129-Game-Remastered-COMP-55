@@ -42,8 +42,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	// Player movement
 	private static final int PLAYER_UP_VELOCITY = -20;
+	private static final int PLAYER_DOWN_VELOCITY = 20;
 	private static int jumpCounter = 0;
 	private Timer jumpUpTimer = new Timer(20, this);
+	private Timer downTimer = new Timer(20, this);
 	private Timer leftMoveTimer = new Timer(20, this);
 	private Timer rightMoveTimer = new Timer(20, this);
 
@@ -122,13 +124,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		System.out.println("hide");
 	}
 
-	public boolean checkGround() {
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
-				.getChunkIMG()) {
-
-		}
-		return true;
-	}
+//	public boolean checkGround() {
+//		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+//				.getChunkIMG()) {
+//
+//		}
+//		return true;
+//	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -206,6 +208,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public boolean isPlayerOnGround() {
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +3) == chunky.get(1)
 				.getChunkIMG() && (jumpCounter > 1)) {
+			System.out.println("JUMPING");
+
 			return true;
 		}
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +5) == chunky.get(3)
@@ -213,8 +217,22 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			return true;
 
 		}
+		
+		return false;
+	}
+	
+	public boolean isPlayerGoingOver() {
+		for (int i = 1; i <chunky.size(); i ++) {
+			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != chunky.get(i)
+					.getChunkIMG() && jumpUpTimer.isRunning() == false ) {
+				System.out.println("FALLING");
+
+				return true;
+			}
+		}
 
 		return false;
+		
 	}
 
 	@Override
@@ -380,10 +398,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    jumpCounter++;
 	    player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
 	}
+	if (source == downTimer) {
+		//jumpCounter++;
+		player.move(0, PLAYER_DOWN_VELOCITY);
+		player.getImage().rotate(20);
+	}
+	
 
 	if (isPlayerOnGround()) {
 	    jumpUpTimer.stop();
 	    jumpCounter = 0;
+	}
+	if (isPlayerGoingOver()) {
+		downTimer.start();
+		System.out.println("SKJNSKJS");
 	}
 
 	if (passedLevel() == true) {
