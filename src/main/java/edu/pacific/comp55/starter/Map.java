@@ -44,5 +44,12 @@ public class Map {
 		Enemy enemy = new Enemy(startX, startY);
 		enemies.add(enemy);
 	}
+	
+	public void removeChunks(ArrayList<Chunk> chunks) {
+		chunks.clear();
+	}
+	public void removeEnemies(ArrayList<Enemy> enemies) {
+		enemies.clear();
+	}
 
 }
