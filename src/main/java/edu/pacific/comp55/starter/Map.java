@@ -14,7 +14,7 @@ public class Map {
 	// Array list holds GRect objects for our game world
 	private ArrayList<Chunk> chunks;
 	private ArrayList<Enemy> enemies;
-
+    private ArrayList<Chunk> ground;
 	public ArrayList<Chunk> getChunks() {
 		return chunks;
 	}
@@ -34,7 +34,7 @@ public class Map {
 	}
 
 	// Method to create a chunk, adds to the ArrayList "chunkToGRect"
-	public void createChunk(String chunkName, String path, int chunkX, int chunkY, int width, int height) {
+	public void createChunk(char chunkName, String path, int chunkX, int chunkY, int width, int height) {
 		Chunk chunk = new Chunk(chunkName, path, chunkX, chunkY, width, height);
 
 		chunks.add(chunk);
@@ -50,6 +50,9 @@ public class Map {
 	}
 	public void removeEnemies(ArrayList<Enemy> enemies) {
 		enemies.clear();
+	}
+	public void sortGroundChunks() {
+		
 	}
 
 }

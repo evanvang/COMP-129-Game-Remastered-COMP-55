@@ -42,7 +42,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	// Player movement
 	private static final int PLAYER_UP_VELOCITY = -20;
-	private static final int PLAYER_DOWN_VELOCITY = 20;
+	private static final int PLAYER_DOWN_VELOCITY = 10;
 	private static int jumpCounter = 0;
 	private Timer jumpUpTimer = new Timer(20, this);
 	private Timer downTimer = new Timer(20, this);
@@ -222,14 +222,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	
 	public boolean isPlayerGoingOver() {
-		for (int i = 1; i <chunky.size(); i ++) {
-			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != chunky.get(i)
+		
+			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != chunky.get(1)
 					.getChunkIMG() && jumpUpTimer.isRunning() == false ) {
 				System.out.println("FALLING");
 
 				return true;
 			}
-		}
+		
 
 		return false;
 		
@@ -331,10 +331,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void setupLevel1() {
 		player = new Player(50, 415);
 		cloud = new Cloud(50, 25);
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+		map.createChunk('b', "background.png", 0, 0, 1900, 850);
+		map.createChunk('g', "ground1.png", 0, 515, 650, 250);
+		map.createChunk('s', "Spike.png", 650, 665, 140, 100);
+		map.createChunk('g', "ground1.png", 790, 425, 650, 350);
 		map.createEnemy(900, 375);
 		map.createEnemy(150, 465);
 		time = 30;
@@ -348,11 +348,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void setupLevel2() {
 		player = new Player(50, 415);
 		cloud = new Cloud(50, 25);
-		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
+		map.createChunk('b', "background.png", 0, 0, 1900, 850);
 		
-		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
-		map.createChunk("g2", "Spike.png", 650, 665, 140, 100);
-		map.createChunk("g3", "ground1.png", 790, 425, 650, 350);
+		map.createChunk('g', "ground1.png", 0, 515, 650, 250);
+		map.createChunk('s', "Spike.png", 650, 665, 140, 100);
+		map.createChunk('g', "ground1.png", 790, 425, 650, 350);
 		map.createEnemy(900, 375);
 		map.createEnemy(150, 465);
 		time = 30;

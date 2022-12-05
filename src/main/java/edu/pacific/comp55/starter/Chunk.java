@@ -10,10 +10,11 @@ public class Chunk {
 	private GImage chunkIMG;
 	private GImage spikeIMG;
 	private GRect chunkGRect;
+	private char name;
 
 	// Constructor
-	public Chunk(String chunkName, String path, int chunkX, int chunkY, int width, int height) {
-
+	public Chunk(char chunkName, String path, int chunkX, int chunkY, int width, int height) {
+		chunkName = name;
 		this.backgroundIMG = new GImage("background.png", chunkX, chunkY);
 		this.backgroundIMG.setSize(width, height);
 
@@ -41,5 +42,8 @@ public class Chunk {
 	public GImage getspikeIMG() {
 		return spikeIMG;
 	}
-
+	
+	public char getID() {
+		return name;
+	}
 }
