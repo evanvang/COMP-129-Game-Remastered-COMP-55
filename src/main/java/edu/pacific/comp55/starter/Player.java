@@ -2,6 +2,7 @@ package edu.pacific.comp55.starter;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.Timer;
 
@@ -130,5 +131,6 @@ public class Player {
 	GImage newIMGImage = new GImage(img);
 	this.playerIMG = newIMGImage;
     }
+
 
 }

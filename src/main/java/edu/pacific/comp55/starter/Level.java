@@ -358,6 +358,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	@Override
     public void actionPerformed(ActionEvent e) {
+		if (time == 0) {
+			timeLabel = new GLabel("0", 200, 50);
+			
+		}
 	Object source = e.getSource();
 	if (source == eTimer) {
 	    callEnemyCloudMovement();
