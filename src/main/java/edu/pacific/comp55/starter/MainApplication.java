@@ -21,15 +21,15 @@ public class MainApplication extends GraphicsApplication {
     private MenuPane menu;
     private SettingsPane settings;
     private PausePane pause;
-    private Level level;
+    private Level level = new Level(this,1);
     private int count;
-
+    
     public void init() {
 	setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     public void run() {
-	level = new Level(this, 1);
+//	level = new Level(this, 1);
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
@@ -45,10 +45,9 @@ public class MainApplication extends GraphicsApplication {
     }
 
     public void switchToLevel() {
-    int levelNum = level.getLevelNum();
-    level = new Level(this, levelNum);
-	switchToScreen(level);
-	playRandomSound();
+	    level = new Level(this, 1);
+		switchToScreen(level);
+		playRandomSound();
 	
     }
     public void switchToCurrLevel() {

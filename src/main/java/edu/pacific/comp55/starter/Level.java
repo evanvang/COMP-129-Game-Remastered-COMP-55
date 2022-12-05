@@ -62,7 +62,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private GImage goalSpace;
 	private int levelNum;
 	private int lives;
-
+   
 	// Constructor
 	public Level(MainApplication program, int levelNum) {
 
@@ -73,6 +73,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		drawLiveLabel();
 		if (levelNum == 1) {
 			setupLevel1();
+		}
+		else if(levelNum == 2) {
+			setupLevel2();
 		}
 		newPlayer = player.getImage();
 		chunky = map.getChunks();
@@ -153,8 +156,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void setupLevel2() {
-		map.removeChunks(chunky);
-		map.removeEnemies(map.getEnemies());
+		
 		player = new Player(50, 200);
 		System.out.println("setupLevel2"); 
 		cloud = new Cloud(50, 25);
@@ -170,12 +172,18 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		timeLabel.setLabel(String.valueOf(time));
 		drawGoalSpace();
 		goalSpace.setLocation(1150, 300 - goalSpace.getHeight());
+//		newPlayer = player.getImage();
+//		chunky = map.getChunks();
+//		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
+
 	}
 
 	boolean passedLevel() {
 		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
 			System.out.println("win");
 			eTimer.stop();
+			map.removeChunks(chunky);
+			map.removeEnemies(map.getEnemies());
 			return true;
 		}
 		// System.out.println("lose");
@@ -215,6 +223,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 			break;
 		case KeyEvent.VK_P:
+			System.out.println("in level: "+levelNum);
 			mainScreen.switchToPause();
 			eTimer.stop();
 			break;
@@ -248,7 +257,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				foo.setColor(Color.red);
 				mainScreen.add(foo);
 
-				System.out.println("Collision Detected");
+//				System.out.println("Collision Detected");
 				/* <<Test code */
 
 				return true;
@@ -473,6 +482,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 	}
+	
+	
 
 	private boolean isPlayerMoving() {
 		if (rightMoveTimer.isRunning() || leftMoveTimer.isRunning() || jumpUpTimer.isRunning()

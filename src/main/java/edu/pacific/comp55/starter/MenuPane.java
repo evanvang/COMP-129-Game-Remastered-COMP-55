@@ -14,6 +14,7 @@ public class MenuPane extends GraphicsPane {
 	private GButton playButton;
 	private GButton settingsButton;
 	private GImage menuBackground;
+	
 
 	public MenuPane(MainApplication app) {
 		super();
@@ -36,6 +37,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(menuBackground);
 		program.add(playButton);
 		program.add(settingsButton);
+		
 	}
 
 	@Override
