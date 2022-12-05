@@ -51,6 +51,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private Cloud cloud;
 	private double enemyVel = 3;
 	private int time;
+	private int startX;
+	private int startY;
 	private GLabel timeLabel;
 	private GLabel liveLabel;
 	private int count = 0;
@@ -136,7 +138,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		System.out.println("hide");
 	}
 	public void setupLevel1() {
-		player = new Player(50, 415);
+		startX = 50;
+		startY = 415;
+		player = new Player(startX, startY);
 		cloud = new Cloud(50, 25);
 		map.createChunk("g0", "background.png", 0, 0, 1900, 850);
 		map.createChunk("g1", "ground1.png", 0, 515, 650, 250);
@@ -155,7 +159,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void setupLevel2() {
 		map.removeChunks(chunky);
 		map.removeEnemies(map.getEnemies());
-		player = new Player(50, 200);
+		startX = 50;
+		startY = 200;
+		player = new Player(startX, startY);
 		System.out.println("setupLevel2"); 
 		cloud = new Cloud(50, 25);
 		map.createChunk("g0", "backround.png", 0, 0, 1900, 850);
@@ -315,7 +321,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		cloud.move(1325);
 	}
-
+	public void goToOrigin() {
+		player = new Player(startX, startY);
+		
+	}
 	public void drawTimeLabel() {
 		timeLabel = new GLabel("30", 200, 50);
 		timeLabel.setColor(Color.WHITE);
@@ -332,7 +341,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		liveIMG = new GImage("liveshead.png", 20, 8);
 		liveIMG.setSize(65, 65);
 	}
-
+	
 	public void drawGoalSpace() {
 		goalSpace = new GImage("redflag.png");
 		goalSpace.setSize(70, 70);
@@ -360,6 +369,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (source == eTimer) {
 			callEnemyCloudMovement();
 		}
+		
+		if (lives <= 0) {
+			//goToOrigin();
+		}
 
 		if (source == rightMoveTimer) {
 			player.move(initSpeed, 0);
@@ -378,6 +391,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (isPlayerOnGround()) {
 			jumpUpTimer.stop();
 			jumpCounter = 0;
+		}
+		if (getTime() <= 0) {
+			lives--;
+			liveLabel.setLabel(String.valueOf(lives));
+			time = 30;
+			
 		}
 
 		if (isPlayerEnemyCollision()) {
