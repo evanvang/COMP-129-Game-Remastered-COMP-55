@@ -58,21 +58,21 @@ public class Map {
 	}
 	public void sortGroundChunks() {
 		
-		//System.out.println(groundPieces.size());
 		
 			for (int i = 0; i < chunks.size();i++) {
 				
 				if (chunks.get(i).getID() == 'g') {
 					groundPieces.add(chunks.get(i));
-					System.out.println(groundPieces.size());
-					
+					//System.out.println(chunks.get(i).getID());
+					//System.out.println(chunks.get(i));
 				}
+				
 			}
-		
+			System.out.println(groundPieces.size());
 	}
 
 	public ArrayList<Chunk> getGroundChunks() {
 		return groundPieces; 
 	}
-
+	
 }

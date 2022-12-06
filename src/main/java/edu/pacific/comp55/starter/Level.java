@@ -13,6 +13,7 @@ import java.util.EventListener;
 import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
+import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.graphics.GRectangle;
 import acm.program.GraphicsProgram;
@@ -204,24 +205,37 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		return false;
 	}
+	
+	private boolean isGround(GObject element) {
+		for(Chunk c : chunky) {
+			if (element == c.getChunkIMG() && c.getID() == 'g') {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public boolean isPlayerOnGround() {
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() ) == chunky.get(1)
-				.getChunkIMG() && (jumpCounter > 1)) {
+		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +3);
+		if (isGround(obj) && (jumpCounter > 1)) {
 			System.out.println("JUMPING");
 			System.out.println(map.getGroundChunks().size());
 			return true;
-		}
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() ) == chunky.get(3)
-				.getChunkIMG()  && (jumpCounter > 1)) {
-			return true;
-
 		}
 		
 		return false;
 	}
 	
  	public boolean isPlayerGoingOver() {
+ 		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()+ 3));
+ 		if (!i && jumpUpTimer.isRunning() == false) {
+ 			System.out.println("FALLING");
+ 			return true;
+ 		} 
+ 		
+ 		System.out.println("Ground");
+ 		return false;
+ 		/*
 		for (int i = 0; i < map.getGroundChunks().size() ; i++) {
 			
 			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != map.getGroundChunks().get(i)
@@ -232,7 +246,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			}
 		}
 
-		return false;
+*/
 		
 	}
 
@@ -341,6 +355,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		time = 30;
 		lives = 3;
 		map.sortGroundChunks();
+		System.out.println("ffffsfs");
 		drawGoalSpace();
 		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
 
@@ -413,7 +428,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	if (isPlayerGoingOver()) {
 		downTimer.start();
-		System.out.println("SKJNSKJS");
+		//System.out.println("Cliff");
 	}
 
 	if (passedLevel() == true) {
