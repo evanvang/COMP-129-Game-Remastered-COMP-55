@@ -209,7 +209,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() ) == chunky.get(1)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			System.out.println("JUMPING");
-			//System.out.println(map.getGroundChunks().size());
+			System.out.println(map.getGroundChunks().size());
 			return true;
 		}
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() ) == chunky.get(3)
@@ -222,7 +222,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 	
  	public boolean isPlayerGoingOver() {
-		for (int i = 1; i < map.getGroundChunks().size() ; i++) {
+		for (int i = 0; i < map.getGroundChunks().size() ; i++) {
 			
 			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != map.getGroundChunks().get(i)
 					.getChunkIMG() && jumpUpTimer.isRunning() == false ) {
@@ -347,20 +347,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
 	}
 
-	public void setupLevel2() {
-		player = new Player(50, 415);
-		cloud = new Cloud(50, 25);
-		map.createChunk('b', "background.png", 0, 0, 1900, 850);
-		
-		map.createChunk('g', "ground1.png", 0, 515, 650, 250);
-		map.createChunk('s', "Spike.png", 650, 665, 140, 100);
-		map.createChunk('g', "ground1.png", 790, 425, 650, 350);
-		map.createEnemy(900, 375);
-		map.createEnemy(150, 465);
-		time = 30;
-		drawGoalSpace();
-		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
-	}
+//	public void setupLevel2() {
+//		player = new Player(50, 415);
+//		cloud = new Cloud(50, 25);
+//		map.createChunk('b', "background.png", 0, 0, 1900, 850);
+//		
+//		map.createChunk('g', "ground1.png", 0, 515, 650, 250);
+//		map.createChunk('s', "Spike.png", 650, 665, 140, 100);
+//		map.createChunk('g', "ground1.png", 790, 425, 650, 350);
+//		map.createEnemy(900, 375);
+//		map.createEnemy(150, 465);
+//		time = 30;
+//		drawGoalSpace();
+//		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
+//	}
 
 	boolean passedLevel() {
 		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {

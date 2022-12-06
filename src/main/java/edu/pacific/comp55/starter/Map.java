@@ -58,12 +58,13 @@ public class Map {
 	}
 	public void sortGroundChunks() {
 		
-//		System.out.println(groundPieces.size());
+		//System.out.println(groundPieces.size());
 		
-			for (int i = 1; i < chunks.size();i++) {
-			//	System.out.println(chunks.get(i).getID());
+			for (int i = 0; i < chunks.size();i++) {
+				
 				if (chunks.get(i).getID() == 'g') {
 					groundPieces.add(chunks.get(i));
+					System.out.println(groundPieces.size());
 					
 				}
 			}
