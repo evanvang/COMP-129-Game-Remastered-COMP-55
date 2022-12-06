@@ -53,7 +53,15 @@ public class Player {
 
 	updatePlayerPos();
 
+	
     }
+
+    
+    public void runPlayerDeathSpinAnimation() {
+	playerIMG.rotate(50);
+	playerIMG_idle2.rotate(50);
+    }
+    
 
     public void updatePlayerPos() {
 	x = playerIMG.getX();
