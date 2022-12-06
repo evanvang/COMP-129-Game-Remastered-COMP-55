@@ -298,6 +298,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		if (keyCode == KeyEvent.VK_RIGHT) {
 			rightWalkFrictionTimer.start();
+			rightMoveTimer.stop();
 		}
 	
 		if (keyCode == KeyEvent.VK_LEFT){
