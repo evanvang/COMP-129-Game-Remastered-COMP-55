@@ -516,23 +516,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     }
 
     public void respawnPlayer() {
-//	System.out.println("respawn player called");
-//	mainScreen.remove(player.getImage());
-//	mainScreen.remove(player.getImage_2());
-//	
-//	player.resetImages();
-//	mainScreen.add(player.getImage());
-//	mainScreen.add(player.getImage_2());
-//	
-//	
+
 	player.getImage().setLocation(50, -100);
 	player.getImage_2().setLocation(50, -100);
 	player.updatePlayerPos();
 	
 	jumpUpTimer.start();
 
-//	player.getImage().rotate(0);
-//	player.getImage_2().rotate(0);
+
     }
 
     private boolean isPlayerMoving() {

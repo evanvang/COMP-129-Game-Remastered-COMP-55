@@ -54,16 +54,7 @@ public class Player {
 
 	
     }
-    
-//    public void resetImages() {
-//	playerIMG = new GImage("idle1.png");
-//	playerIMG.setSize(100, 100);
-//
-//	playerIMG_idle2 = new GImage("idle2.png");
-//	playerIMG_idle2.setSize(100, 100);
-//	playerIMG_idle2.setVisible(false);
-//    }
-    
+
     
     public void runPlayerDeathSpinAnimation() {
 	playerIMG.rotate(50);
