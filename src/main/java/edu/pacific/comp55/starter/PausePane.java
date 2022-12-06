@@ -29,6 +29,7 @@ public class PausePane extends GraphicsPane {
 		program.remove(quit);
 		program.remove(resume);
 		program.remove(retry);
+		level.setPauseToNull();
 	}
 	
 	@Override
@@ -37,15 +38,18 @@ public class PausePane extends GraphicsPane {
 		hideContents();
 		numLevel = level.getLevelNum();
 		if (obj == quit) {
-           
-		   program.removeAll();
-           program.switchToMenu();
+			
+			 program.removeAll();
+	         program.switchToMenu();
 			
 		}
 		if (obj == resume) {
-			program.switchToCurrLevel();
+			program.switchToScreen(level);
+			System.out.println("resume to level " + numLevel);
 		}
-		if (obj == retry) {
+		if (obj == retry) {			
+			System.out.println("back to level: " + numLevel);
+			program.removeAll();
 			level = new Level(program,numLevel);
 			program.switchToScreen(level);
 		}
