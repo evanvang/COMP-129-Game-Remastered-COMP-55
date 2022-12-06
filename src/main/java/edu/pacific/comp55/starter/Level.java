@@ -368,8 +368,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createEnemy(150, 465);
 		time = 30;
 		lives = 3;
-		map.sortGroundChunks();
-		System.out.println("ffffsfs");
+	//	map.sortGroundChunks();
+	//	System.out.println("ffffsfs");
 		drawGoalSpace();
 		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
 
