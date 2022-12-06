@@ -52,7 +52,24 @@ public class Player {
 
 	updatePlayerPos();
 
+	
     }
+    
+//    public void resetImages() {
+//	playerIMG = new GImage("idle1.png");
+//	playerIMG.setSize(100, 100);
+//
+//	playerIMG_idle2 = new GImage("idle2.png");
+//	playerIMG_idle2.setSize(100, 100);
+//	playerIMG_idle2.setVisible(false);
+//    }
+    
+    
+    public void runPlayerDeathSpinAnimation() {
+	playerIMG.rotate(50);
+	playerIMG_idle2.rotate(50);
+    }
+    
 
     public void updatePlayerPos() {
 	x = playerIMG.getX();

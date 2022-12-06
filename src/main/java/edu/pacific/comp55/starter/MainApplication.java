@@ -30,6 +30,7 @@ public class MainApplication extends GraphicsApplication {
 
     public void run() {
 	level = new Level(this, 1);
+	
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
@@ -46,7 +47,7 @@ public class MainApplication extends GraphicsApplication {
 
     public void switchToLevel() {
     int levelNum = level.getLevelNum();
-    level = new Level(this, levelNum);
+    	level = new Level(this, levelNum);
 	switchToScreen(level);
 	playRandomSound();
 	
