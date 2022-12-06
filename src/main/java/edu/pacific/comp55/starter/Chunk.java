@@ -14,7 +14,7 @@ public class Chunk {
 
 	// Constructor
 	public Chunk(char chunkName, String path, int chunkX, int chunkY, int width, int height) {
-		chunkName = name;
+		name = chunkName;
 		this.backgroundIMG = new GImage("background.png", chunkX, chunkY);
 		this.backgroundIMG.setSize(width, height);
 
@@ -34,7 +34,7 @@ public class Chunk {
 	public GImage getChunkIMG() {
 		return chunkIMG;
 	}
-
+	
 	public GRect getChunkGRect() {
 		return chunkGRect;
 	}
@@ -46,4 +46,5 @@ public class Chunk {
 	public char getID() {
 		return name;
 	}
+	
 }

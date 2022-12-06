@@ -206,13 +206,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public boolean isPlayerOnGround() {
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +3) == chunky.get(1)
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() ) == chunky.get(1)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			System.out.println("JUMPING");
-
+			//System.out.println(map.getGroundChunks().size());
 			return true;
 		}
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() +5) == chunky.get(3)
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() ) == chunky.get(3)
 				.getChunkIMG()  && (jumpCounter > 1)) {
 			return true;
 
@@ -221,15 +221,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return false;
 	}
 	
-	public boolean isPlayerGoingOver() {
-		
-			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != chunky.get(1)
+ 	public boolean isPlayerGoingOver() {
+		for (int i = 1; i < map.getGroundChunks().size() ; i++) {
+			
+			if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3, newPlayer.getY() + newPlayer.getHeight()) != map.getGroundChunks().get(i)
 					.getChunkIMG() && jumpUpTimer.isRunning() == false ) {
 				System.out.println("FALLING");
 
 				return true;
 			}
-		
+		}
 
 		return false;
 		
@@ -339,6 +340,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createEnemy(150, 465);
 		time = 30;
 		lives = 3;
+		map.sortGroundChunks();
 		drawGoalSpace();
 		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
 

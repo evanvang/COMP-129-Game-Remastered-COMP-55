@@ -2,6 +2,7 @@ package edu.pacific.comp55.starter;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
@@ -14,13 +15,16 @@ public class Map {
 	// Array list holds GRect objects for our game world
 	private ArrayList<Chunk> chunks;
 	private ArrayList<Enemy> enemies;
-    private ArrayList<Chunk> ground;
+    private ArrayList<Chunk> groundPieces;
 	public ArrayList<Chunk> getChunks() {
 		return chunks;
 	}
 
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
+	}
+	public ArrayList<Chunk> getChunk() {
+		return chunks;
 	}
 
 	public void setChunks(ArrayList<Chunk> chunks) {
@@ -31,6 +35,7 @@ public class Map {
 	public Map() {
 		this.chunks = new ArrayList<>();
 		this.enemies = new ArrayList<Enemy>();
+		this.groundPieces = new ArrayList<Chunk>();
 	}
 
 	// Method to create a chunk, adds to the ArrayList "chunkToGRect"
@@ -53,6 +58,20 @@ public class Map {
 	}
 	public void sortGroundChunks() {
 		
+//		System.out.println(groundPieces.size());
+		
+			for (int i = 1; i < chunks.size();i++) {
+			//	System.out.println(chunks.get(i).getID());
+				if (chunks.get(i).getID() == 'g') {
+					groundPieces.add(chunks.get(i));
+					
+				}
+			}
+		
+	}
+
+	public ArrayList<Chunk> getGroundChunks() {
+		return groundPieces; 
 	}
 
 }
