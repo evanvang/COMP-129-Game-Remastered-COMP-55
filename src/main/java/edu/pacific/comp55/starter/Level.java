@@ -1,5 +1,6 @@
 
 package edu.pacific.comp55.starter;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,6 @@ import javax.swing.Timer;
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
-
 
 /**
  * @author Team No Focus!
@@ -64,7 +64,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private GImage goalSpace;
 	private int levelNum;
 	private int lives;
-   
+	private PausePane pause;
+
 	// Constructor
 	public Level(MainApplication program, int levelNum) {
 
@@ -75,12 +76,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		drawLiveLabel();
 		if (levelNum == 1) {
 			setupLevel1();
-		}
-		else if(levelNum == 2) {
+		} else if (levelNum == 2) {
+			System.out.println("retry");
 			setupLevel2();
 		}
-		newPlayer = player.getImage();
-		chunky = map.getChunks();
+//		newPlayer = player.getImage();
+//		chunky = map.getChunks();
 	}
 
 	public GLabel getTimeLabel() {
@@ -107,7 +108,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void showContents() {
-		if(levelNum == 1) {
+		if (levelNum == 1) {
 			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
 			mainScreen.add(map.getChunks().get(1).getChunkIMG());
 			mainScreen.add(map.getChunks().get(2).getspikeIMG());
@@ -117,8 +118,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(map.getEnemies().get(0).getImage());
 			mainScreen.add(map.getEnemies().get(1).getImage());
 			mainScreen.add(cloud.getImage());
-		}else {
-			System.out.println("add level 2");
+		} else {
+			// System.out.println("add level 2");
 			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
 			mainScreen.add(map.getChunks().get(1).getChunkIMG());
 			mainScreen.add(map.getChunks().get(2).getspikeIMG());
@@ -130,16 +131,21 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
 		}
-
+		newPlayer = player.getImage();
+		chunky = map.getChunks();
 		showDetails();
 		startTimer();
 
 	}
 
 	public void hideContents() {
+
 		mainScreen.removeAll();
+		map.removeChunks(chunky);
+		map.removeEnemies(map.getEnemies());
 		System.out.println("hide");
 	}
+
 	public void setupLevel1() {
 		startX = 50;
 		startY = 415;
@@ -160,11 +166,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void setupLevel2() {
-		player = new Player(50, 200);
-		startX = 50;
+		System.out.println("setupLevel2");
+		startX = 30;
 		startY = 200;
 		player = new Player(startX, startY);
-		System.out.println("setupLevel2"); 
 		cloud = new Cloud(50, 25);
 		map.createChunk("g0", "backround.png", 0, 0, 1900, 850);
 		map.createChunk("g1", "ground1.png", 0, 300, 300, 500);
@@ -178,22 +183,37 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		timeLabel.setLabel(String.valueOf(time));
 		drawGoalSpace();
 		goalSpace.setLocation(1150, 300 - goalSpace.getHeight());
-//		newPlayer = player.getImage();
-//		chunky = map.getChunks();
-//		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
+		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
+
 
 	}
 
-	boolean passedLevel() {
+	// boolean passedLevel() {
+	// if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
+	// System.out.println("win");
+	// eTimer.stop();
+	//// map.removeChunks(chunky);
+	//// map.removeEnemies(map.getEnemies());
+	// return true;
+	// }
+	// // System.out.println("lose");
+	// return false;
+	// }
+
+	void passedLevel() {
 		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
 			System.out.println("win");
 			eTimer.stop();
-			map.removeChunks(chunky);
-			map.removeEnemies(map.getEnemies());
-			return true;
+			if (levelNum == 1) {
+				hideContents();
+				levelNum = 2;
+				setupLevel2();
+				showContents();
+			}
+
 		}
 		// System.out.println("lose");
-		return false;
+
 	}
 
 	public boolean checkGround() {
@@ -218,7 +238,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 			break;
 		case KeyEvent.VK_LEFT:
-			if(isPlayerOnEdge()) {
+			if (isPlayerOnEdge()) {
 				break;
 			}
 			leftMoveTimer.start();
@@ -229,8 +249,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 			break;
 		case KeyEvent.VK_P:
-			System.out.println("in level: "+levelNum);
-			mainScreen.switchToPause();
+			System.out.println("in level: " + levelNum);
+			pause = new PausePane(mainScreen, this);
+			mainScreen.switchPause(pause);
 			eTimer.stop();
 			break;
 		case KeyEvent.VK_T:
@@ -254,16 +275,15 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			if (player.bounds.intersects(e.getImage().getBounds())) {
 
 				/* Test code>> */
-				GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
-						player.bounds.getHeight());
-				mainScreen.add(temp);
-
-				GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
-						e.getImage().getHeight());
-				foo.setColor(Color.red);
-				mainScreen.add(foo);
-
-//				System.out.println("Collision Detected");
+//				//GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
+//						player.bounds.getHeight());
+//				mainScreen.add(temp);
+//
+//				//GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
+//						e.getImage().getHeight());
+//				foo.setColor(Color.red);
+//				mainScreen.add(foo);
+				// System.out.println("Collision Detected");
 				/* <<Test code */
 
 				return true;
@@ -282,7 +302,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(3)
 				.getChunkIMG() && (jumpCounter > 1)) {
 			return true;
-
 		}
 
 		return false;
@@ -304,6 +323,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		rightMoveTimer.stop();
 		leftMoveTimer.stop();
 	}
+
 	public boolean isPlayerOnEdge() {
 		if (newPlayer.getX() <= -5) {
 			return true;
@@ -330,10 +350,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		cloud.move(1325);
 	}
+
 	public void goToOrigin() {
 		player = new Player(startX, startY);
-		
+
 	}
+
 	public void drawTimeLabel() {
 		timeLabel = new GLabel("30", 200, 50);
 		timeLabel.setColor(Color.WHITE);
@@ -350,7 +372,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		liveIMG = new GImage("liveshead.png", 20, 8);
 		liveIMG.setSize(65, 65);
 	}
-	
+
 	public void drawGoalSpace() {
 		goalSpace = new GImage("redflag.png");
 		goalSpace.setSize(70, 70);
@@ -378,9 +400,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (source == eTimer) {
 			callEnemyCloudMovement();
 		}
-		
+
 		if (lives <= 0) {
-			//goToOrigin();
+			// goToOrigin();
 		}
 
 		if (source == rightMoveTimer) {
@@ -388,9 +410,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 		if (source == leftMoveTimer) {
-			if(!isPlayerOnEdge()) {
+			if (!isPlayerOnEdge()) {
 				player.move(-initSpeed, 0);
-			}}
+			}
+		}
 
 		if (source == jumpUpTimer) {
 			jumpCounter++;
@@ -405,7 +428,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			lives--;
 			liveLabel.setLabel(String.valueOf(lives));
 			time = 30;
-			
+
 		}
 
 		if (isPlayerEnemyCollision()) {
@@ -416,8 +439,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				leftMoveTimer.stop();
 
 			hitTimer.start();
-			lives--;
-			liveLabel.setLabel(String.valueOf(lives));
+//			lives--;
+//			liveLabel.setLabel(String.valueOf(lives));
 		}
 
 		if (source == hitTimer) {
@@ -489,20 +512,21 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				idleAnimationTimer_1.start();
 			}
 		}
+		passedLevel();
 
-		if(source == eTimer) {
-			if(passedLevel() && levelNum ==1) {
-				hideContents();
-				levelNum = 2;
-				setupLevel2();
-				showContents();
-
-			}
-		}
+		// if(passedLevel() && levelNum ==1) {
+		// hideContents();
+		// levelNum = 2;
+		// setupLevel2();
+		// showContents();
+		//
+		// }
 
 	}
-	
-	
+
+	void setPauseToNull() {
+		pause = null;
+	}
 
 	private boolean isPlayerMoving() {
 		if (rightMoveTimer.isRunning() || leftMoveTimer.isRunning() || jumpUpTimer.isRunning()

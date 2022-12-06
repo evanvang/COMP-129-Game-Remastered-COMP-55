@@ -20,7 +20,7 @@ public class MainApplication extends GraphicsApplication {
     private MainGame mainGame;
     private MenuPane menu;
     private SettingsPane settings;
-    private PausePane pause;
+//    private PausePane pause;
     private Level level = new Level(this,1);
     private boolean isMuted;
 
@@ -35,7 +35,7 @@ public class MainApplication extends GraphicsApplication {
 	mainGame = new MainGame(this);
 	menu = new MenuPane(this);
 	settings = new SettingsPane(this);
-	pause = new PausePane(this, level);
+//	pause = new PausePane(this, level);
 	setupInteractions();
 	switchToMenu();
     }
@@ -53,17 +53,17 @@ public class MainApplication extends GraphicsApplication {
 		playRandomSound();
 	
     }
-    public void switchToCurrLevel() {
-    	switchToScreen(level);
-    	playRandomSound();
-    }
+//    public void switchToCurrLevel() {
+//    	switchToScreen(level);
+//    	playRandomSound();
+//    }
 
     public void switchToSettings() {
 	switchToScreen(settings);
     }
     
-    public void switchToPause() {
-    	switchToPause(pause);
+    public void switchPause(PausePane p) {
+    	switchToPause(p);
 
 //    	switchToScreen(pause);
         }
