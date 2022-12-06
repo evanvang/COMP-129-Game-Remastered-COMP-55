@@ -35,10 +35,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	// Player movement
 	private static final int PLAYER_UP_VELOCITY = -20;
-	private static final int PLAYER_DOWN_VELOCITY = 10;
+	private static final int PLAYER_DOWN_VELOCITY = 5;
 	private static int jumpCounter = 0;
 	private Timer jumpUpTimer = new Timer(20, this);
-	private Timer downTimer = new Timer(20, this);
+	private Timer downTimer = new Timer(25, this);
 	private Timer leftMoveTimer = new Timer(20, this);
 	private Timer rightMoveTimer = new Timer(20, this);
 
@@ -261,7 +261,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
 		if (isGround(obj) && (jumpCounter > 1)) {
 			System.out.println("JUMPING");
-			System.out.println(map.getGroundChunks().size());
+//			System.out.println(map.getGroundChunks().size());
 			return true;
 		}
 
@@ -279,17 +279,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		System.out.println("Grounded");
 		return false;
 	}
-	/*
-	 * for (int i = 0; i < map.getGroundChunks().size() ; i++) {
-	 * 
-	 * if (mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth()/3,
-	 * newPlayer.getY() + newPlayer.getHeight()) != map.getGroundChunks().get(i)
-	 * .getChunkIMG() && jumpUpTimer.isRunning() == false ) {
-	 * System.out.println("FALLING");
-	 * 
-	 * return true; } }
-	 * 
-	 */
+	public boolean isPlayerOnEdge() {
+		if (newPlayer.getX() <= -5) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isPlayerClipping() {
+		if(newPlayer.getX()+newPlayer.getWidth() == 10000) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -308,13 +311,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		leftMoveTimer.stop();
 	}
 		}
-
-	public boolean isPlayerOnEdge() {
-		if (newPlayer.getX() <= -5) {
-			return true;
-		}
-		return false;
-	}
 
 	public void goToOrigin() {
 		player = new Player(startX, startY);
@@ -431,11 +427,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (source == downTimer) {
 		//jumpCounter++;
 		player.move(0, PLAYER_DOWN_VELOCITY);
-		player.getImage().rotate(20);
+		//player.getImage().rotate(10);
 	}
 	
 
 	if (isPlayerOnGround()) {
+		downTimer.stop();
 	    jumpUpTimer.stop();
 	    jumpCounter = 0;
 	}
