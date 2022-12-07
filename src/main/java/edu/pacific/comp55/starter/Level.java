@@ -251,10 +251,31 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		return false;
 	}
-
-	private boolean isGround(GObject element) {
+	
+	private boolean isSpike(GObject spike) {
 		for (Chunk c : chunky) {
-			if (element == c.getChunkIMG() && c.getID() == 'g') {
+			if (spike == c.getspikeIMG() && c.getID() == 's') {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isPlayerOnSpike() {
+		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
+		if (isSpike(obj)) {
+			System.out.println("SPIKED");
+//			System.out.println(map.getGroundChunks().size());
+			return true;
+		}
+
+		return false;
+	}
+	
+
+	private boolean isGround(GObject ground) {
+		for (Chunk c : chunky) {
+			if (ground == c.getChunkIMG() && c.getID() == 'g') {
 				return true;
 			}
 		}
@@ -439,6 +460,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (isPlayerGoingOver()) {
 		downTimer.start();
 		//System.out.println("Cliff");
+	}
+	if (isPlayerOnSpike()) {
+	    liveLabel.setLabel(String.valueOf(lives));
+		lives--;
 	}
 	
 	if (time == 0) {
