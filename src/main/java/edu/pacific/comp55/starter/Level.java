@@ -150,7 +150,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		newPlayer = player.getImage();
 		chunky = map.getChunks();
 		showDetails();
-		startTimer();
+		eTimer.start();
 	}
 
 	public void hideContents() {
@@ -171,10 +171,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				setupLevel2();
 				showContents();
 			}
-
 		}
-		// System.out.println("lose");
-
+		// if(passedLevel() && levelNum ==1) {
+		// hideContents();
+		// levelNum = 2;
+		// setupLevel2();
+		// showContents();
+		//
+		// }
 	}
 
 	@Override
@@ -397,10 +401,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (time == 0) {
-			timeLabel = new GLabel("0", 200, 50);
-			
-		}
 	Object source = e.getSource();
 	if (source == eTimer) {
 	    callEnemyCloudMovement();
@@ -440,10 +440,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		downTimer.start();
 		//System.out.println("Cliff");
 	}
-	if (getTime() <= 0) {
+	
+	if (time == 0) {
+	    time = 31;
 	    lives--;
 	    liveLabel.setLabel(String.valueOf(lives));
-	    time = 30;
 
 	}
 
@@ -531,13 +532,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	passedLevel();
 
-	// if(passedLevel() && levelNum ==1) {
-	// hideContents();
-	// levelNum = 2;
-	// setupLevel2();
-	// showContents();
-	//
-	// }
     }
 
 	void setPauseToNull() {
@@ -552,21 +546,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 					|| ene.getImage().getX() <= ene.getStartX()) {
 				enemyVel *= -1;
 				ene.getImage().move(enemyVel, 0);
-
 			}
 		}
-
 		if (count % 15 == 0) {
 			time--;
 			timeLabel.setLabel(String.valueOf(time));
 		}
-
 		cloud.move(1325);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
 	}
 
 	private boolean initAnimationState = false;
