@@ -209,7 +209,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			System.out.println("in level: " + levelNum);
 			pause = new PausePane(mainScreen, this);
 			mainScreen.switchPause(pause);
-			eTimer.stop();
+			stopAllTimers();
 			break;
 		case KeyEvent.VK_T:
 			System.out.println("P: " + player.getImage().getX());
@@ -380,7 +380,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public void setupLevel2() {
 		System.out.println("setupLevel2");
-		startX = 30;
+		startX = 10;
 		startY = 200;
 		player = new Player(startX, startY);
 		cloud = new Cloud(50, 25);
@@ -553,6 +553,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			timeLabel.setLabel(String.valueOf(time));
 		}
 		cloud.move(1325);
+	}
+	
+	void stopAllTimers() {
+		eTimer.stop();
+		rightMoveTimer.stop();
+		leftMoveTimer.stop();
+		jumpUpTimer.stop();
+		downTimer.stop();
+		hitTimer.stop();
+		rightWalkFrictionTimer.stop();
+		leftWalkFrictionTimer.stop();
+		idleAnimationTimer_1.stop();
+		idleAnimationTimer_2.stop();
+		
 	}
 
 	private boolean initAnimationState = false;
