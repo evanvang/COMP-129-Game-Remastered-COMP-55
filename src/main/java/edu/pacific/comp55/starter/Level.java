@@ -225,49 +225,72 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	return;
     }
 
-    public boolean isPlayerEnemyCollision() {
+    
 
-	for (Enemy e : map.getEnemies()) {
+	public boolean isPlayerEnemyCollision() {
 
-	    if (player.bounds.intersects(e.getImage().getBounds())) {
+		for (Enemy e : map.getEnemies()) {
 
-		/* Test code>> */
-		GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
-			player.bounds.getHeight());
-		mainScreen.add(temp);
+			if (player.bounds.intersects(e.getImage().getBounds())) {
 
-		GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
-			e.getImage().getHeight());
-		foo.setColor(Color.red);
-		mainScreen.add(foo);
+				/* Test code>> */
+				GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
+						player.bounds.getHeight());
+				mainScreen.add(temp);
 
-		lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
-		lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
+				GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
+						e.getImage().getHeight());
+				foo.setColor(Color.red);
+				mainScreen.add(foo);
 
-		System.out.println("Collision Detected");
-		/* <<Test code */
+				lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
+				lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
 
-		return true;
-	    }
+				System.out.println("Collision Detected");
+				/* <<Test code */
 
+				return true;
+			}
+
+		}
+
+		return false;
+	}
+	
+	private boolean isSpike(GObject spike) {
+		for (Chunk c : chunky) {
+			if (spike == c.getspikeIMG() && c.getID() == 's') {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	return false;
-    }
+	public boolean isPlayerOnSpike() {
+		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
+		if (isSpike(obj)) {
+			System.out.println("SPIKED");
+//			System.out.println(map.getGroundChunks().size());
+			return true;
+		}
 
-    private boolean isGround(GObject element) {
-	for (Chunk c : chunky) {
-	    if (element == c.getChunkIMG() && c.getID() == 'g') {
-		return true;
-	    }
+		return false;
 	}
-	return false;
-    }
+	
 
-    public boolean isPlayerOnGround() {
-	GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
-	if (isGround(obj) && (jumpCounter > 1)) {
-	    System.out.println("JUMPING");
+	private boolean isGround(GObject ground) {
+		for (Chunk c : chunky) {
+			if (ground == c.getChunkIMG() && c.getID() == 'g') {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isPlayerOnGround() {
+		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
+		if (isGround(obj) && (jumpCounter > 1)) {
+			System.out.println("JUMPING");
 //			System.out.println(map.getGroundChunks().size());
 	    return true;
 	}
@@ -444,6 +467,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    // System.out.println("Cliff");
 	}
 
+	if (isPlayerOnSpike()) {
+	    liveLabel.setLabel(String.valueOf(lives));
+		lives--;
+	}
+	
 	if (time == 0) {
 	    time = 31;
 	    lives--;
