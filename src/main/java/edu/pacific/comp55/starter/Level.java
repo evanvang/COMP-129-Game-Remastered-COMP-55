@@ -565,6 +565,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    time--;
 	    timeLabel.setLabel(String.valueOf(time));
 	}
+	cloud.move(1325);
+
     }
 	
 	void stopAllTimers() {
