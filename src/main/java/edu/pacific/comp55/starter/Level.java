@@ -482,10 +482,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 			if (source == leftMoveTimer)
 				leftMoveTimer.stop();
-
-			hitTimer.start();
-			// lives--;
-			// liveLabel.setLabel(String.valueOf(lives));
+			respawnPlayer();
+			//hitTimer.start();
+			 lives--;
+			 liveLabel.setLabel(String.valueOf(lives));
 		}
 
 		if (source == hitTimer) {
