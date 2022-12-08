@@ -52,7 +52,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	// Enemy collision impact
 	private Timer hitTimer = new Timer(20, this);
-	private double hitImpact = 10;
+	private double hitImpact = 100;
 
 	private MainApplication mainScreen;
 	private Map map;
@@ -102,28 +102,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return timeLabel;
 	}
 
-	public void setTimeLabel(GLabel timeLabel) {
-		this.timeLabel = timeLabel;
-	}
-
-	public int getLevelNum() {
-		return levelNum;
-	}
-
-	public boolean checkGround() {
-		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
-				.getChunkIMG()) {
-
-		}
-		return true;
-	}
-
 	public void showDetails() {
 		mainScreen.add(timeLabel);
 		mainScreen.add(liveIMG);
 		mainScreen.add(liveLabel);
 		mainScreen.add(clockIMG);
 		mainScreen.add(goalSpace);
+	}
+
+	public void setTimeLabel(GLabel timeLabel) {
+		this.timeLabel = timeLabel;
 	}
 
 	public void showContents() {
@@ -154,6 +142,19 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		chunky = map.getChunks();
 		showDetails();
 		eTimer.start();
+	}
+
+	public int getLevelNum() {
+		return levelNum;
+	}
+
+	public boolean checkGround() {
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+				.getChunkIMG()) {
+
+			return true;
+		}
+		return false;
 	}
 
 	public void hideContents() {
@@ -234,12 +235,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				/* Test code>> */
 				GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
 						player.bounds.getHeight());
-				mainScreen.add(temp);
+				// mainScreen.add(temp);
 
 				GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
 						e.getImage().getHeight());
 				foo.setColor(Color.red);
-				mainScreen.add(foo);
+				// mainScreen.add(foo);
 
 				lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
 				lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
@@ -268,7 +269,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
 		if (isSpike(obj)) {
 			System.out.println("SPIKED");
-//			System.out.println(map.getGroundChunks().size());
 			return true;
 		}
 
@@ -296,7 +296,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public boolean isPlayerGoingOver() {
-		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 3,
+		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 4,
 				newPlayer.getY() + newPlayer.getHeight() + 3));
 		if (!i && jumpUpTimer.isRunning() == false) {
 			System.out.println("FALLING");
@@ -329,12 +329,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		if (keyCode == KeyEvent.VK_RIGHT) {
 			rightWalkFrictionTimer.start();
-			rightMoveTimer.stop();
-			leftMoveTimer.stop();
-		}
-
-		if (keyCode == KeyEvent.VK_LEFT) {
-			leftWalkFrictionTimer.start();
 			rightMoveTimer.stop();
 			leftMoveTimer.stop();
 		}
@@ -465,8 +459,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 		if (isPlayerOnSpike()) {
-			liveLabel.setLabel(String.valueOf(lives));
+			respawnPlayer();
 			lives--;
+			liveLabel.setLabel(String.valueOf(lives));
 		}
 
 		if (time == 0) {
@@ -544,6 +539,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		pause = null;
 	}
 
+	public void setLevelNum(int levelNum) {
+		this.levelNum = levelNum;
+	}
+
 	void callEnemyCloudMovement() {
 		count++;
 		for (Enemy ene : map.getEnemies()) {
@@ -560,10 +559,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 		cloud.move(1325);
 
-	}
+		if (count % 15 == 0)
 
-	public void setLevelNum(int levelNum) {
-		this.levelNum = levelNum;
+		{
+			time--;
+			timeLabel.setLabel(String.valueOf(time));
+		}
 	}
 
 	void stopAllTimers() {
@@ -577,7 +578,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		leftWalkFrictionTimer.stop();
 		idleAnimationTimer_1.stop();
 		idleAnimationTimer_2.stop();
-
 	}
 
 	private void runIdleAnimation(Object source) {
