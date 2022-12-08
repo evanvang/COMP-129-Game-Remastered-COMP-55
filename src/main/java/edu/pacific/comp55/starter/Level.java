@@ -22,106 +22,101 @@ import acm.graphics.GRect;
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
-    private boolean initAnimationState = false;
-    private Timer respawnTimer = new Timer(20, this);
+	private boolean initAnimationState = false;
+	private Timer respawnTimer = new Timer(20, this);
 
-    private double lastPCollision_Ref;
-    private double lastECollision_Ref;
+	private double lastPCollision_Ref;
+	private double lastECollision_Ref;
 
-    private Timer hitBufferTimer = new Timer(20, this);
-    private int hitBufferCount = 100;
+	private Timer hitBufferTimer = new Timer(20, this);
+	private int hitBufferCount = 100;
 
-    // Animation
-    private Timer idleAnimationTimer_1 = new Timer(20, this);
-    private Timer idleAnimationTimer_2 = new Timer(20, this);
-    private int idleAnimationCount = 20;
+	// Animation
+	private Timer idleAnimationTimer_1 = new Timer(20, this);
+	private Timer idleAnimationTimer_2 = new Timer(20, this);
+	private int idleAnimationCount = 20;
 
-    // Player movement
-    private static final int PLAYER_UP_VELOCITY = -20;
-    private static final int PLAYER_DOWN_VELOCITY = 5;
-    private static int jumpCounter = 0;
-    private Timer jumpUpTimer = new Timer(20, this);
-    private Timer downTimer = new Timer(25, this);
-    private Timer leftMoveTimer = new Timer(20, this);
-    private Timer rightMoveTimer = new Timer(20, this);
+	// Player movement
+	private static final int PLAYER_UP_VELOCITY = -20;
+	private static final int PLAYER_DOWN_VELOCITY = 5;
+	private static int jumpCounter = 0;
+	private Timer jumpUpTimer = new Timer(20, this);
+	private Timer downTimer = new Timer(25, this);
+	private Timer leftMoveTimer = new Timer(20, this);
+	private Timer rightMoveTimer = new Timer(20, this);
 
-    // Walk friction after key released
-    private Timer rightWalkFrictionTimer = new Timer(20, this);
-    private Timer leftWalkFrictionTimer = new Timer(20, this);
-    private double walkFriction = 10;
+	// Walk friction after key released
+	private Timer rightWalkFrictionTimer = new Timer(20, this);
+	private Timer leftWalkFrictionTimer = new Timer(20, this);
+	private double walkFriction = 10;
 
-    // Enemy collision impact
-    private Timer hitTimer = new Timer(20, this);
-    private double hitImpact = 10;
+	// Enemy collision impact
+	private Timer hitTimer = new Timer(20, this);
+	private double hitImpact = 10;
 
-    private MainApplication mainScreen;
-    private Map map;
-    private Player player;
-    private Timer eTimer = new Timer(50, this);
-    private Cloud cloud;
-    private double enemyVel = 3;
-    private int time;
-    private int startX;
-    private int startY;
-    private GLabel timeLabel;
-    private GLabel liveLabel;
-    private int count = 0;
-    private GImage liveIMG;
-    private GImage clockIMG;
+	private MainApplication mainScreen;
+	private Map map;
+	private Player player;
+	private Timer eTimer = new Timer(50, this);
+	private Cloud cloud;
+	private double enemyVel = 3;
+	private int time;
+	private int startX;
+	private int startY;
+	private GLabel timeLabel;
+	private GLabel liveLabel;
+	private int count = 0;
+	private GImage liveIMG;
+	private GImage clockIMG;
 
-    public double initSpeed = 10;
-    private GImage newPlayer;
-    private ArrayList<Chunk> chunky;
-    private GImage goalSpace;
-    private int levelNum;
-    private int lives;
-    private PausePane pause;
+	public double initSpeed = 10;
+	private GImage newPlayer;
+	private ArrayList<Chunk> chunky;
+	private GImage goalSpace;
+	private int levelNum;
+	private int lives;
+	private PausePane pause;
 
-    // Constructor
-    public Level(MainApplication program, int levelNum) {
+	// Constructor
+	public Level(MainApplication program, int levelNum) {
 
-	mainScreen = program;
-	map = new Map();
-	this.levelNum = levelNum;
-	drawTimeLabel();
-	drawLiveLabel();
-	if (levelNum == 1) {
-	    setupLevel1();
-	} else if (levelNum == 2) {
-	    System.out.println("retry");
-	    setupLevel2();
+		mainScreen = program;
+		map = new Map();
+		this.levelNum = levelNum;
+		drawTimeLabel();
+		drawLiveLabel();
+		if (levelNum == 1) {
+			setupLevel1();
+		} else if (levelNum == 2) {
+			System.out.println("retry");
+			setupLevel2();
+		}
+		// newPlayer = player.getImage();
+		// chunky = map.getChunks();
 	}
-	// newPlayer = player.getImage();
-	// chunky = map.getChunks();
-    }
 
-    public GLabel getTimeLabel() {
-	mainScreen.setupInteractions();
-	newPlayer = player.getImage();
-	chunky = map.getChunks();
-	return timeLabel;
-    }
-
-    public void setTimeLabel(GLabel timeLabel) {
-	this.timeLabel = timeLabel;
-    }
-
-    public int getLevelNum() {
-	return levelNum;
-    }
-
-    public boolean checkGround() {
-	if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
-		.getChunkIMG()) {
-
+	public GLabel getTimeLabel() {
+		mainScreen.setupInteractions();
+		newPlayer = player.getImage();
+		chunky = map.getChunks();
+		return timeLabel;
 	}
-	return true;
-    }
 
-  
+	public void setTimeLabel(GLabel timeLabel) {
+		this.timeLabel = timeLabel;
+	}
 
+	public int getLevelNum() {
+		return levelNum;
+	}
 
+	public boolean checkGround() {
+		if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+				.getChunkIMG()) {
 
+		}
+		return true;
+	}
 
 	public void showDetails() {
 		mainScreen.add(timeLabel);
@@ -259,7 +254,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		return false;
 	}
-	
+
 	private boolean isSpike(GObject spike) {
 		for (Chunk c : chunky) {
 			if (spike == c.getspikeIMG() && c.getID() == 's') {
@@ -279,7 +274,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 		return false;
 	}
-	
 
 	private boolean isGround(GObject ground) {
 		for (Chunk c : chunky) {
@@ -295,280 +289,279 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (isGround(obj) && (jumpCounter > 1)) {
 			System.out.println("JUMPING");
 //			System.out.println(map.getGroundChunks().size());
-	    return true;
+			return true;
+		}
+
+		return false;
 	}
 
-	return false;
-    }
+	public boolean isPlayerGoingOver() {
+		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 3,
+				newPlayer.getY() + newPlayer.getHeight() + 3));
+		if (!i && jumpUpTimer.isRunning() == false) {
+			System.out.println("FALLING");
+			return true;
+		}
 
-    public boolean isPlayerGoingOver() {
-	boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 3,
-		newPlayer.getY() + newPlayer.getHeight() + 3));
-	if (!i && jumpUpTimer.isRunning() == false) {
-	    System.out.println("FALLING");
-	    return true;
+		// System.out.println("Grounded");
+		return false;
 	}
 
-	// System.out.println("Grounded");
-	return false;
-    }
-
-    public boolean isPlayerOnEdge() {
-	if (newPlayer.getX() <= -5) {
-	    return true;
-	}
-	return false;
-    }
-
-    public boolean isPlayerClipping() {
-	if (newPlayer.getX() + newPlayer.getWidth() == 10000) {
-	    return true;
+	public boolean isPlayerOnEdge() {
+		if (newPlayer.getX() <= -5) {
+			return true;
+		}
+		return false;
 	}
 
-	return false;
-    }
+	public boolean isPlayerClipping() {
+		if (newPlayer.getX() + newPlayer.getWidth() == 10000) {
+			return true;
+		}
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-	int keyCode = e.getKeyCode();
-
-	if (keyCode == KeyEvent.VK_RIGHT) {
-	    rightWalkFrictionTimer.start();
-	    rightMoveTimer.stop();
-	    leftMoveTimer.stop();
+		return false;
 	}
 
-	if (keyCode == KeyEvent.VK_LEFT) {
-	    leftWalkFrictionTimer.start();
-	    rightMoveTimer.stop();
-	    leftMoveTimer.stop();
-	}
-    }
+	@Override
+	public void keyReleased(KeyEvent e) {
 
-    public void goToOrigin() {
-	player = new Player(startX, startY);
+		int keyCode = e.getKeyCode();
 
-    }
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			rightWalkFrictionTimer.start();
+			rightMoveTimer.stop();
+			leftMoveTimer.stop();
+		}
 
-    public void drawTimeLabel() {
-	timeLabel = new GLabel("30", 200, 50);
-	timeLabel.setColor(Color.WHITE);
-	timeLabel.setFont("Arial-Bold-30");
-	clockIMG = new GImage("clock guy.png", 145, 15);
-	clockIMG.setSize(45, 45);
-    }
-
-    public void drawLiveLabel() {
-
-	liveLabel = new GLabel("3", 95, 50);
-	liveLabel.setColor(Color.WHITE);
-	liveLabel.setFont("Arial-Bold-30");
-	liveIMG = new GImage("liveshead.png", 20, 8);
-	liveIMG.setSize(65, 65);
-    }
-
-    public void drawGoalSpace() {
-	goalSpace = new GImage("redflag.png");
-	goalSpace.setSize(70, 70);
-    }
-
-    public void startTimer() {
-	eTimer.start();
-    }
-
-	
-		public void stopTimer() {
-	eTimer.stop();
-    }
-
-    public int getTime() {
-	return time;
-    }
-
-    public void setTime(int time) {
-	this.time = time;
-    }
-
-    public void setupLevel1() {
-	player = new Player(50, 415);
-	cloud = new Cloud(50, 25);
-	map.createChunk('b', "background.png", 0, 0, 1900, 850);
-	map.createChunk('g', "ground1.png", 0, 515, 650, 250);
-	map.createChunk('s', "Spike.png", 650, 665, 140, 100);
-	map.createChunk('g', "ground1.png", 790, 425, 650, 350);
-	map.createEnemy(900, 375);
-	map.createEnemy(150, 465);
-	time = 30;
-	lives = 3;
-	// map.sortGroundChunks();
-	// System.out.println("ffffsfs");
-	drawGoalSpace();
-	goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
-
-	player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
-    }
-
-    public void setupLevel2() {
-	System.out.println("setupLevel2");
-	startX = 30;
-	startY = 200;
-	player = new Player(startX, startY);
-	cloud = new Cloud(50, 25);
-	map.createChunk('b', "backround.png", 0, 0, 1900, 850);
-	map.createChunk('g', "ground1.png", 0, 300, 300, 500);
-	map.createChunk('s', "Spike.png", 300, 665, 140, 100);
-	map.createChunk('g', "ground1.png", 440, 425, 400, 350);
-	map.createChunk('s', "Spike.png", 840, 665, 140, 100);
-	map.createChunk('g', "ground1.png", 980, 300, 300, 500);
-	map.createEnemy(100, 250);
-	map.createEnemy(600, 375);
-	time = 30;
-	timeLabel.setLabel(String.valueOf(time));
-	drawGoalSpace();
-	goalSpace.setLocation(1150, 300 - goalSpace.getHeight());
-	player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
-
-    }
-
-    public void actionPerformed(ActionEvent e) {
-	Object source = e.getSource();
-	if (source == eTimer) {
-	    callEnemyCloudMovement();
+		if (keyCode == KeyEvent.VK_LEFT) {
+			leftWalkFrictionTimer.start();
+			rightMoveTimer.stop();
+			leftMoveTimer.stop();
+		}
 	}
 
-	if (lives <= 0) {
-	    // goToOrigin();
-	}
-
-	if (source == rightMoveTimer) {
-	    player.move(initSpeed, 0);
-	}
-
-	if (source == leftMoveTimer) {
-	    if (!isPlayerOnEdge()) {
-		player.move(-initSpeed, 0);
-	    }
-	}
-
-	if (source == jumpUpTimer) {
-	    jumpCounter++;
-	    player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
-	}
-	if (source == downTimer) {
-	    // jumpCounter++;
-	    player.move(0, PLAYER_DOWN_VELOCITY);
-	    // player.getImage().rotate(10);
-	}
-
-	if (isPlayerOnGround()) {
-	    downTimer.stop();
-	    jumpUpTimer.stop();
-	    jumpCounter = 0;
-	}
-	if (isPlayerGoingOver()) {
-	    downTimer.start();
-	    // System.out.println("Cliff");
-	}
-
-	if (isPlayerOnSpike()) {
-	    liveLabel.setLabel(String.valueOf(lives));
-		lives--;
-	}
-	
-	if (time == 0) {
-	    time = 31;
-	    lives--;
-	    liveLabel.setLabel(String.valueOf(lives));
+	public void goToOrigin() {
+		player = new Player(startX, startY);
 
 	}
 
-	if (isPlayerEnemyCollision()) {
-	    if (source == rightMoveTimer)
-		rightMoveTimer.stop();
-
-	    if (source == leftMoveTimer)
-		leftMoveTimer.stop();
-
-	    hitTimer.start();
-	    // lives--;
-	    // liveLabel.setLabel(String.valueOf(lives));
+	public void drawTimeLabel() {
+		timeLabel = new GLabel("30", 200, 50);
+		timeLabel.setColor(Color.WHITE);
+		timeLabel.setFont("Arial-Bold-30");
+		clockIMG = new GImage("clock guy.png", 145, 15);
+		clockIMG.setSize(45, 45);
 	}
 
-	if (source == hitTimer) {
-	    if (hitImpact < 0) {
-		hitImpact = 10;
-		hitTimer.stop();
-	    }
+	public void drawLiveLabel() {
 
-	    // Player hit from left side of enemy
-	    if (lastPCollision_Ref < lastECollision_Ref) {
-		player.move(-hitImpact, 0);
-	    }
-
-	    // Player hit from right side of enemy
-	    if (lastPCollision_Ref > lastECollision_Ref) {
-		player.move(hitImpact, 0);
-	    }
-
-	    hitImpact--;
+		liveLabel = new GLabel("3", 95, 50);
+		liveLabel.setColor(Color.WHITE);
+		liveLabel.setFont("Arial-Bold-30");
+		liveIMG = new GImage("liveshead.png", 20, 8);
+		liveIMG.setSize(65, 65);
 	}
 
-	if (source == rightWalkFrictionTimer) {
-	    player.move(walkFriction, 0);
-	    walkFriction--;
+	public void drawGoalSpace() {
+		goalSpace = new GImage("redflag.png");
+		goalSpace.setSize(70, 70);
+	}
 
-	    if (walkFriction == 0) {
-		walkFriction = 5;
-		rightWalkFrictionTimer.stop();
-	    }
+	public void startTimer() {
+		eTimer.start();
+	}
+
+	public void stopTimer() {
+		eTimer.stop();
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	public void setupLevel1() {
+		player = new Player(50, 415);
+		cloud = new Cloud(50, 25);
+		map.createChunk('b', "background.png", 0, 0, 1900, 850);
+		map.createChunk('g', "ground1.png", 0, 515, 650, 250);
+		map.createChunk('s', "Spike.png", 650, 665, 140, 100);
+		map.createChunk('g', "ground1.png", 790, 425, 650, 350);
+		map.createEnemy(900, 375);
+		map.createEnemy(150, 465);
+		time = 30;
+		lives = 3;
+		// map.sortGroundChunks();
+		// System.out.println("ffffsfs");
+		drawGoalSpace();
+		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
+
+		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
+	}
+
+	public void setupLevel2() {
+		System.out.println("setupLevel2");
+		startX = 30;
+		startY = 200;
+		player = new Player(startX, startY);
+		cloud = new Cloud(50, 25);
+		map.createChunk('b', "backround.png", 0, 0, 1900, 850);
+		map.createChunk('g', "ground1.png", 0, 300, 300, 500);
+		map.createChunk('s', "Spike.png", 300, 665, 140, 100);
+		map.createChunk('g', "ground1.png", 440, 425, 400, 350);
+		map.createChunk('s', "Spike.png", 840, 665, 140, 100);
+		map.createChunk('g', "ground1.png", 980, 300, 300, 500);
+		map.createEnemy(100, 250);
+		map.createEnemy(600, 375);
+		time = 30;
+		timeLabel.setLabel(String.valueOf(time));
+		drawGoalSpace();
+		goalSpace.setLocation(1150, 300 - goalSpace.getHeight());
+		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
 
 	}
 
-	if (source == leftWalkFrictionTimer && player.getImage().getX() > 1) {
-	    player.move(-walkFriction, 0);
-	    walkFriction--;
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source == eTimer) {
+			callEnemyCloudMovement();
+		}
 
-	    if (walkFriction == 0) {
-		walkFriction = 5;
-		leftWalkFrictionTimer.stop();
-	    }
+		if (lives <= 0) {
+			// goToOrigin();
+		}
+
+		if (source == rightMoveTimer) {
+			player.move(initSpeed, 0);
+		}
+
+		if (source == leftMoveTimer) {
+			if (!isPlayerOnEdge()) {
+				player.move(-initSpeed, 0);
+			}
+		}
+
+		if (source == jumpUpTimer) {
+			jumpCounter++;
+			player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
+		}
+		if (source == downTimer) {
+			// jumpCounter++;
+			player.move(0, PLAYER_DOWN_VELOCITY);
+			// player.getImage().rotate(10);
+		}
+
+		if (isPlayerOnGround()) {
+			downTimer.stop();
+			jumpUpTimer.stop();
+			jumpCounter = 0;
+		}
+		if (isPlayerGoingOver()) {
+			downTimer.start();
+			// System.out.println("Cliff");
+		}
+
+		if (isPlayerOnSpike()) {
+			liveLabel.setLabel(String.valueOf(lives));
+			lives--;
+		}
+
+		if (time == 0) {
+			time = 31;
+			lives--;
+			liveLabel.setLabel(String.valueOf(lives));
+
+		}
+
+		if (isPlayerEnemyCollision()) {
+			if (source == rightMoveTimer)
+				rightMoveTimer.stop();
+
+			if (source == leftMoveTimer)
+				leftMoveTimer.stop();
+
+			hitTimer.start();
+			// lives--;
+			// liveLabel.setLabel(String.valueOf(lives));
+		}
+
+		if (source == hitTimer) {
+			if (hitImpact < 0) {
+				hitImpact = 10;
+				hitTimer.stop();
+			}
+
+			// Player hit from left side of enemy
+			if (lastPCollision_Ref < lastECollision_Ref) {
+				player.move(-hitImpact, 0);
+			}
+
+			// Player hit from right side of enemy
+			if (lastPCollision_Ref > lastECollision_Ref) {
+				player.move(hitImpact, 0);
+			}
+
+			hitImpact--;
+		}
+
+		if (source == rightWalkFrictionTimer) {
+			player.move(walkFriction, 0);
+			walkFriction--;
+
+			if (walkFriction == 0) {
+				walkFriction = 5;
+				rightWalkFrictionTimer.stop();
+			}
+
+		}
+
+		if (source == leftWalkFrictionTimer && player.getImage().getX() > 1) {
+			player.move(-walkFriction, 0);
+			walkFriction--;
+
+			if (walkFriction == 0) {
+				walkFriction = 5;
+				leftWalkFrictionTimer.stop();
+			}
+
+		}
+
+		if (!(isPlayerMoving())) {
+
+			idleAnimationTimer_1.start();
+
+			runIdleAnimation(source);
+		}
+
+		passedLevel();
 
 	}
 
-	if (!(isPlayerMoving())) {
-
-	    idleAnimationTimer_1.start();
-
-	    runIdleAnimation(source);
+	void setPauseToNull() {
+		pause = null;
 	}
 
-	passedLevel();
+	void callEnemyCloudMovement() {
+		count++;
+		for (Enemy ene : map.getEnemies()) {
+			ene.getImage().move(enemyVel, 0);
+			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+					|| ene.getImage().getX() <= ene.getStartX()) {
+				enemyVel *= -1;
+				ene.getImage().move(enemyVel, 0);
+			}
+		}
+		if (count % 15 == 0) {
+			time--;
+			timeLabel.setLabel(String.valueOf(time));
+		}
+		cloud.move(1325);
 
-    }
-
-    void setPauseToNull() {
-	pause = null;
-    }
-
-    void callEnemyCloudMovement() {
-	count++;
-	for (Enemy ene : map.getEnemies()) {
-	    ene.getImage().move(enemyVel, 0);
-	    if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
-		    || ene.getImage().getX() <= ene.getStartX()) {
-		enemyVel *= -1;
-		ene.getImage().move(enemyVel, 0);
-	    }
 	}
-	if (count % 15 == 0) {
-	    time--;
-	    timeLabel.setLabel(String.valueOf(time));
-	}
-	cloud.move(1325);
 
-    }
-	
 	void stopAllTimers() {
 		eTimer.stop();
 		rightMoveTimer.stop();
@@ -580,59 +573,59 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		leftWalkFrictionTimer.stop();
 		idleAnimationTimer_1.stop();
 		idleAnimationTimer_2.stop();
-		
-	}
-
-    private void runIdleAnimation(Object source) {
-	if (source == idleAnimationTimer_1) {
-	    if (idleAnimationCount == 0) {
-		idleAnimationCount = 20;
-		idleAnimationTimer_2.start();
-
-	    }
-
-	    player.getImage().setVisible(false);
-	    player.getImage_2().setVisible(true);
-	    idleAnimationCount--;
-	}
-
-	if (source == idleAnimationTimer_2) {
-
-	    if (idleAnimationTimer_1.isRunning()) {
-		idleAnimationTimer_1.stop();
-	    }
-
-	    if (idleAnimationCount == 0) {
-		idleAnimationCount = 20;
-		idleAnimationTimer_1.start();
-		idleAnimationTimer_2.stop();
-
-	    }
-
-	    player.getImage_2().setVisible(false);
-	    player.getImage().setVisible(true);
-	    idleAnimationCount--;
 
 	}
 
-    }
+	private void runIdleAnimation(Object source) {
+		if (source == idleAnimationTimer_1) {
+			if (idleAnimationCount == 0) {
+				idleAnimationCount = 20;
+				idleAnimationTimer_2.start();
 
-    public void respawnPlayer() {
+			}
 
-	player.getImage().setLocation(50, -100);
-	player.getImage_2().setLocation(50, -100);
-	player.updatePlayerPos();
+			player.getImage().setVisible(false);
+			player.getImage_2().setVisible(true);
+			idleAnimationCount--;
+		}
 
-	jumpUpTimer.start();
+		if (source == idleAnimationTimer_2) {
 
-    }
+			if (idleAnimationTimer_1.isRunning()) {
+				idleAnimationTimer_1.stop();
+			}
 
-    private boolean isPlayerMoving() {
-	if (rightMoveTimer.isRunning() || leftMoveTimer.isRunning() || jumpUpTimer.isRunning()
-		|| leftWalkFrictionTimer.isRunning() || rightWalkFrictionTimer.isRunning())
-	    return true;
+			if (idleAnimationCount == 0) {
+				idleAnimationCount = 20;
+				idleAnimationTimer_1.start();
+				idleAnimationTimer_2.stop();
 
-	return false;
-    }
+			}
+
+			player.getImage_2().setVisible(false);
+			player.getImage().setVisible(true);
+			idleAnimationCount--;
+
+		}
+
+	}
+
+	public void respawnPlayer() {
+
+		player.getImage().setLocation(50, -100);
+		player.getImage_2().setLocation(50, -100);
+		player.updatePlayerPos();
+
+		jumpUpTimer.start();
+
+	}
+
+	private boolean isPlayerMoving() {
+		if (rightMoveTimer.isRunning() || leftMoveTimer.isRunning() || jumpUpTimer.isRunning()
+				|| leftWalkFrictionTimer.isRunning() || rightWalkFrictionTimer.isRunning())
+			return true;
+
+		return false;
+	}
 
 }
