@@ -562,6 +562,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	}
 
+	public void setLevelNum(int levelNum) {
+		this.levelNum = levelNum;
+	}
+
 	void stopAllTimers() {
 		eTimer.stop();
 		rightMoveTimer.stop();

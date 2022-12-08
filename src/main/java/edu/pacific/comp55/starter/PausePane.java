@@ -37,10 +37,11 @@ public class PausePane extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		numLevel = level.getLevelNum();
 		if (obj == quit) {
-			
+			level.stopAllTimers();
 			 program.removeAll();
+			 level.setLevelNum(1);
 	         program.switchToMenu();
-			
+	  
 		}
 		if (obj == resume) {
 			program.switchToScreen(level);
