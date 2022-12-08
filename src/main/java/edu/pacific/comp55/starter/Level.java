@@ -102,28 +102,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	return timeLabel;
     }
 
-    public void setTimeLabel(GLabel timeLabel) {
-	this.timeLabel = timeLabel;
-    }
-
-    public int getLevelNum() {
-	return levelNum;
-    }
-
-    public boolean checkGround() {
-	if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
-		.getChunkIMG()) {
-
-	}
-	return true;
-    }
-
     public void showDetails() {
 	mainScreen.add(timeLabel);
 	mainScreen.add(liveIMG);
 	mainScreen.add(liveLabel);
 	mainScreen.add(clockIMG);
 	mainScreen.add(goalSpace);
+    }
+
+    public void setTimeLabel(GLabel timeLabel) {
+	this.timeLabel = timeLabel;
     }
 
     public void showContents() {
@@ -154,6 +142,19 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	chunky = map.getChunks();
 	showDetails();
 	eTimer.start();
+    }
+
+    public int getLevelNum() {
+	return levelNum;
+    }
+
+    public boolean checkGround() {
+	if (mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight()) == chunky.get(1)
+		.getChunkIMG()) {
+
+	    return true;
+	}
+	return false;
     }
 
     public void hideContents() {
@@ -268,7 +269,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
 	if (isSpike(obj)) {
 	    System.out.println("SPIKED");
-//			System.out.println(map.getGroundChunks().size());
 	    return true;
 	}
 
@@ -296,7 +296,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
     }
 
     public boolean isPlayerGoingOver() {
-	boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 3,
+	boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 4,
 		newPlayer.getY() + newPlayer.getHeight() + 3));
 	if (!i && jumpUpTimer.isRunning() == false) {
 	    System.out.println("FALLING");
@@ -329,12 +329,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	if (keyCode == KeyEvent.VK_RIGHT) {
 	    rightWalkFrictionTimer.start();
-	    rightMoveTimer.stop();
-	    leftMoveTimer.stop();
-	}
-
-	if (keyCode == KeyEvent.VK_LEFT) {
-	    leftWalkFrictionTimer.start();
 	    rightMoveTimer.stop();
 	    leftMoveTimer.stop();
 	}
@@ -467,6 +461,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	if (isPlayerOnSpike()) {
 	    liveLabel.setLabel(String.valueOf(lives));
 	    lives--;
+	    respawnPlayer();
 	}
 
 	if (time == 0) {
@@ -494,7 +489,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	if (source == hitTimer) {
 	    if (hitImpact < 0) {
-		hitImpact = 100;
+		hitImpact = 10;
 		hitTimer.stop();
 	    }
 
@@ -562,6 +557,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    time--;
 	    timeLabel.setLabel(String.valueOf(time));
 	}
+	cloud.move(1325);
+
+	if (count % 15 == 0)
+
+	{
+	    time--;
+	    timeLabel.setLabel(String.valueOf(time));
+	}
     }
 
     void stopAllTimers() {
@@ -575,144 +578,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	leftWalkFrictionTimer.stop();
 	idleAnimationTimer_1.stop();
 	idleAnimationTimer_2.stop();
-
     }
-
-    /*
-     * 
-     * 
-     * 
-     * Hanna
-     * 
-     * 
-     * 
-     */
-
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//	Object source = e.getSource();
-//
-//	if (source == eTimer) {
-//	    callEnemyCloudMovement();
-//	    
-//	if(lives <= 0) {
-//	    //goToOrigin();
-//	}
-//
-//	if (source == rightMoveTimer) {
-//	    player.move(initSpeed, 0);
-//	}
-//
-//	if (source == leftMoveTimer) {
-//	    if (!isPlayerOnEdge()) {
-//		player.move(-initSpeed, 0);
-//	    }
-//	}
-//
-//	if (source == jumpUpTimer) {
-//	    jumpCounter++;
-//	    player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
-//	}
-//
-//	if (isPlayerOnGround()) {
-//	    jumpUpTimer.stop();
-//	    jumpCounter = 0;
-//	}
-//
-//
-//	if (isPlayerEnemyCollision()) {
-//	    if (source == rightMoveTimer)
-//		rightMoveTimer.stop();
-//
-//	    if (source == leftMoveTimer)
-//		leftMoveTimer.stop();
-//
-//	    hitTimer.start();
-//	    //lives--;
-//	    //liveLabel.setLabel(String.valueOf(lives));
-//	}
-//
-//	if (source == respawnTimer) {
-//	    if (player.getImage().getX() < -20) {
-//		respawnPlayer();
-//		respawnTimer.stop();
-//	    }
-//	}
-//
-//	if (source == hitTimer) {
-//
-//	    if (player.getImage().getX() < -20 || player.getImage().getX() > 1200) {
-//		System.out.println("hit timer will stop");
-//		respawnTimer.start();
-//		hitImpact = 100;
-//		hitTimer.stop();
-//	    }
-//
-//	    // Player hit from left side of enemy
-//	    if (lastPCollision_Ref < lastECollision_Ref) {
-//		//player.runPlayerDeathSpinAnimation();
-//		player.move(-hitImpact, -hitImpact);
-//
-//	    }
-//
-//	    // Player hit from right side of enemy
-//	    if (lastPCollision_Ref > lastECollision_Ref) {
-//		//player.runPlayerDeathSpinAnimation();
-//		player.move(hitImpact, -hitImpact);
-//	    }
-//
-//	    hitImpact--;
-//	}
-//
-//	if (source == rightWalkFrictionTimer) {
-//	    player.move(walkFriction, 0);
-//	    walkFriction--;
-//
-//	    if (walkFriction == 0) {
-//		walkFriction = 7;
-//		rightWalkFrictionTimer.stop();
-//	    }
-//
-//	}
-//
-//	if (source == leftWalkFrictionTimer && player.getImage().getX() > 1) {
-//	    player.move(-walkFriction, 0);
-//	    walkFriction--;
-//
-//	    if (walkFriction == 0) {
-//		walkFriction = 7;
-//		leftWalkFrictionTimer.stop();
-//	    }
-//
-//	}
-//
-//	if (!(isPlayerMoving())) {
-//
-//	    if (initAnimationState == false) {
-//		initAnimationState = true;
-//		idleAnimationTimer_1.start();
-//	    }
-//
-//	    runIdleAnimation(source);
-//	}
-//
-//	if (lives == 0) {
-//	    // mainScreen.removeAll();
-//	}
-//
-//    }
-//    }
-
-    /*
-     * 
-     * 
-     * 
-     * Hanna
-     * 
-     * 
-     * 
-     * 
-     */
 
     private void runIdleAnimation(Object source) {
 	if (source == idleAnimationTimer_1) {
