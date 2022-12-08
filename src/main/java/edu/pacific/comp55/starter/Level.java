@@ -158,11 +158,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void hideContents() {
-
 		mainScreen.removeAll();
 		map.removeChunks(chunky);
 		map.removeEnemies(map.getEnemies());
-		System.out.println("hide");
 	}
 
 	void passedLevel() {
@@ -396,7 +394,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public void setupLevel2() {
 		System.out.println("setupLevel2");
-		startX = 30;
+		startX = 0;
 		startY = 200;
 		player = new Player(startX, startY);
 		cloud = new Cloud(50, 25);
