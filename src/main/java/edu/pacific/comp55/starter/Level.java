@@ -296,7 +296,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public boolean isPlayerGoingOver() {
-		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 3,
+		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() /4,
 				newPlayer.getY() + newPlayer.getHeight() + 3));
 		if (!i && jumpUpTimer.isRunning() == false) {
 			System.out.println("FALLING");
@@ -467,6 +467,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (isPlayerOnSpike()) {
 			liveLabel.setLabel(String.valueOf(lives));
 			lives--;
+			respawnPlayer();
 		}
 
 		if (time == 0) {
