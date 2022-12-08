@@ -167,8 +167,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	void passedLevel() {
 		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
-			System.out.println("win");
-			eTimer.stop();
+			stopAllTimers();
 			if (levelNum == 1) {
 				hideContents();
 				levelNum = 2;
@@ -176,13 +175,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				showContents();
 			}
 		}
-		// if(passedLevel() && levelNum ==1) {
-		// hideContents();
-		// levelNum = 2;
-		// setupLevel2();
-		// showContents();
-		//
-		// }
 	}
 
 	@Override
@@ -249,6 +241,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				/* <<Test code */
 
 				return true;
+		
 			}
 
 		}
@@ -477,16 +470,20 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 		if (isPlayerEnemyCollision()) {
-			if (source == rightMoveTimer)
+			if (source == rightMoveTimer) 
 				rightMoveTimer.stop();
+			
 
-			if (source == leftMoveTimer)
+			if (source == leftMoveTimer) 
 				leftMoveTimer.stop();
+			
 
 			hitTimer.start();
-			// lives--;
-			// liveLabel.setLabel(String.valueOf(lives));
+//			 lives--;
+//			 liveLabel.setLabel(String.valueOf(lives));
 		}
+		
+		
 
 		if (source == hitTimer) {
 			if (hitImpact < 0) {
@@ -503,6 +500,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			if (lastPCollision_Ref > lastECollision_Ref) {
 				player.move(hitImpact, 0);
 			}
+			
+			
 
 			hitImpact--;
 		}
@@ -530,14 +529,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 		if (!(isPlayerMoving())) {
-
 			idleAnimationTimer_1.start();
-
 			runIdleAnimation(source);
 		}
-
 		passedLevel();
-
 	}
 
 	void setPauseToNull() {
