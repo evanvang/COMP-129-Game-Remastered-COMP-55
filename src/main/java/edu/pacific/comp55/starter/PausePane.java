@@ -35,7 +35,6 @@ public class PausePane extends GraphicsPane {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-		hideContents();
 		numLevel = level.getLevelNum();
 		if (obj == quit) {
 			
