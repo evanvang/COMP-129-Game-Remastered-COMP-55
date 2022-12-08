@@ -118,182 +118,176 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	return true;
     }
 
-  
+    public void showDetails() {
+	mainScreen.add(timeLabel);
+	mainScreen.add(liveIMG);
+	mainScreen.add(liveLabel);
+	mainScreen.add(clockIMG);
+	mainScreen.add(goalSpace);
+    }
 
+    public void showContents() {
+	if (levelNum == 1) {
+	    mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+	    mainScreen.add(map.getChunks().get(1).getChunkIMG());
+	    mainScreen.add(map.getChunks().get(2).getspikeIMG());
+	    mainScreen.add(map.getChunks().get(3).getChunkIMG());
+	    mainScreen.add(player.getImage());
+	    mainScreen.add(player.getImage_2());
+	    mainScreen.add(map.getEnemies().get(0).getImage());
+	    mainScreen.add(map.getEnemies().get(1).getImage());
+	    mainScreen.add(cloud.getImage());
+	} else {
+	    // System.out.println("add level 2");
+	    mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
+	    mainScreen.add(map.getChunks().get(1).getChunkIMG());
+	    mainScreen.add(map.getChunks().get(2).getspikeIMG());
+	    mainScreen.add(map.getChunks().get(3).getChunkIMG());
+	    mainScreen.add(map.getChunks().get(4).getspikeIMG());
+	    mainScreen.add(map.getChunks().get(5).getChunkIMG());
+	    mainScreen.add(map.getEnemies().get(0).getImage());
+	    mainScreen.add(map.getEnemies().get(1).getImage());
+	    mainScreen.add(player.getImage());
+	    mainScreen.add(player.getImage_2());
+	}
+	newPlayer = player.getImage();
+	chunky = map.getChunks();
+	showDetails();
+	eTimer.start();
+    }
 
+    public void hideContents() {
 
+	mainScreen.removeAll();
+	map.removeChunks(chunky);
+	map.removeEnemies(map.getEnemies());
+	System.out.println("hide");
+    }
 
-	public void showDetails() {
-		mainScreen.add(timeLabel);
-		mainScreen.add(liveIMG);
-		mainScreen.add(liveLabel);
-		mainScreen.add(clockIMG);
-		mainScreen.add(goalSpace);
+    void passedLevel() {
+	if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
+	    System.out.println("win");
+	    eTimer.stop();
+	    if (levelNum == 1) {
+		hideContents();
+		levelNum = 2;
+		setupLevel2();
+		showContents();
+	    }
+	}
+	// if(passedLevel() && levelNum ==1) {
+	// hideContents();
+	// levelNum = 2;
+	// setupLevel2();
+	// showContents();
+	//
+	// }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+	int keyCode = e.getKeyCode();
+
+	/*
+	 * Player key movements
+	 */
+	switch (keyCode) {
+	case KeyEvent.VK_RIGHT:
+	    rightMoveTimer.start();
+
+	    break;
+	case KeyEvent.VK_LEFT:
+	    if (isPlayerOnEdge()) {
+		break;
+	    }
+	    leftMoveTimer.start();
+
+	    break;
+	case KeyEvent.VK_SPACE:
+	    jumpUpTimer.start();
+
+	    break;
+	case KeyEvent.VK_P:
+	    System.out.println("in level: " + levelNum);
+	    pause = new PausePane(mainScreen, this);
+	    mainScreen.switchPause(pause);
+	    stopAllTimers();
+	    break;
+	case KeyEvent.VK_T:
+	    System.out.println("P: " + player.getImage().getX());
+	    System.out.println("E: " + map.getEnemies().get(1).getImage().getX() + "\n");
+	    break;
+
+	default:
+
+	}
+	return;
+    }
+
+    public boolean isPlayerEnemyCollision() {
+
+	for (Enemy e : map.getEnemies()) {
+
+	    if (player.bounds.intersects(e.getImage().getBounds())) {
+
+		/* Test code>> */
+		GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
+			player.bounds.getHeight());
+		mainScreen.add(temp);
+
+		GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
+			e.getImage().getHeight());
+		foo.setColor(Color.red);
+		mainScreen.add(foo);
+
+		lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
+		lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
+
+		System.out.println("Collision Detected");
+		/* <<Test code */
+
+		return true;
+	    }
+
 	}
 
-	public void showContents() {
-		if (levelNum == 1) {
-			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-			mainScreen.add(map.getChunks().get(1).getChunkIMG());
-			mainScreen.add(map.getChunks().get(2).getspikeIMG());
-			mainScreen.add(map.getChunks().get(3).getChunkIMG());
-			mainScreen.add(player.getImage());
-			mainScreen.add(player.getImage_2());
-			mainScreen.add(map.getEnemies().get(0).getImage());
-			mainScreen.add(map.getEnemies().get(1).getImage());
-			mainScreen.add(cloud.getImage());
-		} else {
-			// System.out.println("add level 2");
-			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-			mainScreen.add(map.getChunks().get(1).getChunkIMG());
-			mainScreen.add(map.getChunks().get(2).getspikeIMG());
-			mainScreen.add(map.getChunks().get(3).getChunkIMG());
-			mainScreen.add(map.getChunks().get(4).getspikeIMG());
-			mainScreen.add(map.getChunks().get(5).getChunkIMG());
-			mainScreen.add(map.getEnemies().get(0).getImage());
-			mainScreen.add(map.getEnemies().get(1).getImage());
-			mainScreen.add(player.getImage());
-			mainScreen.add(player.getImage_2());
-		}
-		newPlayer = player.getImage();
-		chunky = map.getChunks();
-		showDetails();
-		eTimer.start();
+	return false;
+    }
+
+    private boolean isSpike(GObject spike) {
+	for (Chunk c : chunky) {
+	    if (spike == c.getspikeIMG() && c.getID() == 's') {
+		return true;
+	    }
 	}
+	return false;
+    }
 
-	public void hideContents() {
-
-		mainScreen.removeAll();
-		map.removeChunks(chunky);
-		map.removeEnemies(map.getEnemies());
-		System.out.println("hide");
-	}
-
-	void passedLevel() {
-		if (player.getImage().getBounds().intersects(goalSpace.getBounds())) {
-			System.out.println("win");
-			eTimer.stop();
-			if (levelNum == 1) {
-				hideContents();
-				levelNum = 2;
-				setupLevel2();
-				showContents();
-			}
-		}
-		// if(passedLevel() && levelNum ==1) {
-		// hideContents();
-		// levelNum = 2;
-		// setupLevel2();
-		// showContents();
-		//
-		// }
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-
-		int keyCode = e.getKeyCode();
-
-		/*
-		 * Player key movements
-		 */
-		switch (keyCode) {
-		case KeyEvent.VK_RIGHT:
-			rightMoveTimer.start();
-
-			break;
-		case KeyEvent.VK_LEFT:
-			if (isPlayerOnEdge()) {
-				break;
-			}
-			leftMoveTimer.start();
-
-			break;
-		case KeyEvent.VK_SPACE:
-			jumpUpTimer.start();
-
-			break;
-		case KeyEvent.VK_P:
-			System.out.println("in level: " + levelNum);
-			pause = new PausePane(mainScreen, this);
-			mainScreen.switchPause(pause);
-			stopAllTimers();
-			break;
-		case KeyEvent.VK_T:
-			System.out.println("P: " + player.getImage().getX());
-			System.out.println("E: " + map.getEnemies().get(1).getImage().getX() + "\n");
-			break;
-
-		default:
-
-		}
-		return;
-	}
-
-	public boolean isPlayerEnemyCollision() {
-
-		for (Enemy e : map.getEnemies()) {
-
-			if (player.bounds.intersects(e.getImage().getBounds())) {
-
-				/* Test code>> */
-				GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
-						player.bounds.getHeight());
-				mainScreen.add(temp);
-
-				GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
-						e.getImage().getHeight());
-				foo.setColor(Color.red);
-				mainScreen.add(foo);
-
-				lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
-				lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
-
-				System.out.println("Collision Detected");
-				/* <<Test code */
-
-				return true;
-			}
-
-		}
-
-		return false;
-	}
-	
-	private boolean isSpike(GObject spike) {
-		for (Chunk c : chunky) {
-			if (spike == c.getspikeIMG() && c.getID() == 's') {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isPlayerOnSpike() {
-		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
-		if (isSpike(obj)) {
-			System.out.println("SPIKED");
+    public boolean isPlayerOnSpike() {
+	GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
+	if (isSpike(obj)) {
+	    System.out.println("SPIKED");
 //			System.out.println(map.getGroundChunks().size());
-			return true;
-		}
-
-		return false;
-	}
-	
-
-	private boolean isGround(GObject ground) {
-		for (Chunk c : chunky) {
-			if (ground == c.getChunkIMG() && c.getID() == 'g') {
-				return true;
-			}
-		}
-		return false;
+	    return true;
 	}
 
-	public boolean isPlayerOnGround() {
-		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
-		if (isGround(obj) && (jumpCounter > 1)) {
-			System.out.println("JUMPING");
+	return false;
+    }
+
+    private boolean isGround(GObject ground) {
+	for (Chunk c : chunky) {
+	    if (ground == c.getChunkIMG() && c.getID() == 'g') {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean isPlayerOnGround() {
+	GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
+	if (isGround(obj) && (jumpCounter > 1)) {
+	    System.out.println("JUMPING");
 //			System.out.println(map.getGroundChunks().size());
 	    return true;
 	}
@@ -377,8 +371,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	eTimer.start();
     }
 
-	
-		public void stopTimer() {
+    public void stopTimer() {
 	eTimer.stop();
     }
 
@@ -473,9 +466,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	if (isPlayerOnSpike()) {
 	    liveLabel.setLabel(String.valueOf(lives));
-		lives--;
+	    lives--;
 	}
-	
+
 	if (time == 0) {
 	    time = 31;
 	    lives--;
@@ -489,6 +482,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	    if (source == leftMoveTimer)
 		leftMoveTimer.stop();
+	    
+	    respawnPlayer();
 
 	    hitTimer.start();
 	    // lives--;
@@ -565,25 +560,21 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	    time--;
 	    timeLabel.setLabel(String.valueOf(time));
 	}
-	cloud.move(1325);
+    }
+
+    void stopAllTimers() {
+	eTimer.stop();
+	rightMoveTimer.stop();
+	leftMoveTimer.stop();
+	jumpUpTimer.stop();
+	downTimer.stop();
+	hitTimer.stop();
+	rightWalkFrictionTimer.stop();
+	leftWalkFrictionTimer.stop();
+	idleAnimationTimer_1.stop();
+	idleAnimationTimer_2.stop();
 
     }
-	
-	void stopAllTimers() {
-		eTimer.stop();
-		rightMoveTimer.stop();
-		leftMoveTimer.stop();
-		jumpUpTimer.stop();
-		downTimer.stop();
-		hitTimer.stop();
-		rightWalkFrictionTimer.stop();
-		leftWalkFrictionTimer.stop();
-		idleAnimationTimer_1.stop();
-		idleAnimationTimer_2.stop();
-		
-	}
-	
-    
 
     /*
      * 
