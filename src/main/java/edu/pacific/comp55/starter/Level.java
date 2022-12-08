@@ -52,7 +52,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
     // Enemy collision impact
     private Timer hitTimer = new Timer(20, this);
-    private double hitImpact = 10;
+    private double hitImpact = 100;
 
     private MainApplication mainScreen;
     private Map map;
@@ -234,12 +234,12 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		/* Test code>> */
 		GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
 			player.bounds.getHeight());
-		mainScreen.add(temp);
+		// mainScreen.add(temp);
 
 		GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
 			e.getImage().getHeight());
 		foo.setColor(Color.red);
-		mainScreen.add(foo);
+		// mainScreen.add(foo);
 
 		lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
 		lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
@@ -482,17 +482,19 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	    if (source == leftMoveTimer)
 		leftMoveTimer.stop();
-	    
-	    respawnPlayer();
 
 	    hitTimer.start();
 	    // lives--;
 	    // liveLabel.setLabel(String.valueOf(lives));
 	}
 
+	if (player.getImage().getX() < -10) {
+	    respawnPlayer();
+	}
+
 	if (source == hitTimer) {
 	    if (hitImpact < 0) {
-		hitImpact = 10;
+		hitImpact = 100;
 		hitTimer.stop();
 	    }
 
