@@ -1,4 +1,4 @@
-
+	
 package edu.pacific.comp55.starter;
 
 import acm.graphics.GImage;
