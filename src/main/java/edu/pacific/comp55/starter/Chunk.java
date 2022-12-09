@@ -11,10 +11,19 @@ public class Chunk {
 	private GImage spikeIMG;
 	private GRect chunkGRect;
 	private char name;
+	private int left;
+	private int right;
+	private int up;
+	private int down;
+	
 
 	// Constructor
 	public Chunk(char chunkName, String path, int chunkX, int chunkY, int width, int height) {
 		name = chunkName;
+		left = chunkX - width;
+		right = chunkX;
+		up = chunkY - height;
+		down = chunkY;
 		this.backgroundIMG = new GImage(path, chunkX, chunkY);
 		this.backgroundIMG.setSize(width, height);
 
@@ -41,6 +50,19 @@ public class Chunk {
 
 	public GImage getspikeIMG() {
 		return spikeIMG;
+	}
+	
+	public int getRight() {
+		return right;
+	}
+	public int getLeft() {
+		return left;
+	}
+	public int getUp() {
+		return up;
+	}
+	public int getDown() {
+		return down;
 	}
 	
 	public char getID() {

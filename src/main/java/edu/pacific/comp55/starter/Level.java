@@ -6,6 +6,8 @@ import acm.graphics.GLabel;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.graphics.GRectangle;
+import javafx.scene.transform.Rotate;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,12 +76,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private int count = 0;
 	private GImage liveIMG;
 	private GImage clockIMG;
-
+	private boolean timerActivated = false;
 	public double initSpeed = 10;
 	private GImage newPlayer;
 	private ArrayList<Chunk> chunky;
 	private GImage goalSpace;
 	private int levelNum;
+	private int downVelocity = 8;
 	private int lives;
 	private PausePane pause;
 	private GameOver lose;
@@ -200,12 +203,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		switch (keyCode) {
 		case KeyEvent.VK_RIGHT:
 			rightMoveTimer.start();
-
+			player.getImage().setVisible(true);
+			player.getImage_2().setVisible(false);
+			
 			break;
 		case KeyEvent.VK_LEFT:
 			if (isPlayerOnEdge()) {
 				break;
 			}
+			player.getImage().setVisible(true);
+			player.getImage_2().setVisible(false);
 			leftMoveTimer.start();
 
 			break;
@@ -277,6 +284,15 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return false;
 	}
 	
+	/*private boolean isTouchWall() {
+		for (int i = 0; i < map.getChunks().size(); i++) {
+			if ((((newPlayer.getX() + initSpeed >= map.getChunks().get(i).getRight() - 50 || newPlayer.getX() >= map.getChunks().get(i).getRight() + 20) && (newPlayer.getY() == map.getChunks().get(i).getUp()))) {
+				return true;
+			}
+		}
+		return false;
+	}*/
+	
 
 	public boolean isPlayerOnGround() {
 		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
@@ -291,7 +307,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public boolean isPlayerGoingOver() {
 		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 4,
-				newPlayer.getY() + newPlayer.getHeight() + 3));
+				newPlayer.getY() + newPlayer.getHeight() + PLAYER_DOWN_VELOCITY));
 		if (!i && jumpUpTimer.isRunning() == false) {
 			System.out.println("FALLING");
 			return true;
@@ -501,7 +517,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 		if (source == rightMoveTimer) {
-			player.move(initSpeed, 0);
+				player.move(initSpeed, 0);
 		}
 
 		if (source == leftMoveTimer) {
@@ -513,23 +529,41 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (source == jumpUpTimer) {
 			jumpCounter++;
 			player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
+			downVelocity = 5;
 		}
 		if (source == downTimer) {
 			// jumpCounter++;
-			player.move(0, PLAYER_DOWN_VELOCITY);
+			downVelocity += 1.25;
+			player.move(0, downVelocity);
 			// player.getImage().rotate(10);
 		}
 
 		if (isPlayerOnGround()) {
 			downTimer.stop();
+			timerActivated = false;
+			downVelocity = 7;
 			jumpUpTimer.stop();
 			jumpCounter = 0;
 		}
 		if (isPlayerGoingOver()) {
-			downTimer.start();
+			if (!timerActivated) {
+				System.out.println("WENT OVER");
+				timerActivated = true;
+				downTimer.start();
+			}
 		}
 
 		if (isPlayerOnSpike()) {
+			respawnPlayer();
+			decrementLive();
+
+			for (Enemy enemy : deadEnemies) {
+				mainScreen.add(enemy.getImage());
+				map.getEnemies().add(enemy);
+			}
+			deadEnemies.clear();
+		}
+		if (newPlayer.getY() > 950) {
 			respawnPlayer();
 			decrementLive();
 
@@ -698,7 +732,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void respawnPlayer() {
-
+		downVelocity = 8;
 		player.getImage().setLocation(0, -100);
 		player.getImage_2().setLocation(0, -100);
 		player.updatePlayerPos();
