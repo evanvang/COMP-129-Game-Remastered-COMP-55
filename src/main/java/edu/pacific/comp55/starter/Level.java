@@ -145,6 +145,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(map.getEnemies().get(0).getImage());
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
+			
 		}
 		else {
 			addChunks();
@@ -152,6 +153,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(map.getEnemies().get(1).getImage());
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
+			
 		}
 		newPlayer = player.getImage();
 		chunky = map.getChunks();
@@ -189,10 +191,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				deadEnemies.clear();
 			}
 			else if (levelNum == 2) {
-				hideContents();
-				levelNum = 2;
+				/*hideContents();
+				levelNum = 3;
 				setupLevel3();
-				showContents();
+				showContents();*/
+				mainScreen.switchToWinScreen();
 				deadEnemies.clear();
 			}
 		}
@@ -315,6 +318,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			// System.out.println(map.getGroundChunks().size());
 			return true;
 		}
+		else if (isGround(obj) && downTimer.isRunning()) {
+			return true;
+		}
 
 		return false;
 	}
@@ -322,10 +328,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public boolean isPlayerGoingOver() {
 		boolean i = isGround(mainScreen.getElementAt((newPlayer.getX() + newPlayer.getWidth() / 4),
 				newPlayer.getY() + newPlayer.getHeight() + PLAYER_DOWN_VELOCITY));
-		if (!i && jumpUpTimer.isRunning() == false) {
+		if (!i && jumpUpTimer.isRunning() == false && downTimer.isRunning() == false) {
 			System.out.println("FALLING");
 			return true;
 		}
+		
 
 		// System.out.println("Grounded");
 		return false;
@@ -577,6 +584,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('g', "ground6.png", 1500, 50, 100, 100);
 		map.createChunk('g', "ground7.png", 1500, -50, 100, 100);
 		
+		map.createChunk('g', "ground15.png", 1200, 625, 100, 50);
+		map.createChunk('g', "ground14.png", 1100, 625, 100, 50);
+		
+		map.createChunk('g', "ground15.png", 1350, 500, 100, 50);
+		map.createChunk('g', "ground14.png", 1250, 500, 100, 50);
+		
+		map.createChunk('g', "ground15.png", 1100, 390, 100, 50);
+		map.createChunk('g', "ground14.png", 1000, 390, 100, 50);
+		
+		
 		
 		
 		map.createChunk('s', "leftspike.png", 1478, -50, 22, 100);
@@ -660,9 +677,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 
 		if (isPlayerOnGround()) {
+			downVelocity = 5;
 			downTimer.stop();
 			timerActivated = false;
-			downVelocity = 7;
 			jumpUpTimer.stop();
 			jumpCounter = 0;
 		}

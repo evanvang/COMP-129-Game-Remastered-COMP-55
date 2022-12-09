@@ -32,7 +32,6 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		level = new Level(this, 1);
-
 		mainGame = new MainGame(this);
 		menu = new MenuPane(this);
 		settings = new SettingsPane(this);
