@@ -43,6 +43,11 @@ public abstract class GraphicsApplication extends GraphicsProgram {
 		curScreen = newScreen;
 	}
 	
+	protected void switchToLose(GraphicsPane newScreen) {
+		newScreen.showContents();
+		curScreen = newScreen;
+	}
+	
 	/*
 	 * These methods just override the basic
 	 * mouse listeners to pass any information that

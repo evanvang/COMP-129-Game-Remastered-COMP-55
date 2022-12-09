@@ -20,7 +20,6 @@ public class MainApplication extends GraphicsApplication {
 	private MainGame mainGame;
 	private MenuPane menu;
 	private SettingsPane settings;
-	//    private PausePane pause;
 	private Level level = new Level(this,1);
 	private boolean isMuted;
 
@@ -73,7 +72,10 @@ public class MainApplication extends GraphicsApplication {
 	public void switchPause(PausePane p) {
 		switchToPause(p);
 
-		//    	switchToScreen(pause);
+	}
+	public void switchLose(GameOver o) {
+		switchToLose(o);
+
 	}
 
 	private void playRandomSound() {

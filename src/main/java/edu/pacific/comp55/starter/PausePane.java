@@ -45,11 +45,10 @@ public class PausePane extends GraphicsPane {
 		}
 		if (obj == resume) {
 			program.switchToScreen(level);
-			System.out.println("resume to level " + numLevel);
+			
 		}
 		if (obj == retry) {	
 			level.stopAllTimers();
-			System.out.println("back to level: " + numLevel);
 			program.removeAll();
 			level = new Level(program,numLevel);
 			program.switchToScreen(level);
