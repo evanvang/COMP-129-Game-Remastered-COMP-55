@@ -173,6 +173,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				showContents();
 				deadEnemies.clear();
 			}
+			else if (levelNum == 2) {
+				mainScreen.switchToWinScreen();
+			}
 		}
 	}
 
@@ -412,9 +415,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('g', "Ground10.png", 200, 715, 100, 100);
 		map.createChunk('g', "Ground12.png", 300, 715, 100, 100);
 		map.createChunk('g', "Ground11.png", 400, 715, 100, 100);
-		map.createChunk('g', "Ground14.png", 600, 315, 100, 50);
-		map.createChunk('g', "Ground13.png", 700, 315, 100, 50);
-		map.createChunk('g', "Ground15.png", 800, 315, 100, 50);
+		map.createChunk('g', "Ground14.png", 650, 480, 100, 50);
+		map.createChunk('g', "Ground15.png", 750, 480, 100, 50);
 		map.createChunk('g', "Ground6.png", 900, 715, 100, 100);
 		map.createChunk('g', "Ground7.png", 900, 615, 100, 100);
 		map.createChunk('g', "Ground6.png", 900, 515, 100, 100);

@@ -36,6 +36,7 @@ public class MainApplication extends GraphicsApplication {
 		mainGame = new MainGame(this);
 		menu = new MenuPane(this);
 		settings = new SettingsPane(this);
+		win = new WinScreen(this);
 		//	pause = new PausePane(this, level);
 		setupInteractions();
 		switchToMenu();
@@ -56,7 +57,7 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToWinScreen() {
-		switchToScreen(win);
+		switchToPause(win);
 		
 	}
 	

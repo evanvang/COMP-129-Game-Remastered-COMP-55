@@ -14,7 +14,7 @@ public class WinScreen extends GraphicsPane {
 	public WinScreen(MainApplication app) {
 		program = app;
 		goBack = new GButton("Go Back", 580, 375, 150, 75);
-		winText = new GImage("You Win!.png", 100, 100);
+		winText = new GImage("You Win!.png", 500, 100);
 
 	}
 	
