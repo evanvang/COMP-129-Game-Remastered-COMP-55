@@ -19,8 +19,8 @@ import javax.swing.Timer;
 /**
  * @author Team No Focus!
  *
- * Level class will generate the game world by integrating Map, Player, and
- * Level
+ *         Level class will generate the game world by integrating Map, Player,
+ *         and Level
  *
  */
 public class Level extends GraphicsPane implements KeyListener, ActionListener {
@@ -99,7 +99,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			setupLevel2();
 		}
 	}
-	
+
 	public void setLives(int live) {
 		lives = live;
 	}
@@ -125,23 +125,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public void showContents() {
 		if (levelNum == 1) {
-			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-			mainScreen.add(map.getChunks().get(1).getChunkIMG());
-			mainScreen.add(map.getChunks().get(2).getspikeIMG());
-			mainScreen.add(map.getChunks().get(3).getChunkIMG());
+
+			addChunks();
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
 			mainScreen.add(map.getEnemies().get(0).getImage());
-			mainScreen.add(map.getEnemies().get(1).getImage());
-			mainScreen.add(cloud.getImage());
 		} else {
-			// System.out.println("add level 2");
-			mainScreen.add(map.getChunks().get(0).getbackgroundIMG());
-			mainScreen.add(map.getChunks().get(1).getChunkIMG());
-			mainScreen.add(map.getChunks().get(2).getspikeIMG());
-			mainScreen.add(map.getChunks().get(3).getChunkIMG());
-			mainScreen.add(map.getChunks().get(4).getspikeIMG());
-			mainScreen.add(map.getChunks().get(5).getChunkIMG());
+
+			addChunks();
 			mainScreen.add(map.getEnemies().get(0).getImage());
 			mainScreen.add(map.getEnemies().get(1).getImage());
 			mainScreen.add(player.getImage());
@@ -184,7 +175,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			}
 		}
 	}
-	
+
 	void GameOverCheck() {
 		if (lives == 0) {
 			stopAllTimers();
@@ -253,37 +244,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		return false;
 	}
 
-	//    public boolean isPlayerEnemyCollision2() {
-	//
-	//        for (Enemy e : map.getEnemies()) {
-	//
-	//            if (player.bounds.intersects(e.getImage().getBounds())) {
-	//
-	//                /* Test code>> */
-	//                GRect temp = new GRect(player.bounds.getX(), player.bounds.getY(), player.bounds.getWidth(),
-	//                        player.bounds.getHeight());
-	//                // mainScreen.add(temp);
-	//
-	//                GRect foo = new GRect(e.getImage().getX(), e.getImage().getY(), e.getImage().getWidth(),
-	//                        e.getImage().getHeight());
-	//                foo.setColor(Color.red);
-	//                // mainScreen.add(foo);
-	//
-	//                lastPCollision_Ref = temp.getBounds().getX() + temp.getBounds().getWidth() / 2;
-	//                lastECollision_Ref = foo.getBounds().getX() + foo.getBounds().getWidth() / 2;
-	//
-	//                System.out.println("Collision Detected");
-	//                /* <<Test code */
-	//
-	//                return true;
-	//
-	//            }
-	//
-	//        }
-
-	//        return false;
-	//    }
-
 	private boolean isSpike(GObject spike) {
 		for (Chunk c : chunky) {
 			if (spike == c.getspikeIMG() && c.getID() == 's') {
@@ -316,7 +276,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
 		if (isGround(obj) && (jumpCounter > 1)) {
 			System.out.println("JUMPING");
-			//			System.out.println(map.getGroundChunks().size());
+			// System.out.println(map.getGroundChunks().size());
 			return true;
 		}
 
@@ -410,19 +370,86 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		this.time = time;
 	}
 
+	public void addChunks() {
+		for (int i = 0; i < map.getChunks().size(); i++) {
+			if (map.getChunks().get(i).getID() == 'b') {
+				mainScreen.add(map.getChunks().get(i).getbackgroundIMG());
+			}
+			if (map.getChunks().get(i).getID() == 'g') {
+				mainScreen.add(map.getChunks().get(i).getChunkIMG());
+			}
+			if (map.getChunks().get(i).getID() == 's') {
+				mainScreen.add(map.getChunks().get(i).getspikeIMG());
+			}
+		}
+	}
+
 	public void setupLevel1() {
 		player = new Player(50, 415);
 		cloud = new Cloud(50, 25);
 		map.createChunk('b', "background.png", 0, 0, 1900, 850);
-		map.createChunk('g', "ground1.png", 0, 515, 650, 250);
-		map.createChunk('s', "Spike.png", 650, 665, 140, 100);
-		map.createChunk('g', "ground1.png", 790, 425, 650, 350);
-		map.createEnemy(900, 375);
-		map.createEnemy(150, 465);
+		map.createChunk('g', "ground1.png", 0, 515, 100, 100);
+		map.createChunk('s', "Spike.png", 550, 725, 100, 100);
+		map.createChunk('s', "Spike.png", 650, 725, 100, 100);
+		map.createChunk('s', "Spike.png", 750, 725, 100, 100);
+		map.createChunk('s', "Spike.png", 850, 725, 100, 100);
+		map.createChunk('g', "ground1.png", 100, 515, 100, 100);
+		map.createChunk('g', "ground1.png", 200, 515, 100, 100);
+		map.createChunk('g', "ground1.png", 300, 515, 100, 100);
+		map.createChunk('g', "ground1.png", 400, 515, 100, 100);
+		map.createChunk('g', "ground4.png", 500, 515, 100, 100);
+		map.createChunk('g', "ground8.png", 500, 615, 100, 100);
+		map.createChunk('g', "ground9.png", 500, 715, 100, 100);
+		map.createChunk('g', "ground8.png", 500, 815, 100, 100);
+		map.createChunk('g', "Ground10.png", 0, 615, 100, 100);
+		map.createChunk('g', "Ground10.png", 100, 615, 100, 100);
+		map.createChunk('g', "Ground11.png", 200, 615, 100, 100);
+		map.createChunk('g', "Ground10.png", 300, 615, 100, 100);
+		map.createChunk('g', "Ground12.png", 400, 615, 100, 100);
+		map.createChunk('g', "Ground11.png", 0, 715, 100, 100);
+		map.createChunk('g', "Ground12.png", 100, 715, 100, 100);
+		map.createChunk('g', "Ground10.png", 200, 715, 100, 100);
+		map.createChunk('g', "Ground12.png", 300, 715, 100, 100);
+		map.createChunk('g', "Ground11.png", 400, 715, 100, 100);
+		map.createChunk('g', "Ground14.png", 600, 315, 100, 50);
+		map.createChunk('g', "Ground13.png", 700, 315, 100, 50);
+		map.createChunk('g', "Ground15.png", 800, 315, 100, 50);
+		map.createChunk('g', "Ground6.png", 900, 715, 100, 100);
+		map.createChunk('g', "Ground7.png", 900, 615, 100, 100);
+		map.createChunk('g', "Ground6.png", 900, 515, 100, 100);
+		map.createChunk('g', "Ground5.png", 900, 415, 100, 100);
+		map.createChunk('g', "Ground1.png", 1000, 415, 100, 100);
+		map.createChunk('g', "Ground11.png", 1000, 515, 100, 100);
+		map.createChunk('g', "Ground10.png", 1000, 615, 100, 100);
+		map.createChunk('g', "Ground2.png", 1100, 415, 100, 100);
+		map.createChunk('g', "Ground11.png", 1100, 515, 100, 100);
+		map.createChunk('g', "Ground11.png", 1000, 715, 100, 100);
+		map.createChunk('g', "Ground10.png", 1100, 515, 100, 100);
+		map.createChunk('g', "Ground11.png", 1100, 615, 100, 100);
+		map.createChunk('g', "Ground10.png", 1100, 715, 100, 100);
+		map.createChunk('g', "Ground3.png", 1200, 415, 100, 100);
+		map.createChunk('g', "Ground10.png", 1200, 515, 100, 100);
+		map.createChunk('g', "Ground10.png", 1200, 615, 100, 100);
+		map.createChunk('g', "Ground11.png", 1200, 715, 100, 100);
+		map.createChunk('g', "Ground12.png", 1300, 515, 100, 100);
+		map.createChunk('g', "Ground10.png", 1300, 615, 100, 100);
+		map.createChunk('g', "Ground10.png", 1300, 715, 100, 100);
+		map.createChunk('g', "Ground10.png", 1400, 515, 100, 100);
+		map.createChunk('g', "Ground2.png", 1300, 415, 100, 100);
+		map.createChunk('g', "Ground3.png", 1400, 415, 100, 100);
+		map.createChunk('g', "Ground11.png", 1400, 515, 100, 100);
+		map.createChunk('g', "Ground11.png", 1400, 615, 100, 100);
+		map.createChunk('g', "Ground10.png", 1400, 715, 100, 100);
+		map.createChunk('g', "Ground1.png", 1500, 415, 100, 100);
+		map.createChunk('g', "Ground12.png", 1500, 515, 100, 100);
+		map.createChunk('g', "Ground12.png", 1500, 615, 100, 100);
+		map.createChunk('g', "Ground10.png", 1500, 715, 100, 100);
+
+		map.createEnemy(900, 370);
 		time = 30;
 		lives = 3;
 		drawGoalSpace();
-		goalSpace.setLocation(1150, 425 - goalSpace.getHeight());
+		goalSpace.setLocation(1300, 420 - goalSpace.getHeight());
 
 		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
 	}
@@ -433,7 +460,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		startY = 200;
 		player = new Player(startX, startY);
 		cloud = new Cloud(50, 25);
-		map.createChunk('b', "backround.png", 0, 0, 1900, 850);
+		map.createChunk('b', "background.png", 0, 0, 1900, 850);
 		map.createChunk('g', "ground1.png", 0, 300, 300, 500);
 		map.createChunk('s', "Spike.png", 300, 665, 140, 100);
 		map.createChunk('g', "ground1.png", 440, 425, 400, 350);
@@ -493,7 +520,6 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 		if (isPlayerGoingOver()) {
 			downTimer.start();
-			// System.out.println("Cliff");
 		}
 
 		if (isPlayerOnSpike()) {
@@ -515,52 +541,30 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		Enemy collideEnemy = collideWithEnemy();
 		if (collideEnemy == null) {
 			hasCollided = false;
-			
+
 		} else {
-			if (!hasCollided) { 
+			if (!hasCollided) {
 				hasCollided = true;
 				double playerHeight = player.getImage().getHeight();
 				double enemyHeight = collideEnemy.getImage().getHeight();
 				double deltaHeight = Math.abs(playerHeight - enemyHeight);
 
-				GRectangle intersectionRect = player.getImage().getBounds().intersection(collideEnemy.getImage().getBounds());
+				GRectangle intersectionRect = player.getImage().getBounds()
+						.intersection(collideEnemy.getImage().getBounds());
 				double intersectionHeight = intersectionRect.getHeight();
-			
-				if (intersectionHeight < deltaHeight ) {
+
+				if (intersectionHeight < deltaHeight) {
 					mainScreen.remove(collideEnemy.getImage());
 					map.getEnemies().remove(collideEnemy);
 					deadEnemies.add(collideEnemy);
-				
+
 				} else {
-					// maybe make the player cannot move further when collides here
 					decrementLive();
-					respawnPlayer();		
+					respawnPlayer();
 				}
 			}
-			
-		}
 
-		//        if (isPlayerEnemyCollision()) {
-		//            if (!hasCollided) {
-		//                hasCollided = true;
-		//                decrementLive();
-		//            }
-		//        } else {
-		//            hasCollided = false;
-		//        }
-		//        if (isPlayerEnemyCollision()) {
-		//            if (source == rightMoveTimer) {
-		//                rightMoveTimer.stop();
-		//            }
-		//
-		//            if (source == leftMoveTimer) {
-		//                leftMoveTimer.stop();
-		//            }
-		//
-		//            hitTimer.start();
-		////			 lives--;
-		////			 liveLabel.setLabel(String.valueOf(lives));
-		//        }
+		}
 		if (source == hitTimer) {
 			if (hitImpact < 0) {
 				hitImpact = 10;
@@ -612,6 +616,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	void setPauseToNull() {
 		pause = null;
 	}
+
 	void setGameOverToNull() {
 		lose = null;
 	}
@@ -705,4 +710,3 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 }
-

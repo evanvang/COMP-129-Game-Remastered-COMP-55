@@ -56,20 +56,6 @@ public class Map {
 	public void removeEnemies(ArrayList<Enemy> enemies) {
 		enemies.clear();
 	}
-//	public void sortGroundChunks() {
-//		
-//		
-//			for (int i = 0; i < chunks.size();i++) {
-//				
-//				if (chunks.get(i).getID() == 'g') {
-//					groundPieces.add(chunks.get(i));
-//					//System.out.println(chunks.get(i).getID());
-//					//System.out.println(chunks.get(i));
-//				}
-//				
-//			}
-//			System.out.println(groundPieces.size());
-//	}
 
 	public ArrayList<Chunk> getGroundChunks() {
 		return groundPieces; 

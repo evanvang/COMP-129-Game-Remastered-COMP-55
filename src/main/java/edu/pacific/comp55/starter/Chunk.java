@@ -15,13 +15,13 @@ public class Chunk {
 	// Constructor
 	public Chunk(char chunkName, String path, int chunkX, int chunkY, int width, int height) {
 		name = chunkName;
-		this.backgroundIMG = new GImage("background.png", chunkX, chunkY);
+		this.backgroundIMG = new GImage(path, chunkX, chunkY);
 		this.backgroundIMG.setSize(width, height);
 
-		this.chunkIMG = new GImage("ground1.png", chunkX, chunkY);
+		this.chunkIMG = new GImage(path, chunkX, chunkY);
 		this.chunkIMG.setSize(width, height);
 
-		this.spikeIMG = new GImage("Spike.png", chunkX, chunkY);
+		this.spikeIMG = new GImage(path, chunkX, chunkY);
 		this.spikeIMG.setSize(width, height);
 
 	}
