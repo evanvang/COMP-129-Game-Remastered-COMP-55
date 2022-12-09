@@ -20,7 +20,7 @@ public class GameOver extends GraphicsPane {
 	@Override
 	public void showContents() {
 		program.add(quit2);
-		//program.add(retry);
+		program.add(retry2);
 	}
 	
 	@Override
@@ -34,6 +34,7 @@ public class GameOver extends GraphicsPane {
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		numLevel = level2.getLevelNum();
+		level2.setLives(3);
 		if (obj == quit2) {
 			level2.stopAllTimers();
 			 program.removeAll();

@@ -99,6 +99,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			setupLevel2();
 		}
 	}
+	
+	public void setLives(int live) {
+		lives = live;
+	}
 
 	public GLabel getTimeLabel() {
 		mainScreen.setupInteractions();
@@ -452,7 +456,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		//GameOverCheck();
+		GameOverCheck();
 		Object source = e.getSource();
 		if (source == eTimer) {
 			callEnemyCloudMovement();
