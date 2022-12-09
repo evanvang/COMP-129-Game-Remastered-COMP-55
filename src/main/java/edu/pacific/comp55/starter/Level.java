@@ -45,7 +45,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private int idleAnimationCount = 20;
 
 	// Player movement
-	private static final int PLAYER_UP_VELOCITY = -20;
+	private static final int PLAYER_UP_VELOCITY = -17;
 	private static final int PLAYER_DOWN_VELOCITY = 5;
 	private static int jumpCounter = 0;
 	private Timer jumpUpTimer = new Timer(20, this);
@@ -101,6 +101,10 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			System.out.println("retry");
 			setupLevel2();
 		}
+		else if (levelNum == 3) {
+			System.out.println("retry");
+			setupLevel3();
+		}
 	}
 
 	public void setLives(int live) {
@@ -135,8 +139,14 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(map.getEnemies().get(0).getImage());
 			mainScreen.add(map.getEnemies().get(1).getImage());
 
-		} else {
+		} else if (levelNum == 2){
 
+			addChunks();
+			mainScreen.add(map.getEnemies().get(0).getImage());
+			mainScreen.add(player.getImage());
+			mainScreen.add(player.getImage_2());
+		}
+		else {
 			addChunks();
 			mainScreen.add(map.getEnemies().get(0).getImage());
 			mainScreen.add(map.getEnemies().get(1).getImage());
@@ -179,7 +189,11 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				deadEnemies.clear();
 			}
 			else if (levelNum == 2) {
-				mainScreen.switchToWinScreen();
+				hideContents();
+				levelNum = 2;
+				setupLevel3();
+				showContents();
+				deadEnemies.clear();
 			}
 		}
 	}
@@ -306,7 +320,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	}
 
 	public boolean isPlayerGoingOver() {
-		boolean i = isGround(mainScreen.getElementAt(newPlayer.getX() + newPlayer.getWidth() / 4,
+		boolean i = isGround(mainScreen.getElementAt((newPlayer.getX() + newPlayer.getWidth() / 4),
 				newPlayer.getY() + newPlayer.getHeight() + PLAYER_DOWN_VELOCITY));
 		if (!i && jumpUpTimer.isRunning() == false) {
 			System.out.println("FALLING");
@@ -411,10 +425,16 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		cloud = new Cloud(50, 25);
 		map.createChunk('b', "background.png", 0, 0, 1900, 850);
 		map.createChunk('g', "ground1.png", 0, 515, 100, 100);
-		map.createChunk('s', "Spike.png", 550, 725, 100, 100);
-		map.createChunk('s', "Spike.png", 650, 725, 100, 100);
-		map.createChunk('s', "Spike.png", 750, 725, 100, 100);
-		map.createChunk('s', "Spike.png", 850, 725, 100, 100);
+		map.createChunk('s', "upspike.png", 550, 785, 100, 22);
+		map.createChunk('s', "upspike.png", 650, 785, 100, 22);
+		map.createChunk('s', "upspike.png", 750, 785, 100, 22);
+		map.createChunk('s', "upspike.png", 850, 785, 100, 22);
+		map.createChunk('s', "rightspike.png", 600, 700, 22, 100);
+		map.createChunk('s', "rightspike.png", 600, 600, 22, 100);
+		map.createChunk('s', "leftspike.png", 878, 500, 22, 100);
+		map.createChunk('s', "leftspike.png", 878, 600, 22, 100);
+		map.createChunk('s', "leftspike.png", 878, 700, 22, 100);
+		map.createChunk('s', "leftspike.png", 878, 800, 22, 100);
 		map.createChunk('g', "ground1.png", 100, 515, 100, 100);
 		map.createChunk('g', "ground1.png", 200, 515, 100, 100);
 		map.createChunk('g', "ground1.png", 300, 515, 100, 100);
@@ -484,11 +504,112 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		player = new Player(startX, startY);
 		cloud = new Cloud(50, 25);
 		map.createChunk('b', "background.png", 0, 0, 1900, 850);
+		
+		map.createChunk('g', "ground1.png", 0, 300, 100, 100);
+		map.createChunk('g', "ground2.png", 100, 300, 100, 100);
+		map.createChunk('g', "ground4.png", 200, 300, 100, 100);
+		map.createChunk('g', "ground8.png", 200, 400, 100, 100);
+		map.createChunk('g', "ground9.png", 200, 500, 100, 100);
+		map.createChunk('g', "ground8.png", 200, 600, 100, 100);
+		map.createChunk('g', "ground8.png", 200, 700, 100, 100);
+		map.createChunk('g', "ground8.png", 200, 800, 100, 100);
+		map.createChunk('g', "ground11.png", 0, 400, 100, 100);
+		map.createChunk('g', "ground12.png", 100, 400, 100, 100);
+		map.createChunk('g', "ground10.png", 0, 500, 100, 100);
+		map.createChunk('g', "ground11.png", 100, 500, 100, 100);
+		map.createChunk('g', "ground10.png", 0, 600, 100, 100);
+		map.createChunk('g', "ground12.png", 100, 600, 100, 100);
+		map.createChunk('g', "ground10.png", 0, 700, 100, 100);
+		map.createChunk('g', "ground11.png", 100, 700, 100, 100);
+		map.createChunk('g', "ground12.png", 0, 800, 100, 100);
+		map.createChunk('g', "ground10.png", 100, 800, 100, 100);
+		
+		map.createChunk('s', "rightspike.png", 300, 400, 22, 100);
+		map.createChunk('s', "rightspike.png", 300, 500, 22, 100);
+		map.createChunk('s', "rightspike.png", 300, 600, 22, 100);
+		map.createChunk('s', "rightspike.png", 300, 700, 22, 100);
+		map.createChunk('s', "rightspike.png", 300, 800, 22, 100);
+		
+		map.createChunk('s', "leftspike.png", 503, 0, 22, 100);
+		map.createChunk('s', "leftspike.png", 503, 100, 22, 100);
+		map.createChunk('s', "leftspike.png", 503, 200, 22, 100);
+		map.createChunk('s', "leftspike.png", 503, 300, 22, 100);
+		map.createChunk('s', "leftspike.png", 503, 400, 22, 100);
+		
+		map.createChunk('g', "ground7.png", 525, 0, 100, 100);
+		map.createChunk('g', "ground6.png", 525, 100, 100, 100);
+		map.createChunk('g', "ground6.png", 525, 200, 100, 100);
+		map.createChunk('g', "ground7.png", 525, 300, 100, 100);
+		map.createChunk('g', "ground16.png", 525, 400, 100, 100);
+		map.createChunk('g', "ground18.png", 625, 400, 100, 100);
+		map.createChunk('g', "ground18.png", 725, 400, 100, 100);
+		map.createChunk('g', "ground20.png", 625, 300, 100, 100);
+		map.createChunk('g', "ground9.png", 625, 200, 100, 100);
+		map.createChunk('g', "ground8.png", 625, 100, 100, 100);
+		map.createChunk('g', "ground9.png", 625, 0, 100, 100);
+		map.createChunk('g', "ground1.png", 725, 300, 100, 100);
+		map.createChunk('g', "ground4.png", 825, 300, 100, 100);
+		map.createChunk('g', "ground17.png", 825, 400, 100, 100);
+		
+		map.createChunk('s', "downspike.png", 525, 500, 100, 22);
+		map.createChunk('s', "downspike.png", 625, 500, 100, 22);
+		map.createChunk('s', "downspike.png", 725, 500, 100, 22);
+		map.createChunk('s', "downspike.png", 825, 500, 100, 22);
+		map.createChunk('s', "rightspike.png", 925, 300, 22, 100);
+		map.createChunk('s', "rightspike.png", 925, 400, 22, 100);
+		
+		map.createChunk('s', "leftspike.png", 678, 750, 22, 100);
+		map.createChunk('g', "ground5.png", 700, 750, 100, 100);
+		map.createChunk('g', "ground1.png", 800, 750, 100, 100);
+		map.createChunk('g', "ground1.png", 900, 750, 100, 100);
+		map.createChunk('g', "ground1.png", 1000, 750, 100, 100);
+		map.createChunk('g', "ground2.png", 1100, 750, 100, 100);
+		map.createChunk('g', "ground1.png", 1200, 750, 100, 100);
+		map.createChunk('g', "ground2.png", 1300, 750, 100, 100);
+		map.createChunk('g', "ground1.png", 1400, 750, 100, 100);
+		map.createChunk('g', "ground21.png", 1500, 750, 100, 100);
+		map.createChunk('g', "ground7.png", 1500, 650, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 550, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 450, 100, 100);
+		map.createChunk('g', "ground7.png", 1500, 350, 100, 100);
+		map.createChunk('g', "ground7.png", 1500, 250, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 150, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 50, 100, 100);
+		map.createChunk('g', "ground7.png", 1500, -50, 100, 100);
+		
+		
+		
+		map.createChunk('s', "leftspike.png", 1478, -50, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 50, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 150, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 250, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 350, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 450, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 550, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 650, 22, 100);
+		
+		map.createEnemy(1000, 700);
+		time = 30;
+		lives = 3;
+		timeLabel.setLabel(String.valueOf(time));
+		drawGoalSpace();
+		goalSpace.setLocation(800, 300 - goalSpace.getHeight());
+		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
+
+	}
+	
+	public void setupLevel3() {
+		System.out.println("setupLevel3");
+		startX = 0;
+		startY = 200;
+		player = new Player(startX, startY);
+		cloud = new Cloud(50, 25);
+		map.createChunk('b', "background.png", 0, 0, 1900, 850);
 		map.createChunk('g', "ground1.png", 0, 300, 300, 500);
 		map.createChunk('s', "Spike.png", 300, 665, 140, 100);
 		map.createChunk('g', "ground1.png", 440, 425, 400, 350);
 		map.createChunk('s', "Spike.png", 840, 665, 140, 100);
-		map.createChunk('g', "ground1.png", 980, 300, 300, 500);
+		map.createChunk('g', "ground9.png", 980, 300, 300, 500);
 		map.createEnemy(150, 250);
 		map.createEnemy(600, 375);
 		time = 30;
@@ -529,7 +650,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		if (source == jumpUpTimer) {
 			jumpCounter++;
 			player.move(0, PLAYER_UP_VELOCITY + jumpCounter);
-			downVelocity = 5;
+			downVelocity = 4;
 		}
 		if (source == downTimer) {
 			// jumpCounter++;
