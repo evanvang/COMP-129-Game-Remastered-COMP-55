@@ -271,6 +271,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		}
 		return false;
 	}
+	
 
 	public boolean isPlayerOnGround() {
 		GObject obj = mainScreen.getElementAt(newPlayer.getX(), newPlayer.getY() + newPlayer.getHeight() + 3);
