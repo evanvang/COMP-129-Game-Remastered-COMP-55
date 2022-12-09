@@ -45,7 +45,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private int idleAnimationCount = 20;
 
 	// Player movement
-	private static final int PLAYER_UP_VELOCITY = -17;
+	private static final int PLAYER_UP_VELOCITY = -18;
 	private static final int PLAYER_DOWN_VELOCITY = 5;
 	private static int jumpCounter = 0;
 	private Timer jumpUpTimer = new Timer(20, this);
@@ -68,6 +68,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private Timer eTimer = new Timer(50, this);
 	private Cloud cloud;
 	private double enemyVel = 3;
+	private double shurikenVel = 7;
 	private int time;
 	private int startX;
 	private int startY;
@@ -151,6 +152,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			addChunks();
 			mainScreen.add(map.getEnemies().get(0).getImage());
 			mainScreen.add(map.getEnemies().get(1).getImage());
+			mainScreen.add(map.getEnemies().get(2).getImage());
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
 			
@@ -191,10 +193,13 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 				deadEnemies.clear();
 			}
 			else if (levelNum == 2) {
-				/*hideContents();
+				hideContents();
 				levelNum = 3;
 				setupLevel3();
-				showContents();*/
+				showContents();
+				deadEnemies.clear();
+			}
+			else if (levelNum == 3) {
 				mainScreen.switchToWinScreen();
 				deadEnemies.clear();
 			}
@@ -493,8 +498,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('g', "Ground12.png", 1500, 615, 100, 100);
 		map.createChunk('g', "Ground10.png", 1500, 715, 100, 100);
 
-		map.createEnemy(400, 470);
-		map.createEnemy(900, 370);
+		map.createEnemy("pumpkin joe.png", 400, 470);
+		map.createEnemy("pumpkin joe.png", 900, 370);
 		
 		time = 30;
 		lives = 3;
@@ -605,7 +610,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('s', "leftspike.png", 1478, 550, 22, 100);
 		map.createChunk('s', "leftspike.png", 1478, 650, 22, 100);
 		
-		map.createEnemy(1000, 700);
+		map.createEnemy("pumpkin joe.png", 1000, 700);
 		time = 30;
 		lives = 3;
 		timeLabel.setLabel(String.valueOf(time));
@@ -618,22 +623,88 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	public void setupLevel3() {
 		System.out.println("setupLevel3");
 		startX = 0;
-		startY = 200;
+		startY = 550;
 		player = new Player(startX, startY);
 		cloud = new Cloud(50, 25);
 		map.createChunk('b', "background.png", 0, 0, 1900, 850);
-		map.createChunk('g', "ground1.png", 0, 300, 300, 500);
-		map.createChunk('s', "Spike.png", 300, 665, 140, 100);
-		map.createChunk('g', "ground1.png", 440, 425, 400, 350);
-		map.createChunk('s', "Spike.png", 840, 665, 140, 100);
-		map.createChunk('g', "ground9.png", 980, 300, 300, 500);
-		map.createEnemy(150, 250);
-		map.createEnemy(600, 375);
+		map.createChunk('g', "ground2.png", 0, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 100, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 200, 700, 100, 100);
+		map.createChunk('g', "ground2.png", 300, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 400, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 500, 700, 100, 100);
+		map.createChunk('g', "ground2.png", 600, 700, 100, 100);
+		map.createChunk('g', "ground2.png", 700, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 800, 700, 100, 100);
+		map.createChunk('g', "ground2.png", 900, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 1000, 700, 100, 100);
+		map.createChunk('g', "ground2.png", 1100, 700, 100, 100);
+		map.createChunk('g', "ground2.png", 1200, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 1300, 700, 100, 100);
+		map.createChunk('g', "ground1.png", 1400, 700, 100, 100);
+		map.createChunk('g', "ground21.png", 1500, 700, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 600, 100, 100);
+		map.createChunk('g', "ground7.png", 1500, 500, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 400, 100, 100);
+		map.createChunk('g', "ground6.png", 1500, 300, 100, 100);
+		map.createChunk('g', "ground22.png", 1500, 200, 100, 100);
+		
+		map.createChunk('g', "ground18.png", 1400, 200, 100, 100);
+		map.createChunk('g', "ground19.png", 1300, 200, 100, 100);
+		map.createChunk('g', "ground16.png", 1200, 200, 100, 100);
+		map.createChunk('g', "ground5.png", 1200, 100, 100, 100);
+		map.createChunk('g', "ground2.png", 1300, 100, 100, 100);
+		map.createChunk('g', "ground1.png", 1400, 100, 100, 100);
+		map.createChunk('g', "ground1.png", 1500, 100, 100, 100);
+		
+		map.createChunk('g', "ground15.png", 1200, 460, 100, 50);
+		map.createChunk('g', "ground14.png", 1100, 460, 100, 50);
+		
+		map.createChunk('g', "ground15.png", 825, 360, 100, 50);
+		map.createChunk('g', "ground13.png", 725, 360, 100, 50);
+		map.createChunk('g', "ground14.png", 625, 360, 100, 50);
+		
+		map.createChunk('g', "ground15.png", 950, 575, 100, 50);
+		map.createChunk('g', "ground14.png", 850, 575, 100, 50);
+		
+		map.createChunk('g', "ground14.png", 200, 475, 100, 50);
+		map.createChunk('g', "ground15.png", 300, 475, 100, 50);
+		
+		map.createChunk('s', "leftspike.png", 1478, 600, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 500, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 400, 22, 100);
+		map.createChunk('s', "leftspike.png", 1478, 300, 22, 100);
+		
+		map.createChunk('g', "ground4.png", 425, 100, 100, 100);
+		map.createChunk('g', "ground5.png", 325, 100, 100, 100);
+		map.createChunk('g', "ground16.png", 325, 200, 100, 100);
+		map.createChunk('g', "ground17.png", 425, 200, 100, 100);
+		
+		map.createChunk('s', "leftspike.png", 303, 200, 22, 100);
+		map.createChunk('s', "leftspike.png", 303, 100, 22, 100);
+		map.createChunk('s', "downspike.png", 325, 300, 100, 22);
+		map.createChunk('s', "downspike.png", 425, 300, 100, 22);
+		map.createChunk('s', "rightspike.png", 522, 200, 22, 100);
+		map.createChunk('s', "rightspike.png", 522, 100, 22, 100);
+		
+		map.createChunk('g', "ladderend.png", 125, 100, 100, 100);
+		map.createChunk('g', "ladder.png", 125, 200, 100, 100);
+		map.createChunk('g', "ladderstart.png", 125, 300, 100, 100);
+		
+		map.createChunk('g', "ground14.png", 600, 120, 100, 50);
+		map.createChunk('g', "ground13.png", 700, 120, 100, 50);
+		map.createChunk('g', "ground13.png", 800, 120, 100, 50);
+		map.createChunk('g', "ground13.png", 900, 120, 100, 50);
+		map.createChunk('g', "ground15.png", 1000, 120, 100, 50);
+		
+		map.createEnemy("pumpkin joe.png", 325, 50);
+		map.createEnemy("shuriken.png", 600, 290);
+		map.createEnemy("shuriken.png", 550, 40);
 		time = 30;
 		lives = 3;
 		timeLabel.setLabel(String.valueOf(time));
 		drawGoalSpace();
-		goalSpace.setLocation(1150, 300 - goalSpace.getHeight());
+		goalSpace.setLocation(1250, 100 - goalSpace.getHeight());
 		player.getImage().setBounds(player.getImage().getX(), player.getImage().getY(), 100, 100);
 
 	}
@@ -641,6 +712,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	private void decrementLive() {
 		lives--;
 		liveLabel.setLabel(String.valueOf(lives));
+		time = 31;
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -732,7 +804,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 						.intersection(collideEnemy.getImage().getBounds());
 				double intersectionHeight = intersectionRect.getHeight();
 
-				if (intersectionHeight < deltaHeight) {
+				if (intersectionHeight < deltaHeight && collideEnemy.getPath() == "pumpkin joe.png") {
 					mainScreen.remove(collideEnemy.getImage());
 					map.getEnemies().remove(collideEnemy);
 					deadEnemies.add(collideEnemy);
@@ -807,11 +879,21 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 	void callEnemyCloudMovement() {
 		count++;
 		for (Enemy ene : map.getEnemies()) {
-			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 150
-					|| ene.getImage().getX() <= ene.getStartX()) {
-				enemyVel *= -1;
+			if (ene.getPath() == "pumpkin joe.png") {
 				ene.getImage().move(enemyVel, 0);
+				if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 150
+					|| ene.getImage().getX() <= ene.getStartX()) {
+					enemyVel *= -1;
+					ene.getImage().move(enemyVel, 0);
+				}
+			}
+			else if (ene.getPath() == "shuriken.png") {
+				ene.getImage().move(shurikenVel, 0);
+				if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 500
+					|| ene.getImage().getX() <= ene.getStartX()) {
+					shurikenVel *= -1;
+					ene.getImage().move(shurikenVel, 0);
+				}
 			}
 		}
 		if (count % 15 == 0) {

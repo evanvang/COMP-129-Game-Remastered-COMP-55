@@ -45,8 +45,8 @@ public class Map {
 		chunks.add(chunk);
 	}
 
-	public void createEnemy(int startX, int startY) {
-		Enemy enemy = new Enemy(startX, startY);
+	public void createEnemy(String path, int startX, int startY) {
+		Enemy enemy = new Enemy(path, startX, startY);
 		enemies.add(enemy);
 	}
 	

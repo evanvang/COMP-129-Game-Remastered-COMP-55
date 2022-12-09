@@ -11,6 +11,7 @@ public class Enemy {
 	private double startX;
 	private double startY;
 	private GImage enemyIMG;
+	private String newPath;
 
 	public double getStartX() {
 		return startX;
@@ -31,12 +32,16 @@ public class Enemy {
 	public GImage getImage() {
 		return enemyIMG;
 	}
+	
+	public String getPath() {
+		return newPath;
+	}
 
-	public Enemy(int startX, int startY) {
-
+	public Enemy(String path, int startX, int startY) {
+		this.newPath = path;
 		this.startX = startX;
 		this.startY = startY;
-		this.enemyIMG = new GImage("pumpkin joe.png");
+		this.enemyIMG = new GImage(path);
 		this.enemyIMG.setSize(50, 50);
 		this.enemyIMG.setLocation(startX, startY);
 
