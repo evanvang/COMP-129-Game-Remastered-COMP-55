@@ -580,6 +580,19 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('g', "ground2.png", 1300, 750, 100, 100);
 		map.createChunk('g', "ground1.png", 1400, 750, 100, 100);
 		map.createChunk('g', "ground21.png", 1500, 750, 100, 100);
+		map.createChunk('g', "ground10.png", 0, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 100, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 200, 850, 100, 100);
+		map.createChunk('g', "ground5.png", 700, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 800, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 900, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 1000, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 1100, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 1200, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 1300, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 1400, 850, 100, 100);
+		map.createChunk('g', "ground10.png", 1500, 850, 100, 100);
+		
 		map.createChunk('g', "ground7.png", 1500, 650, 100, 100);
 		map.createChunk('g', "ground6.png", 1500, 550, 100, 100);
 		map.createChunk('g', "ground6.png", 1500, 450, 100, 100);
