@@ -693,8 +693,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 
 	public void respawnPlayer() {
 
-		player.getImage().setLocation(50, -100);
-		player.getImage_2().setLocation(50, -100);
+		player.getImage().setLocation(0, -100);
+		player.getImage_2().setLocation(0, -100);
 		player.updatePlayerPos();
 
 		jumpUpTimer.start();
