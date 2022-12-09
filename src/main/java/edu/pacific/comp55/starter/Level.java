@@ -469,7 +469,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('g', "ground1.png", 440, 425, 400, 350);
 		map.createChunk('s', "Spike.png", 840, 665, 140, 100);
 		map.createChunk('g', "ground1.png", 980, 300, 300, 500);
-		map.createEnemy(100, 250);
+		map.createEnemy(150, 250);
 		map.createEnemy(600, 375);
 		time = 30;
 		lives = 3;
@@ -632,7 +632,7 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		count++;
 		for (Enemy ene : map.getEnemies()) {
 			ene.getImage().move(enemyVel, 0);
-			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 200
+			if (ene.getImage().getX() + ene.getImage().getWidth() >= ene.getStartX() + 150
 					|| ene.getImage().getX() <= ene.getStartX()) {
 				enemyVel *= -1;
 				ene.getImage().move(enemyVel, 0);
