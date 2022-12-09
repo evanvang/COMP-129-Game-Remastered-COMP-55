@@ -130,6 +130,8 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 			mainScreen.add(player.getImage());
 			mainScreen.add(player.getImage_2());
 			mainScreen.add(map.getEnemies().get(0).getImage());
+			mainScreen.add(map.getEnemies().get(1).getImage());
+
 		} else {
 
 			addChunks();
@@ -448,7 +450,9 @@ public class Level extends GraphicsPane implements KeyListener, ActionListener {
 		map.createChunk('g', "Ground12.png", 1500, 615, 100, 100);
 		map.createChunk('g', "Ground10.png", 1500, 715, 100, 100);
 
+		map.createEnemy(400, 470);
 		map.createEnemy(900, 370);
+		
 		time = 30;
 		lives = 3;
 		drawGoalSpace();
