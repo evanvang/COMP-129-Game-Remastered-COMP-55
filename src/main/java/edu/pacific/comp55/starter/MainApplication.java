@@ -22,6 +22,8 @@ public class MainApplication extends GraphicsApplication {
 	private SettingsPane settings;
 	private LevelsPane levels;
 	private Level level = new Level(this,1);
+	private Level level2 = new Level(this,2);
+	private Level level3 = new Level(this,3);
 	private boolean isMuted;
 	private WinScreen win;
 
@@ -65,6 +67,16 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToNewLevel() {
 		level = new Level(this, 1);
 		switchToScreen(level);
+		playRandomSound();	
+	}
+	public void switchToLevel2() {
+		level2 = new Level(this, 2);
+		switchToScreen(level2);
+		playRandomSound();	
+	}
+	public void switchToLevel3() {
+		level3 = new Level(this, 3);
+		switchToScreen(level3);
 		playRandomSound();	
 	}
 	

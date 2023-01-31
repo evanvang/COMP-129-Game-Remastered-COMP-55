@@ -24,7 +24,7 @@ public class MenuPane extends GraphicsPane {
 		playButton = new GButton("Play", 400, 600, 150, 75);
 		playButton.setFillColor(Color.WHITE);
 		
-		levelsButton = new GButton("Level Selection", 625, 550, 150, 75);
+		levelsButton = new GButton("Select Level", 625, 550, 150, 75);
 		levelsButton.setFillColor(Color.WHITE);
 		
 
