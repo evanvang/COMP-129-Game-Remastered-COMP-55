@@ -24,6 +24,9 @@ public class MenuPane extends GraphicsPane {
 		playButton = new GButton("Play", 400, 600, 150, 75);
 		playButton.setFillColor(Color.WHITE);
 		
+		levelsButton = new GButton("Level Selection", 625, 550, 150, 75);
+		levelsButton.setFillColor(Color.WHITE);
+		
 
 		settingsButton = new GButton("Settings", 850, 600, 150, 75);
 		settingsButton.setFillColor(Color.WHITE);
@@ -37,6 +40,7 @@ public class MenuPane extends GraphicsPane {
 	public void showContents() {
 		program.add(menuBackground);
 		program.add(playButton);
+		program.add(levelsButton);
 		program.add(settingsButton);
 		
 	}
@@ -45,6 +49,7 @@ public class MenuPane extends GraphicsPane {
 	public void hideContents() {
 		program.remove(menuBackground);
 		program.remove(playButton);
+		program.remove(levelsButton);
 		program.remove(settingsButton);
 
 	}

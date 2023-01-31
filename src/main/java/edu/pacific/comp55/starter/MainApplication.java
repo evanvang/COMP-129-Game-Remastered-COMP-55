@@ -35,6 +35,7 @@ public class MainApplication extends GraphicsApplication {
 		level = new Level(this, 1);
 		mainGame = new MainGame(this);
 		menu = new MenuPane(this);
+		levels = new LevelsPane(this);
 		settings = new SettingsPane(this);
 		win = new WinScreen(this);
 		//	pause = new PausePane(this, level);
