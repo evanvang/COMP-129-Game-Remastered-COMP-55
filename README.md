@@ -1,5 +1,5 @@
 # 55starterfiles
-Starter Project for Comp 55
+README ADJUSTED
 
 COMP 129 REMASTERED CHANGES README UPDATED:
 In this remastered version for the class COMP 129 (Software Engineering) I am adding an additional feature.
