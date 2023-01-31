@@ -13,6 +13,7 @@ public class MenuPane extends GraphicsPane {
 	// all of the GraphicsProgram calls
 	private GButton playButton;
 	private GButton settingsButton;
+	private GButton levelsButton;
 	private GImage menuBackground;
 	
 
@@ -56,6 +57,9 @@ public class MenuPane extends GraphicsPane {
 		}
 		if (obj == settingsButton) {
 			program.switchToSettings();
+		}
+		if (obj == levelsButton) {
+			program.switchToLevels();
 		}
 	}
 }

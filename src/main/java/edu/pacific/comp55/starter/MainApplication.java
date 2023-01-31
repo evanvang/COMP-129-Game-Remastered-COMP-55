@@ -20,6 +20,7 @@ public class MainApplication extends GraphicsApplication {
 	private MainGame mainGame;
 	private MenuPane menu;
 	private SettingsPane settings;
+	private LevelsPane levels;
 	private Level level = new Level(this,1);
 	private boolean isMuted;
 	private WinScreen win;
@@ -73,6 +74,10 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToSettings() {
 		switchToScreen(settings);
+	}
+	
+	public void switchToLevels() {
+		switchToScreen(levels);
 	}
 
 	public void switchPause(PausePane p) {
